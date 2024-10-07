@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.API", "SMIS.API.csproj", "{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Core", "..\SMIS.Core\SMIS.Core.csproj", "{507D6401-8191-4DE6-86D4-2F341CD69BE4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB} = {BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Application", "..\SMIS.Application\SMIS.Application.csproj", "{4793FBD3-04D8-423E-970C-542ECF93B1A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB} = {BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Infraestructure", "..\SMIS.Infraestructure\SMIS.Infraestructure.csproj", "{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7} = {4793FBD3-04D8-423E-970C-542ECF93B1A7}
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB} = {BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {243E0B7D-1E51-4747-A1CD-81B61999831A}
+	EndGlobalSection
+EndGlobal

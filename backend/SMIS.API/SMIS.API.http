@@ -1,0 +1,6 @@
+@SMIS.API_HostAddress = http://localhost:5291
+
+GET {{SMIS.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
