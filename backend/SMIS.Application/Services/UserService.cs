@@ -18,7 +18,7 @@ namespace SMIS.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllAsync();
         }
