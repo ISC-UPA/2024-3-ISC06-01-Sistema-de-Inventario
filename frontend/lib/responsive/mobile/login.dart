@@ -5,16 +5,20 @@ import 'package:frontend/widgets/password_field.dart';
 import 'package:frontend/widgets/login_button.dart';
 
 class LoginMobileLayout extends StatefulWidget {
-  const LoginMobileLayout({super.key});
+  final TextEditingController userController;
+  final TextEditingController passwordController;
+
+  const LoginMobileLayout({
+    super.key,
+    required this.userController,
+    required this.passwordController,
+  });
 
   @override
   LoginMobileLayoutState createState() => LoginMobileLayoutState();
 }
 
 class LoginMobileLayoutState extends State<LoginMobileLayout> {
-  final TextEditingController _userController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
@@ -42,17 +46,17 @@ class LoginMobileLayoutState extends State<LoginMobileLayout> {
               widthFactor: 0.7, // 70% del ancho de la pantalla
               child: Column(
                 children: [
-                  UserField(controller: _userController),
+                  UserField(controller: widget.userController),
                   const SizedBox(height: 30.0),
-                  PasswordField(controller: _passwordController),
+                  PasswordField(controller: widget.passwordController),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 60.0),
           LoginButton(
-            userController: _userController,
-            passwordController: _passwordController,
+            userController: widget.userController,
+            passwordController: widget.passwordController,
           ),
         ],
       ),

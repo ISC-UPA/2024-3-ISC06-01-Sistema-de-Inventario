@@ -5,16 +5,20 @@ import 'package:frontend/widgets/user_field.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginDesktopLayout extends StatelessWidget {
-  const LoginDesktopLayout({super.key});
+  final TextEditingController userController;
+  final TextEditingController passwordController;
+
+  const LoginDesktopLayout({
+    super.key,
+    required this.userController,
+    required this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _userController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-
     final color = Theme.of(context).colorScheme;
 
-    return Scaffold( // Usa un Scaffold para manejar el diseño
+    return Scaffold(
       body: SingleChildScrollView(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,7 +33,7 @@ class LoginDesktopLayout extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            Expanded( // Usa Expanded aquí
+            Expanded(
               child: Container(
                 color: color.surfaceContainer,
                 height: MediaQuery.of(context).size.height,
@@ -46,19 +50,19 @@ class LoginDesktopLayout extends StatelessWidget {
                     ),
                     const SizedBox(height: 50.0),
                     FractionallySizedBox(
-                      widthFactor: 0.7, // 70% del ancho de la pantalla
+                      widthFactor: 0.7,
                       child: Column(
                         children: [
-                          UserField(controller: _userController),
+                          UserField(controller: userController),
                           const SizedBox(height: 30.0),
-                          PasswordField(controller: _passwordController),
+                          PasswordField(controller: passwordController),
                         ],
                       ),
                     ),
                     const SizedBox(height: 60.0),
                     LoginButton(
-                      userController: _userController,
-                      passwordController: _passwordController,
+                      userController: userController,
+                      passwordController: passwordController,
                     ),
                   ],
                 ),
