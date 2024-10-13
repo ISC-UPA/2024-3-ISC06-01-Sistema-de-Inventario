@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({super.key});
+  final TextEditingController controller; // Añadir el controlador como parámetro
+
+  const PasswordField({super.key, required this.controller}); // Constructor modificado
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-  bool _obscureText = true; // Estado para ocultar la contraseña
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary; // Color primario del tema
+    final color = Theme.of(context).colorScheme;
 
     return TextField(
-      style: TextStyle(color: color), // Cambiar el color del texto aquí
+      controller: widget.controller, // Asignar el controlador
+      style: TextStyle(color: color.primary),
       decoration: InputDecoration(
+        fillColor: color.primaryContainer,
+        filled: true,
+        floatingLabelStyle: TextStyle(color:  color.onSecondaryContainer),
         labelText: 'Contraseña',
-        labelStyle: TextStyle(color: color), // Color de la etiqueta
+        labelStyle: TextStyle(color:  color.onSecondaryContainer),
         border: const OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: color), // Color del borde al enfocar
+          borderSide: BorderSide(color: color.primary),
         ),
         suffixIcon: IconButton(
           icon: Icon(
-            _obscureText ? Icons.visibility : Icons.visibility_off, // Icono de ojo
-            color: color, // Color del icono
+            _obscureText ? Icons.visibility : Icons.visibility_off,
+            color: color.primary,
           ),
           onPressed: () {
             setState(() {
-              _obscureText = !_obscureText; // Alternar el estado de visibilidad
+              _obscureText = !_obscureText;
             });
           },
         ),
       ),
-      obscureText: _obscureText, // Controla la visibilidad del texto
+      obscureText: _obscureText,
     );
   }
 }

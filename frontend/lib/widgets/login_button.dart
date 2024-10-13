@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+  final TextEditingController userController; // Añadir controlador de usuario
+  final TextEditingController passwordController; // Añadir controlador de contraseña
+
+  const LoginButton({
+    super.key,
+    required this.userController,
+    required this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary; // Color primario del tema
+    final color = Theme.of(context).colorScheme;
 
     return ElevatedButton(
       onPressed: () {
-        // Lógica de inicio de sesión
+        // Imprimir los valores de usuario y contraseña
+        print('Usuario: ${userController.text}');
+        print('Contraseña: ${passwordController.text}');
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 60),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Bordes redondeados
+          borderRadius: BorderRadius.circular(10),
         ),
-        backgroundColor: color.withOpacity(0.8), // Color del botón (ajusta opacidad si es necesario)
-        elevation: 5, // Sombra del botón
+        backgroundColor: color.onPrimaryContainer,
+        elevation: 5,
       ),
-      child: const Text(
+      child: Text(
         'Iniciar Sesión',
-        style: TextStyle(fontSize: 18, color: Colors.white), // Aumentar el tamaño de la fuente
+        style: TextStyle(fontSize: 18, color: color.onInverseSurface),
       ),
     );
   }
