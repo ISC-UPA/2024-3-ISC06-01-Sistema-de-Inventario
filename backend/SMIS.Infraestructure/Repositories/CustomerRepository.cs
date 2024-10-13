@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace SMIS.Infraestructure.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository: ICustomerRepository
     {
         private readonly AppDbContext _context;
 

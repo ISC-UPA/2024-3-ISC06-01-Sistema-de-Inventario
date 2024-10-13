@@ -11,9 +11,9 @@ namespace SMIS.Application.Services
 {
     public class UserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ICustomerRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(ICustomerRepository userRepository)
         {
             _userRepository = userRepository;
         }
