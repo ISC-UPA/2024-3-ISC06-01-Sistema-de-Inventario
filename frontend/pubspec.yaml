@@ -29,8 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  dartdap: ^0.7.5
   flutter:
     sdk: flutter
+  logging: ^1.2.0
   lottie: ^3.1.2
   provider: ^6.1.2
   shared_preferences: ^2.3.2
