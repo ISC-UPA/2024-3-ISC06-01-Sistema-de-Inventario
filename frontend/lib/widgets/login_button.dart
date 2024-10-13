@@ -31,6 +31,13 @@ class LoginButtonState extends State<LoginButton> {
     final String user = widget.userController.text.trim();
     final String password = widget.passwordController.text.trim();
 
+    // Verificar si los campos están vacíos
+    if (user.isEmpty || password.isEmpty) {
+      CustomSnackBar.show(context, 'El usuario y la contraseña no pueden estar vacíos.');
+      _isAuthenticating = false;
+      return;
+    }
+
     final LdapConnection ldap = LdapConnection(
       host: ldapServer,
       port: 389,
