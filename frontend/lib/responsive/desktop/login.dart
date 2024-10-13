@@ -24,8 +24,8 @@ class LoginDesktopLayout extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.5,
               child: Lottie.asset(
                 'assets/lottie/login_desktop.json',
-                width: 200,
-                height: 200,
+                width: 800,
+                height: 800,
                 fit: BoxFit.contain,
               ),
             ),

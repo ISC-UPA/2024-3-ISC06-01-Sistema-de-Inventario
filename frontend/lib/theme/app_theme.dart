@@ -55,7 +55,7 @@ class AppTheme {
   // Obtener el tema para aplicar a la aplicación
   ThemeData getTheme() {
     return ThemeData(
-      brightness: Brightness.dark, // brightness,
+      brightness: Brightness.light, // brightness,
       colorSchemeSeed: selectedColor, // Usa el color seleccionado
     );
   }
