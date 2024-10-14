@@ -1,0 +1,34 @@
+[
+    {
+      "title": "Bienvenido",
+      "image": "assets/lottie/welcome.json",
+      "description": "Explora nuestra app para conocer más."
+    },
+    {
+      "title": "Descubre",
+      "image": "assets/lottie/login_desktop.json",
+      "description": "Descubre nuestras características."
+    },
+    {
+      "title": "Personaliza",
+      "image": "assets/lottie/login_desktop.json",
+      "description": "Personaliza tu experiencia."
+    },
+    {
+      "title": "Conéctate",
+      "image": "assets/lottie/login_desktop.json",
+      "description": "Conéctate con otros usuarios."
+    },
+    {
+      "title": "Comparte",
+      "image": "assets/lottie/login_desktop.json",
+      "description": "Comparte tus logros y experiencias."
+    },
+    {
+      "title": "Empieza",
+      "image": "assets/lottie/login_desktop.json",
+      "description": "Empieza a usar la app",
+      "isLast": true
+    }
+  ]
+  

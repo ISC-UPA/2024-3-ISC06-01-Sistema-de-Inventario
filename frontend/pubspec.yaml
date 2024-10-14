@@ -36,6 +36,7 @@ dependencies:
   lottie: ^3.1.2
   provider: ^6.1.2
   shared_preferences: ^2.3.2
+  liquid_swipe: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -55,6 +56,8 @@ flutter:
   assets:
     - assets/lottie/login_phone.json
     - assets/lottie/login_desktop.json
+    - assets/intro_data/intro.json
+    - assets/lottie/welcome.json
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
