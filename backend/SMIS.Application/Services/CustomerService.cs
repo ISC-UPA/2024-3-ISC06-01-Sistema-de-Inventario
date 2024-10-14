@@ -9,33 +9,33 @@ using System.Threading.Tasks;
 
 namespace SMIS.Application.Services
 {
-    public class UserService
+    public class CustomerService
     {
-        private readonly ICustomerRepository _userRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public UserService(ICustomerRepository userRepository)
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            _userRepository = userRepository;
+            _customerRepository = customerRepository;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
-            return await _userRepository.GetAllAsync();
+            return await _customerRepository.GetAllAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            return await _userRepository.GetByIdAsync(id);
+            return await _customerRepository.GetByIdAsync(id);
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task AddCustomerAsync(Customer customer)
         {
-            await _userRepository.AddAsync(user);
+            await _customerRepository.AddAsync(customer);
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateCustomerAsync(Customer customer)
         {
-            await _userRepository.UpdateAsync(user);
+            await _customerRepository.UpdateAsync(customer);
         }
     }
 }

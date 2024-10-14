@@ -16,6 +16,6 @@ namespace SMIS.Infraestructure.Data
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMIS.Core.Entities
 {
-    public class User
+    public class Customer
     {
         public int Id { get; set; }
         public string Name { get; set; }

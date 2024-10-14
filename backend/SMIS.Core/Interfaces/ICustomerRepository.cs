@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SMIS.Core.Interfaces
 {
-    public interface IUserRepository
+    public interface ICustomerRepository
     {
-        Task<IEnumerable<User>> GetAllAsync();
-        Task<User> GetByIdAsync(int id);
-        Task AddAsync(User user);
-        Task UpdateAsync(User user);
+        Task<IEnumerable<Customer>> GetAllAsync();
+        Task<Customer> GetByIdAsync(int id);
+        Task AddAsync(Customer customer);
+        Task UpdateAsync(Customer customer);
         Task DeleteAsync(int id);
     }
 }

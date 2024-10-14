@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //Register services and repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CustomerService>();
 
 var app = builder.Build();
 
