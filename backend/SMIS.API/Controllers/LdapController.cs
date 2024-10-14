@@ -21,7 +21,7 @@ namespace MyProject.Api.Controllers
         {
             try
             {
-                _ldapService.ConnectToLpad();
+                _ldapService.ConnectToLdap();
                 return Ok("Conexión a LDAP exitosa.");
             }
             catch (Exception ex)

@@ -40,7 +40,6 @@ namespace SMIS.Application.Services
 
                 Console.WriteLine("Conectado exitosamente al servidor LDAP.");
             }
-
         }
     }
 }
