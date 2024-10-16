@@ -29,15 +29,13 @@ class SwipeIntroPage extends StatelessWidget {
           return _buildPage(context, pageData);
         }).toList();
 
-        return Scaffold(
-          body: LiquidSwipe(
+        return LiquidSwipe(
             pages: pages,
             fullTransitionValue: 300,
             enableLoop: true,
             positionSlideIcon: 0.7,
             waveType: WaveType.circularReveal,
-          ),
-        );
+          );
       },
     );
   }
@@ -45,6 +43,7 @@ class SwipeIntroPage extends StatelessWidget {
   Widget _buildPage(BuildContext context, IntroData pageData) {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: pageData.color,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

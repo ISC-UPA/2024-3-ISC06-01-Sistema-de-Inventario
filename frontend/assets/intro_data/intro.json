@@ -1,34 +1,40 @@
 [
     {
-      "title": "Bienvenido",
+      "title": "Bienvenido a STOCK MASTER",
       "image": "assets/lottie/welcome.json",
-      "description": "Explora nuestra app para conocer más."
+      "description": "Administra tu inventario de manera eficiente y en tiempo real",
+      "color" : "#ffeecc"
     },
     {
-      "title": "Descubre",
-      "image": "assets/lottie/login_desktop.json",
-      "description": "Descubre nuestras características."
+      "title": "Gestión de Stock ",
+      "image": "assets/lottie/stock.json",
+      "description": "Controla tus existencias. Obtén notificaciones cuando el inventario esté bajo",
+      "color" : "#46425e"
     },
     {
-      "title": "Personaliza",
-      "image": "assets/lottie/login_desktop.json",
-      "description": "Personaliza tu experiencia."
+      "title": "Alertas por Correo Electrónico",
+      "image": "assets/lottie/email.json",
+      "description": "Mantente informado sobre el estado de tus existencias mediante correo electronico",
+      "color" : "#ff6973"
     },
     {
-      "title": "Conéctate",
+      "title": "Búsqueda Rápida y Avanzada",
       "image": "assets/lottie/login_desktop.json",
-      "description": "Conéctate con otros usuarios."
+      "description": "Encuentra rápidamente cualquier producto al instante",
+      "color" : "#00b9be"
     },
     {
-      "title": "Comparte",
+      "title": "Generacion de Reportes",
       "image": "assets/lottie/login_desktop.json",
-      "description": "Comparte tus logros y experiencias."
+      "description": "Genera reportes de inventario para una correcta administracion",
+      "color" : "#ffb0a3"
     },
     {
-      "title": "Empieza",
+      "title": "Tu Inventario, a un Clic de Distancia",
       "image": "assets/lottie/login_desktop.json",
-      "description": "Empieza a usar la app",
-      "isLast": true
+      "description": "Inicia sesión para empezar hoy mismo",
+      "isLast": true,
+      "color" : "#15788c"
     }
   ]
   

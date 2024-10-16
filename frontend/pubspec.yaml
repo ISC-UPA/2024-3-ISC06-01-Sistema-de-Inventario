@@ -58,7 +58,9 @@ flutter:
     - assets/lottie/login_desktop.json
     - assets/intro_data/intro.json
     - assets/lottie/welcome.json
-  #   - images/a_dot_ham.jpeg
+    - assets/lottie/stock.json
+    - assets/lottie/email.json
+  #   - images/a_dot_ham.jpegd
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
