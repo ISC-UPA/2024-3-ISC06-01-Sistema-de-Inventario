@@ -10,6 +10,7 @@ namespace SMIS.Core.Entities
     public class Order{
         public Guid IdOrder { get; set; }
         public Guid IdCustomer { get; set; }
+        public Product Product { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public SqlMoney TotalAmount { get; set; }

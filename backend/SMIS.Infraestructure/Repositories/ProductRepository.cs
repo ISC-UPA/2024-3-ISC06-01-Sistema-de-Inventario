@@ -23,6 +23,10 @@ namespace SMIS.Infraestructure.Repositories
         {
             return await _context.Products.ToListAsync();
         }
+        public async Task<Product?> GetByNameAsync(string name)
+        {
+            return await _context.Products.FindAsync(name);
+        }
 
         public async Task<Product?> GetByIdAsync(int id)
         {

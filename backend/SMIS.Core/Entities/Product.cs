@@ -16,6 +16,7 @@ namespace SMIS.Core.Entities
         [StringLength(100)]
         public string Description { get; set; }
         public SqlMoney Price { get; set; }
+        public SqlMoney Cost { get; set; }
         public int Stock { get; set; }
         public EnumProductCategory Category { get; set; }
         public DateTime Created { get; set; }
@@ -26,7 +27,7 @@ namespace SMIS.Core.Entities
 
     public enum EnumProductCategory
     {
-        Service,
-        Product
+        ProductExample1,
+        ProductExample2
     }
 }

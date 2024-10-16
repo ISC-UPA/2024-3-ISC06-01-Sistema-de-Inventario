@@ -29,10 +29,7 @@ namespace SMIS.Core.Entities
     public enum EnumUserRole { 
         
         Admin,
-        Sales,
-        support,
-        Manager,
+        Operator,
         User
-    
     }
 }
