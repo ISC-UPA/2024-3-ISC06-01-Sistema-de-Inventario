@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace SMIS.Infraestructure.Repositories
 {
-    public class CustomerRepository: ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly AppDbContext _context;
 
@@ -26,7 +26,7 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task<Customer> GetByIdAsync(int id)
+        public async Task<Customer?> GetByIdAsync(int id)
         {
             return await _context.Customers.FindAsync(id);
         }
@@ -47,6 +47,5 @@ namespace SMIS.Infraestructure.Repositories
         {
             // To implement
         }
-
     }
 }
