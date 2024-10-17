@@ -3,11 +3,6 @@ using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
 
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMIS.Infraestructure.Repositories
 {
@@ -24,7 +19,7 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Orders.ToListAsync();
         }
 
-        public async Task<Order?> GetByIdAsync(int id)
+        public async Task<Order> GetByIdAsync(Guid id)
         {
             return await _context.Orders.FindAsync(id);
         }

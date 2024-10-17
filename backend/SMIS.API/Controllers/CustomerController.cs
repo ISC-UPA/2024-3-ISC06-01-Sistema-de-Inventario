@@ -25,7 +25,7 @@ namespace SMIS.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Customer> GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(Guid id)
         {
             return await _customerService.GetCustomerByIdAsync(id);
         }

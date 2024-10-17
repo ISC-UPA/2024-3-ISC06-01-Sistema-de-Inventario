@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
+
 
 namespace SMIS.Core.Entities
 {
@@ -19,6 +15,8 @@ namespace SMIS.Core.Entities
         public SqlMoney Cost { get; set; }
         public int Stock { get; set; }
         public EnumProductCategory Category { get; set; }
+
+        //Log
         public DateTime Created { get; set; }
         public User CreatedBy { get; set; }
         public DateTime? Updated { get; set; }

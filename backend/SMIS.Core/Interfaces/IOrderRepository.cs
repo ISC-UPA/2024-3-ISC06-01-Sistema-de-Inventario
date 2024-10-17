@@ -1,16 +1,11 @@
 ﻿using SMIS.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMIS.Core.Interfaces
 {
     public interface IOrderRepository{
 
         Task<IEnumerable<Order>> GetAllAsync();
-        Task<Order> GetByIdAsync(int id);
+        Task<Order> GetByIdAsync(Guid id);
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
 

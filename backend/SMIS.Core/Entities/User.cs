@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SMIS.Core.Entities
 {
@@ -14,9 +9,13 @@ namespace SMIS.Core.Entities
         public string UserName { get; set; }
         [StringLength(100)]
         public string UserDisplayName { get; set; }
+        public EnumUserRole Role { get; set; }
         [StringLength(100)]
         public string Email { get; set; }
-        public EnumUserRole Role { get; set; }
+        [StringLength(100)]
+        public string Password { get; set; }
+
+        //Log
         public DateTime Created { get; set; }
         [StringLength(100)]
         public User CreatedBy { get;set; }
@@ -26,8 +25,8 @@ namespace SMIS.Core.Entities
     }
 
 
-    public enum EnumUserRole { 
-        
+    public enum EnumUserRole
+    { 
         Admin,
         Operator,
         User

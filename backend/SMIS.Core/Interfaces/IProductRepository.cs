@@ -1,17 +1,12 @@
 ﻿using SMIS.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMIS.Core.Interfaces
 {
     public interface IProductRepository {
 
         Task<IEnumerable<Product>> GetAllAsync();
-        Task<Product> GetByIdAsync(int id);
-        Task<Product> GetByNameAsync(string name);
+        Task<Product> GetByIdAsync(Guid id);
+        Task<Product> GetByParamsAsync(Guid? id, string? name, EnumProductCategory? Category);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
     }

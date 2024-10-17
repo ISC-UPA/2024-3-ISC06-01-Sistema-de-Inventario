@@ -3,19 +3,12 @@ using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
 
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SMIS.Infraestructure.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
         private readonly AppDbContext _context;
-
         public CustomerRepository(AppDbContext context)
         {
             _context = context;
@@ -26,7 +19,7 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task<Customer?> GetByIdAsync(int id)
+        public async Task<Customer> GetByIdAsync(Guid id)
         {
             return await _context.Customers.FindAsync(id);
         }
@@ -41,11 +34,6 @@ namespace SMIS.Infraestructure.Repositories
         {
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            // To implement
         }
     }
 }
