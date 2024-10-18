@@ -17,5 +17,26 @@ namespace SMIS.Infraestructure.Data
         public DbSet<RestockOrder> RestockOrders { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        //Customer Relations        ------------------------------------------------------!!
+
+            //To User (CreatedBy)
+            modelBuilder.Entity<Customer>().HasOne(c => c.CreatedByUser)
+                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+
+            //To User (UpdatedBy)
+
+        //Order Relations           ------------------------------------------------------!!
+
+        //Products Relations        ------------------------------------------------------!!
+
+        //RestockOrder Relations    ------------------------------------------------------!!
+
+        //Supplier Relations        ------------------------------------------------------!!
+
+        //User Relations            ------------------------------------------------------!!
+        }
     }
 }

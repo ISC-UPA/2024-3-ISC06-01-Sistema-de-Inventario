@@ -23,5 +23,9 @@ namespace SMIS.Core.Entities
         [StringLength(100)]
         [ForeignKey("UpdateByUser")]
         public Guid? UpdatedBy { get; set; }
+
+       //Navegation properties
+        public User CreatedByUser { get; set; }
+        public User UpdatedByUser { get; set; }
     }
 }

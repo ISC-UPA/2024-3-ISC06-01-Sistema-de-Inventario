@@ -1,6 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SMIS.Core.Entities
 {
@@ -26,6 +31,7 @@ namespace SMIS.Core.Entities
         [ForeignKey("UpdatedByUser")]
         public Guid? UpdatedBy { get; set; }
     }
+
 
     public enum EnumOrderStatus
     {
