@@ -1,12 +1,17 @@
-﻿using System.Data.SqlTypes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlTypes;
 
 namespace SMIS.Core.Entities
 {
     public class RestockOrder
     {
-        public Guid IdRestockOrder { get; set; }
+        [Key]
+        public required Guid IdRestockOrder { get; set; }
+        [ForeignKey("Supplier")]
         public Guid IdSupplier { get; set; }
-        public Product Product { get; set; }
+        [ForeignKey("Product")]
+        public Guid IdProduct { get; set; }
         public DateTime RestockOrderDate { get; set; }
         public int Quantity { get; set; }
         public SqlMoney TotalAmount { get; set; }
@@ -14,9 +19,11 @@ namespace SMIS.Core.Entities
 
         //Log
         public DateTime Created { get; set; }
-        public User CreatedBy { get; set; }
+        [ForeignKey("CreatedByUser")]
+        public Guid? CreatedBy { get; set; }
         public DateTime? Updated { get; set; }
-        public User UpdatedBy { get; set; }
+        [ForeignKey("UpdateByUser")]
+        public Guid? UpdatedBy { get; set; }
     }
 
     public enum EnumRestockOrderStatus

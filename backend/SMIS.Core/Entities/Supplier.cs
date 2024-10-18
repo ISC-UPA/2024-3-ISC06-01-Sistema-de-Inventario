@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMIS.Core.Entities
 {
     public class Supplier
-    {    
-        public Guid IdSupplier { get; set; }
+    {
+        [Key] 
+        public required Guid IdSupplier { get; set; }
         [StringLength (100)]
         public string Name { get; set; }
         [StringLength (500)]
@@ -13,10 +15,12 @@ namespace SMIS.Core.Entities
         //Log
         public DateTime Created { get; set; }
         [StringLength(100)]
-        public User CreatedBy { get; set; }
+        [ForeignKey("CreatedByUser")]
+        public Guid? CreatedBy { get; set; }
         public DateTime? Update { get; set; }
         [StringLength(100)]
-        public User UpdateBy { get; set; }
+        [ForeignKey("UpdateByUser")]
+        public Guid? UpdateBy { get; set; }
     }
 
     public enum SupplierStatus

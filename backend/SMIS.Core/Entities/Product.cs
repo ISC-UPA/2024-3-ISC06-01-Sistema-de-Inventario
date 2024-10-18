@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 
 
 namespace SMIS.Core.Entities
 {
     public class Product{
-
-        public Guid IdProduct { get; set; }
+        [Key]
+        public required Guid IdProduct { get; set; }
         [StringLength(100)]
         public string Name { get; set; }
         [StringLength(100)]
@@ -18,9 +19,11 @@ namespace SMIS.Core.Entities
 
         //Log
         public DateTime Created { get; set; }
-        public User CreatedBy { get; set; }
+        [ForeignKey("CreatedByUser")]
+        public Guid? CreatedBy { get; set; }
         public DateTime? Updated { get; set; }
-        public User UpdatedBy { get; set; }
+        [ForeignKey("UpdateByUser")]
+        public Guid? UpdatedBy { get; set; }
     }
 
     public enum EnumProductCategory

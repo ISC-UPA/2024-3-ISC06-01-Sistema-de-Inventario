@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMIS.Core.Entities
 {
     public class User {
-
-        public Guid IdUser { get; set; }
+        [Key]
+        public required Guid IdUser { get; set; }
         [StringLength(100)]
         public string UserName { get; set; }
         [StringLength(100)]
@@ -18,10 +19,12 @@ namespace SMIS.Core.Entities
         //Log
         public DateTime Created { get; set; }
         [StringLength(100)]
-        public User CreatedBy { get;set; }
+        [ForeignKey("CreatedByUser")]
+        public Guid? CreatedBy { get;set; }
         public DateTime? Update { get; set; }
         [StringLength(100)]
-        public User UpdatedBy { get; set; }
+        [ForeignKey("UpdateByUser")]
+        public Guid? UpdatedBy { get; set; }
     }
 
 
