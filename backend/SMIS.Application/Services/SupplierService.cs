@@ -15,18 +15,15 @@ namespace SMIS.Application.Services
         public async Task<IEnumerable<Supplier>> GetAllSuppliersAsync() { 
         
             return await _supplierRepository.GetAllAsync();
-        
         }
 
         public async Task<Supplier?> GetSupplierByIdAsync(Guid id)
         {
-
             return await _supplierRepository.GetByIdAsync(id);
         }
 
         public async Task AddSupplierAsync(Supplier supplier)
         {
-
             await _supplierRepository.AddAsync(supplier);
         }
 
