@@ -3,35 +3,35 @@
       "title": "Bienvenido a STOCK MASTER",
       "image": "assets/lottie/welcome.json",
       "description": "Administra tu inventario de manera eficiente y en tiempo real",
-      "color" : "#ffeecc"
+      "color" : "#87afbb"
     },
     {
       "title": "Gestión de Stock ",
       "image": "assets/lottie/stock.json",
       "description": "Controla tus existencias. Obtén notificaciones cuando el inventario esté bajo",
-      "color" : "#46425e"
+      "color" : "#ffe5ba"
     },
     {
       "title": "Alertas por Correo Electrónico",
       "image": "assets/lottie/email.json",
       "description": "Mantente informado sobre el estado de tus existencias mediante correo electronico",
-      "color" : "#ff6973"
+      "color" : "#c8dcbe"
     },
     {
       "title": "Búsqueda Rápida y Avanzada",
-      "image": "assets/lottie/login_desktop.json",
+      "image": "assets/lottie/search.json",
       "description": "Encuentra rápidamente cualquier producto al instante",
-      "color" : "#00b9be"
+      "color" : "#FAF9A9"
     },
     {
       "title": "Generacion de Reportes",
-      "image": "assets/lottie/login_desktop.json",
+      "image": "assets/lottie/report.json",
       "description": "Genera reportes de inventario para una correcta administracion",
-      "color" : "#ffb0a3"
+      "color" : "#8b8fb0"
     },
     {
       "title": "Tu Inventario, a un Clic de Distancia",
-      "image": "assets/lottie/login_desktop.json",
+      "image": "assets/lottie/inicio.json",
       "description": "Inicia sesión para empezar hoy mismo",
       "isLast": true,
       "color" : "#15788c"
