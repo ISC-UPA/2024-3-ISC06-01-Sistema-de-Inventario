@@ -23,9 +23,9 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task<Product> GetByParamsAsync(Guid? id, string? name, EnumProductCategory? category)
+        public async Task<Product> GetByParamsAsync(string? name, EnumProductCategory? category)
         {
-            return await _context.Products.FindAsync(id, name, category);
+            return await _context.Products.FindAsync(name, category);
         }
 
         public async Task AddAsync(Product product)

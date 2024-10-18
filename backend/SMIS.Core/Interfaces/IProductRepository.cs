@@ -6,7 +6,7 @@ namespace SMIS.Core.Interfaces
 
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(Guid id);
-        Task<Product> GetByParamsAsync(Guid? id, string? name, EnumProductCategory? Category);
+        Task<Product> GetByParamsAsync(string? name, EnumProductCategory? Category);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
     }

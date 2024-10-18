@@ -3,7 +3,6 @@ using SMIS.Core.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace SMIS.API.Controllers
 {
         [ApiController]
