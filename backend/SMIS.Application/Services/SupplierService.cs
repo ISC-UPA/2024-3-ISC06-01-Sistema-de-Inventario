@@ -12,13 +12,13 @@ namespace SMIS.Application.Services
             _supplierRepository = supplierRepository;
         }
 
-        public async Task<IEnumerable<Supplier>> GetAllSupplierAsync() { 
+        public async Task<IEnumerable<Supplier>> GetAllSuppliersAsync() { 
         
             return await _supplierRepository.GetAllAsync();
         
         }
 
-        public async Task<Supplier?> GetByIdSupplierAsync(Guid id)
+        public async Task<Supplier?> GetSupplierByIdAsync(Guid id)
         {
 
             return await _supplierRepository.GetByIdAsync(id);

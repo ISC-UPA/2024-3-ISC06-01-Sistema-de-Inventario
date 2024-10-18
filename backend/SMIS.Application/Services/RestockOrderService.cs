@@ -12,12 +12,12 @@ namespace SMIS.Application.Services
             _restockOrderRepository = restockOrderRepository;
         }
 
-        public async Task<IEnumerable<RestockOrder>> GetAllRestockOrderAsync() { 
+        public async Task<IEnumerable<RestockOrder>> GetAllRestockOrdersAsync() { 
         
             return await _restockOrderRepository.GetAllAsync();
         }
 
-        public async Task<RestockOrder?> GetByIdRestockOrderAsync(Guid id) { 
+        public async Task<RestockOrder?> GetRestockOrderByIdAsync(Guid id) { 
         
             return await _restockOrderRepository.GetByIdAsync(id);
         }

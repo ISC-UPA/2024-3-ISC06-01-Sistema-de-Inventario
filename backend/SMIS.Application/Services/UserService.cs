@@ -7,13 +7,13 @@ namespace SMIS.Application.Services
 
         private readonly IUserRepository _userRepository;
 
-        public async Task<IEnumerable<User>> GetAllUserAsync() { 
+        public async Task<IEnumerable<User>> GetAllUsersAsync() { 
         
             return await _userRepository.GetAllAsync();   
 
         }
 
-        public async Task<User> GetByIdUserAsync(Guid id) { 
+        public async Task<User> GetUserByIdAsync(Guid id) { 
         
             return await _userRepository.GetByIdAsync(id);
 

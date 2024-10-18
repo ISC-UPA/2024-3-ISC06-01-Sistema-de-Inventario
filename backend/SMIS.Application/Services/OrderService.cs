@@ -14,7 +14,7 @@ namespace SMIS.Application.Services
             _orderRepository = orderRepository;
         }
 
-        public async Task<IEnumerable<Order>> GetAllOrderAsync()
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
 
             return await _orderRepository.GetAllAsync();

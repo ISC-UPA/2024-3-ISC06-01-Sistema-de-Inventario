@@ -12,18 +12,18 @@ namespace SMIS.Application.Services
             _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductAsync() { 
+        public async Task<IEnumerable<Product>> GetAllProductsAsync() { 
         
             return await _productRepository.GetAllAsync();
         
         }
 
-        public async Task<Product> GetByIdProductAsync(Guid id) { 
+        public async Task<Product> GetProductByIdAsync(Guid id) { 
         
             return await _productRepository.GetByIdAsync(id);
         }
 
-        public async Task <Product> GetByParamsProductAsync(Guid? id, string? name,EnumProductCategory? category){
+        public async Task <Product> GetProductByParamsAsync(Guid? id, string? name, EnumProductCategory? category){
         
             return await _productRepository.GetByParamsAsync(id, name, category);
 
