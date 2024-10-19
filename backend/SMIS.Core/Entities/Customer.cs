@@ -7,21 +7,24 @@ namespace SMIS.Core.Entities
     {
         [Key]
         public required Guid Id { get; set; }
+
         [StringLength(100)]
         public string Name { get; set; }
+
         [StringLength(100)]
         public string Email { get; set; }
 
         //Log
         public DateTime Created { get; set; }
 
-        [StringLength(100)]
         [ForeignKey("CreatedByUser")]
+        [StringLength(100)]
         public Guid? CreatedBy { get; set; }
+
         public DateTime? Update { get; set; }
 
-        [StringLength(100)]
         [ForeignKey("UpdateByUser")]
+        [StringLength(100)]
         public Guid? UpdatedBy { get; set; }
 
        //Navegation properties

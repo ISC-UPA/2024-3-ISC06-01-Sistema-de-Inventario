@@ -7,23 +7,32 @@ namespace SMIS.Core.Entities
     {
         [Key] 
         public required Guid IdSupplier { get; set; }
+
         [StringLength (100)]
         public string Name { get; set; }
+
         [StringLength (500)]
         public string Description { get; set; }
 
+        public EnumSupplierStatus SupplierStatus { get; set; }
+
         //Log
         public DateTime Created { get; set; }
-        [StringLength(100)]
+
         [ForeignKey("CreatedByUser")]
         public Guid? CreatedBy { get; set; }
+
         public DateTime? Update { get; set; }
-        [StringLength(100)]
-        [ForeignKey("UpdateByUser")]
+
+        [ForeignKey("UpdatedByUser")]
         public Guid? UpdateBy { get; set; }
+
+        //Navegation properties
+        public User CreatedByUser { get; set; }
+        public User UpdatedByUser { get; set; }
     }
 
-    public enum SupplierStatus
+    public enum EnumSupplierStatus
     {
         Active,
         Inactive
