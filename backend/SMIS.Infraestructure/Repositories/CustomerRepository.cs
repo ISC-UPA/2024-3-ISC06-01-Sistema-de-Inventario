@@ -9,9 +9,11 @@ namespace SMIS.Infraestructure.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly AppDbContext _context;
-        public CustomerRepository(AppDbContext context)
+        private readonly IUserService _userService;
+        public CustomerRepository(AppDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
@@ -21,11 +23,17 @@ namespace SMIS.Infraestructure.Repositories
 
         public async Task<Customer> GetByIdAsync(Guid id)
         {
-            return await _context.Customers.FindAsync(id);
+            return await _context.Customers.FindAsync(id) ?? throw new InvalidOperationException("Customer not found");
         }
 
         public async Task AddAsync(Customer customer)
         {
+            //Need to fix ------------------------------------------------------------------------------------------------------!!! 
+            //var newCustomer = customer;
+            //newCustomer.Created = DateTime.Now;
+            //newCustomer.CreatedByUser = _userService.GetCurrentUserId();
+
+
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
         }
