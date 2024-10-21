@@ -31,7 +31,7 @@
     },
     {
       "title": "Tu Inventario, a un Clic de Distancia",
-      "image": "assets/lottie/inicio.json",
+      "image": "assets/lottie/start.json",
       "description": "Inicia sesión para empezar hoy mismo",
       "isLast": true,
       "color" : "#15788c"

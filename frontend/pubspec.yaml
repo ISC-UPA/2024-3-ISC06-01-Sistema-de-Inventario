@@ -63,6 +63,7 @@ flutter:
     - assets/lottie/search.json
     - assets/lottie/report.json
     - assets/lottie/inicio.json
+    - assets/lottie/start.json
   #   - images/a_dot_ham.jpegd
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
