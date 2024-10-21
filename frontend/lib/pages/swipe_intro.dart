@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/responsive/desktop/swipe_intro.dart';
+import 'package:frontend/responsive/mobile/swipe_intro.dart';
+import 'package:frontend/responsive/responsive_layout.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:lottie/lottie.dart';
 import 'package:frontend/classes/intro_data.dart';
 
 class SwipeIntroPage extends StatelessWidget {
@@ -33,10 +35,14 @@ class SwipeIntroPage extends StatelessWidget {
 
         return LiquidSwipe(
           pages: pages,
-          fullTransitionValue: 300,
-          enableLoop: true,
-          positionSlideIcon: 0.7,
-          waveType: WaveType.circularReveal,
+          fullTransitionValue: 880,
+          enableLoop: false,
+          positionSlideIcon: 0.8,
+          waveType: WaveType.liquidReveal,
+          slideIconWidget: const Icon(Icons.arrow_back_ios),
+          enableSideReveal: true,
+          ignoreUserGestureWhileAnimating: true,
+          preferDragFromRevealedArea: true,
         );
       },
     );
@@ -48,49 +54,9 @@ class SwipeIntroPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: bgColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Animación Lottie
-          Lottie.asset(pageData.lottie, width: 200, height: 200),
-          
-          // Título
-          Text(
-            pageData.title,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white) ?? 
-                   const TextStyle(fontSize: 24, color: Colors.white), // Estilo por defecto si headlineMedium es null
-          ),
-          
-          // Descripción
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              pageData.description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          
-          // Botón y Checkbox en la última página
-          if (pageData.isLast)
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: const Text("Iniciar sesión"),
-                ),
-                CheckboxListTile(
-                  title: const Text("Mostrar de nuevo", style: TextStyle(color: Colors.white)),
-                  value: true, // Aquí puedes conectar esto a preferencias con SharedPreferences
-                  onChanged: (bool? value) {
-                    // lógica para guardar preferencia
-                  },
-                ),
-              ],
-            ),
-        ],
+      body: ResponsiveLayout(
+        mobileBody: buildMobileBody(context, pageData),
+        desktopBody: buildDesktopBody(context, pageData),
       ),
     );
   }
