@@ -39,9 +39,9 @@ class SwipeIntroPage extends StatelessWidget {
           enableLoop: false,
           positionSlideIcon: 0.8,
           waveType: WaveType.liquidReveal,
-          slideIconWidget: const Icon(Icons.arrow_back_ios),
+          slideIconWidget: const SizedBox(height: 30, width: 30,),
           enableSideReveal: true,
-          ignoreUserGestureWhileAnimating: true,
+          ignoreUserGestureWhileAnimating: false,
           preferDragFromRevealedArea: true,
         );
       },

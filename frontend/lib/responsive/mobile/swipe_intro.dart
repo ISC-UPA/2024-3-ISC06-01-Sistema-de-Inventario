@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:frontend/classes/intro_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Widget buildMobileBody(BuildContext context, IntroData pageData) {
   return Center(
@@ -13,8 +14,10 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
         // Título
         Text(
           pageData.title,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white) ?? 
-                 const TextStyle(fontSize: 24, color: Colors.white), // Estilo por defecto si headlineMedium es null
+          style: GoogleFonts.modak(
+            textStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(color: pageData.titleColor) ?? 
+                       TextStyle(fontSize: 24, color: pageData.titleColor), // Estilo por defecto si headlineMedium es null
+          ),
         ),
         
         // Descripción
@@ -23,7 +26,9 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
           child: Text(
             pageData.description,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white),
+            style: GoogleFonts.notoSans(
+              textStyle: TextStyle(color: pageData.subColor),
+            ),
           ),
         ),
         
@@ -38,7 +43,7 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
                 child: const Text("Iniciar sesión"),
               ),
               CheckboxListTile(
-                title: const Text("Mostrar de nuevo", style: TextStyle(color: Colors.white)),
+                title: Text("Mostrar de nuevo", style: GoogleFonts.notoSans(textStyle: TextStyle(color: pageData.subColor))),
                 value: true, // Aquí puedes conectar esto a preferencias con SharedPreferences
                 onChanged: (bool? value) {
                   // lógica para guardar preferencia

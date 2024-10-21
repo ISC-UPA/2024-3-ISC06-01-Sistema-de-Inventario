@@ -5,7 +5,9 @@ class IntroData {
   final String lottie;
   final String description;
   final bool isLast;
-  final Color color; // Cambiar el tipo a Color
+  final Color color;
+  final Color titleColor;
+  final Color subColor; 
 
   IntroData({
     required this.title,
@@ -13,7 +15,11 @@ class IntroData {
     required this.description,
     this.isLast = false,
     required String color,
-  }) : color = _parseColor(color); // Asignar el valor a color utilizando el método _parseColor
+    required String titleColor,
+    required String subColor, 
+  })  : color = _parseColor(color),
+        titleColor = _parseColor(titleColor),
+        subColor = _parseColor(subColor);
 
   factory IntroData.fromJson(Map<String, dynamic> json) {
     return IntroData(
@@ -21,13 +27,15 @@ class IntroData {
       lottie: json['image'],
       description: json['description'],
       isLast: json['isLast'] ?? false,
-      color: json['color'] ?? '#FFFFFF', // Agregar color y proporcionar un valor predeterminado
+      color: json['color'] ?? '#FFFFFF',
+      titleColor: json['titleColor'] ?? '#000000',
+      subColor: json['subColor'] ?? '#000000',
     );
   }
 
   // Método para convertir el string en un Color
   static Color _parseColor(String color) {
-    color = color.replaceAll('#', ''); // Eliminar el símbolo # si está presente
-    return Color(int.parse('0xFF$color')); // Añadir el prefijo 0xFF para la opacidad
+    color = color.replaceAll('#', '');
+    return Color(int.parse('0xFF$color'));
   }
 }
