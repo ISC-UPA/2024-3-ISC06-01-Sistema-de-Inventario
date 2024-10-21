@@ -28,20 +28,28 @@ namespace SMIS.Infraestructure.Repositories
 
         public async Task AddAsync(Customer customer)
         {
-            //Need to fix ------------------------------------------------------------------------------------------------------!!! 
-            //var newCustomer = customer;
-            //newCustomer.Created = DateTime.Now;
-            //newCustomer.CreatedByUser = _userService.GetCurrentUserId();
-
-
-            _context.Customers.Add(customer);
+            var newCustomer = customer;
+            newCustomer.Created = DateTime.UtcNow;
+            newCustomer.CreatedBy = _userService.GetCurrentUserId();
+            _context.Customers.Add(newCustomer);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Customer customer)
         {
-            _context.Customers.Update(customer);
-            await _context.SaveChangesAsync();
+            var existingCustomer = await _context.Customers.FindAsync(customer.Id);
+            if (existingCustomer != null)
+            {
+                existingCustomer = customer;
+                existingCustomer.Update = DateTime.UtcNow;
+                existingCustomer.UpdatedBy = _userService.GetCurrentUserId();
+
+                _context.Customers.Update(existingCustomer);
+                await _context.SaveChangesAsync();
+            }else
+            {
+                throw new InvalidOperationException("Customer not found");
+            }
         }
     }
 }
