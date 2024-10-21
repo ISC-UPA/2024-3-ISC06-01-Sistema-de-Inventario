@@ -9,9 +9,11 @@ namespace SMIS.Infraestructure.Repositories
     public class OrderRepository : IOrderRepository
     {
         private readonly AppDbContext _context;
-        public OrderRepository(AppDbContext context)
+        private readonly IUserService _userService;
+        public OrderRepository(AppDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
@@ -21,19 +23,41 @@ namespace SMIS.Infraestructure.Repositories
 
         public async Task<Order> GetByIdAsync(Guid id)
         {
-            return await _context.Orders.FindAsync(id);
+            return await _context.Orders.FindAsync(id) ?? throw new InvalidOperationException("Order Not Found");
         }
 
         public async Task AddAsync(Order order)
         {
+            var newOrder = order;
+            newOrder.Created = DateTime.UtcNow;
+            newOrder.CreatedBy = _userService.GetCurrentUserId();
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Order order)
         {
-            _context.Orders.Update(order);
-            await _context.SaveChangesAsync();
+            var existingOrder = await _context.Orders.FindAsync(order.IdOrder);
+            if (existingOrder != null)
+            {
+
+                existingOrder = order;
+                existingOrder.Updated = DateTime.UtcNow;
+                existingOrder.UpdatedBy = _userService.GetCurrentUserId();
+
+                _context.Orders.Update(order);
+                await _context.SaveChangesAsync();
+            }
+            else{
+
+                throw new InvalidOperationException("Order Not Found");
+
+
+            }
+            
+
+          
         }
     }
 }

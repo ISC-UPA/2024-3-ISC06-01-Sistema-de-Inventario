@@ -9,9 +9,11 @@ namespace SMIS.Infraestructure.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
-        public UserRepository(AppDbContext context)
+        private readonly IUserService _userService;
+        public UserRepository(AppDbContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -21,19 +23,40 @@ namespace SMIS.Infraestructure.Repositories
        
         public async Task<User> GetByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.FindAsync(id) ?? throw new InvalidOperationException("User Not Found");
         }
 
         public async Task AddAsync(User user)
         {
+            var newUser = user;
+            newUser.Created = DateTime.UtcNow;
+            newUser.CreatedBy = _userService.GetCurrentUserId();
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User user)
         {
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+
+            var existingUser = await _context.Users.FindAsync(user.IdUser);
+            if (existingUser != null)
+            {
+
+                existingUser = user;
+                existingUser.Update = DateTime.UtcNow;
+                existingUser.UpdatedBy = _userService.GetCurrentUserId();
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+
+                throw new InvalidOperationException("User Not Found");
+
+
+            }
         }
     }
 }
