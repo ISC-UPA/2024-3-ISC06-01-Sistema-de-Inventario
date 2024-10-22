@@ -1,5 +1,6 @@
 ﻿using SMIS.Core.Entities;
 using SMIS.Core.Interfaces;
+using SMIS.Infraestructure.Repositories;
 
 namespace SMIS.Application.Services
 {
@@ -30,6 +31,12 @@ namespace SMIS.Application.Services
         public async Task UpdateRestockOrderAsync(RestockOrder restockOrder)
         {
             await _restockOrderRepository.UpdateAsync(restockOrder);
+        }
+
+        public async Task DeletedCustomerAsync(Guid id)
+        {
+
+            await _restockOrderRepository.DeleteAsync(id);
         }
 
     }

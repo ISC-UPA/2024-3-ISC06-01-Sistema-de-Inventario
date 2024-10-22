@@ -4,6 +4,7 @@ using SMIS.Infraestructure.Data;
 
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using SMIS.Infraestructure.Repositories;
 
 namespace SMIS.Application.Services
 {
@@ -42,6 +43,12 @@ namespace SMIS.Application.Services
         public async Task UpdateUserAsync(User user)
         {
             await _userRepository.UpdateAsync(user);
+        }
+
+        public async Task DeletedCustomerAsync(Guid id)
+        {
+
+            await _userRepository.DeleteAsync(id);
         }
 
 

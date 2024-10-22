@@ -62,5 +62,21 @@ namespace SMIS.Infraestructure.Repositories
 
             }
         }
+
+        public async Task DeleteAsync(Guid id)
+        {
+
+            var deletedProduct = await _context.Products.FindAsync(id);
+            if (deletedProduct != null)
+            {
+                _context.Products.Remove(deletedProduct);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Product not found");
+            }
+        }
+
     }
 }

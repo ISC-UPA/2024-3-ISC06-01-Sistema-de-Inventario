@@ -52,12 +52,24 @@ namespace SMIS.Infraestructure.Repositories
             else{
 
                 throw new InvalidOperationException("Order Not Found");
+            } 
 
-
-            }
-            
-
-          
         }
+
+        public async Task DeleteAsync(Guid id)
+        {
+
+            var deletedOrder = await _context.Orders.FindAsync(id);
+            if (deletedOrder != null)
+            {
+                _context.Orders.Remove(deletedOrder);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Order not found");
+            }
+        }
+
     }
 }

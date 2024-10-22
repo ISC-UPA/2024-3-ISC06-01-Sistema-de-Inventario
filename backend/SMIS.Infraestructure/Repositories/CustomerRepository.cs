@@ -51,5 +51,19 @@ namespace SMIS.Infraestructure.Repositories
                 throw new InvalidOperationException("Customer not found");
             }
         }
+
+        public async Task DeleteAsync(Guid id) {
+
+            var deletedCustomer = await _context.Customers.FindAsync(id);
+            if (deletedCustomer != null)
+            {
+                _context.Customers.Remove(deletedCustomer);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Customer not found");
+            }
+        }
     }
 }

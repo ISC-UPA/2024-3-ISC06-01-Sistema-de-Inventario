@@ -57,5 +57,21 @@ namespace SMIS.Infraestructure.Repositories
 
             }
         }
+
+        public async Task DeleteAsync(Guid id)
+        {
+
+            var deletedRestockOrder = await _context.RestockOrders.FindAsync(id);
+            if (deletedRestockOrder != null)
+            {
+                _context.RestockOrders.Remove(deletedRestockOrder);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("RestockOrder not found");
+            }
+        }
+
     }
 }
