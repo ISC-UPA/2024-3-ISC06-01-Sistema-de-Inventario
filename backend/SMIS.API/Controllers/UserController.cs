@@ -39,5 +39,11 @@ namespace SMIS.API.Controllers
         {
             await _userService.UpdateUserAsync(user);
         }
+
+        [HttpDelete]
+        public async Task DeleteUserAsync(Guid id)
+        {
+            await _userService.DeleteUserAsync(id);
+        }
     }
 }

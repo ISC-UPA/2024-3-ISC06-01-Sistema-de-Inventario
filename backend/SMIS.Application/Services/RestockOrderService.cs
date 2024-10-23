@@ -33,7 +33,7 @@ namespace SMIS.Application.Services
             await _restockOrderRepository.UpdateAsync(restockOrder);
         }
 
-        public async Task DeletedCustomerAsync(Guid id)
+        public async Task DeletedRestockOrderAsync(Guid id)
         {
 
             await _restockOrderRepository.DeleteAsync(id);

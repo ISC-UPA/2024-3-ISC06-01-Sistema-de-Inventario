@@ -22,10 +22,10 @@ namespace SMIS.Core.Entities
         [ForeignKey("CreatedByUser")]
         public Guid? CreatedBy { get; set; }
 
-        public DateTime? Update { get; set; }
+        public DateTime? Updated { get; set; }
 
         [ForeignKey("UpdatedByUser")]
-        public Guid? UpdateBy { get; set; }
+        public Guid? UpdatedBy { get; set; }
 
         //Navegation properties
         public User CreatedByUser { get; set; }

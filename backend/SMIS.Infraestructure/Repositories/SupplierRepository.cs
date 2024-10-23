@@ -43,8 +43,8 @@ namespace SMIS.Infraestructure.Repositories
             {
 
                 existingSupplier = supplier;
-                existingSupplier.Update = DateTime.UtcNow;
-                existingSupplier.UpdateBy = _userService.GetCurrentUserId();
+                existingSupplier.Updated = DateTime.UtcNow;
+                existingSupplier.UpdatedBy = _userService.GetCurrentUserId();
 
                 _context.Suppliers.Update(supplier);
                 await _context.SaveChangesAsync();

@@ -6,7 +6,7 @@ namespace SMIS.Core.Entities
     public class Customer
     {
         [Key]
-        public required Guid Id { get; set; }
+        public required Guid IdCustomer { get; set; }
 
         [StringLength(100)]
         public string Name { get; set; }

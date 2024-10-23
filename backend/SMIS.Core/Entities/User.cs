@@ -28,7 +28,7 @@ namespace SMIS.Core.Entities
         [ForeignKey("CreatedByUser")]
         public Guid? CreatedBy { get;set; }
 
-        public DateTime? Update { get; set; }
+        public DateTime? Updated { get; set; }
         [StringLength(100)]
 
         [ForeignKey("UpdatedByUser")]

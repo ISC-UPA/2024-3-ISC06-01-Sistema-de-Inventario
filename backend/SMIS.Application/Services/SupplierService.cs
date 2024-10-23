@@ -33,7 +33,7 @@ namespace SMIS.Application.Services
             await _supplierRepository.UpdateAsync(supplier);
         }
 
-        public async Task DeletedCustomerAsync(Guid id)
+        public async Task DeletedSupplierAsync(Guid id)
         {
 
             await _supplierRepository.DeleteAsync(id);

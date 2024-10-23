@@ -43,7 +43,7 @@ namespace SMIS.Infraestructure.Repositories
             if (existingUser != null)
             {
                 existingUser = user;
-                existingUser.Update = DateTime.UtcNow;
+                existingUser.Updated = DateTime.UtcNow;
                 existingUser.UpdatedBy = _userService.GetCurrentUserId();
 
                 _context.Users.Update(user);

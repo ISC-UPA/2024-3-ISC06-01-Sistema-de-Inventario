@@ -37,7 +37,7 @@ namespace SMIS.Infraestructure.Repositories
 
         public async Task UpdateAsync(Customer customer)
         {
-            var existingCustomer = await _context.Customers.FindAsync(customer.Id);
+            var existingCustomer = await _context.Customers.FindAsync(customer.IdCustomer);
             if (existingCustomer != null)
             {
                 existingCustomer = customer;

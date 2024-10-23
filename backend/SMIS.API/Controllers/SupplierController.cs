@@ -38,5 +38,11 @@ namespace SMIS.API.Controllers
         {
             await _supplierService.UpdateSupplierAsync(supplier);
         }
+
+        [HttpDelete]
+        public async Task DeletedSupplierAsync(Guid id)
+        {
+            await _supplierService.DeletedSupplierAsync(id);
+        }
     }
 }
