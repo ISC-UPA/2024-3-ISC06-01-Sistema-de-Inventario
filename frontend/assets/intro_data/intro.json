@@ -1,51 +1,51 @@
 [
     {
-      "title": "Bienvenido a STOCK MASTER",
+      "title": "Bienvenido a\nSTOCK MASTER",
       "image": "assets/lottie/welcome.json",
       "description": "Administra tu inventario de manera eficiente y en tiempo real",
-      "color": "#87afbb",
-      "titleColor": "#FFFFFF",
-      "subColor": "#000000"
+      "color": "#004872",
+      "titleColor": "#ccecff",
+      "subColor": "#FFFFFF"
     },
     {
       "title": "Gestión de Stock",
       "image": "assets/lottie/stock.json",
       "description": "Controla tus existencias. Obtén notificaciones cuando el inventario esté bajo",
-      "color": "#ffe5ba",
-      "titleColor": "#000000",
+      "color": "#216d4b",
+      "titleColor": "#c8eedd",
       "subColor": "#FFFFFF"
     },
     {
       "title": "Alertas por Correo Electrónico",
       "image": "assets/lottie/email.json",
       "description": "Mantente informado sobre el estado de tus existencias mediante correo electronico",
-      "color": "#c8dcbe",
-      "titleColor": "#000000",
+      "color": "#024f45",
+      "titleColor": "#cefdf7",
       "subColor": "#FFFFFF"
     },
     {
       "title": "Búsqueda Rápida y Avanzada",
       "image": "assets/lottie/search.json",
       "description": "Encuentra rápidamente cualquier producto al instante",
-      "color": "#FAF9A9",
-      "titleColor": "#000000",
+      "color": "#ad1135",
+      "titleColor": "#fce3e9",
       "subColor": "#FFFFFF"
     },
     {
       "title": "Generacion de Reportes",
       "image": "assets/lottie/report.json",
       "description": "Genera reportes de inventario para una correcta administracion",
-      "color": "#8b8fb0",
-      "titleColor": "#FFFFFF",
-      "subColor": "#000000"
+      "color": "#eb0066",
+      "titleColor": "#ffe6e8",
+      "subColor": "#FFFFFF"
     },
     {
-      "title": "Tu Inventario, a un Clic de Distancia",
+      "title": "Inicia sesión para empezar hoy mismo",
       "image": "assets/lottie/start.json",
-      "description": "Inicia sesión para empezar hoy mismo",
+      "description": "",
       "isLast": true,
-      "color": "#15788c",
-      "titleColor": "#FFFFFF",
-      "subColor": "#000000"
+      "color": "#004872",
+      "titleColor": "#ccecff",
+      "subColor": "#FFFFFF"
     }
 ]
