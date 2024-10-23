@@ -1,0 +1,289 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "projectName": "SMIS.API",
+        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj"
+              },
+              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              },
+              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "projectName": "SMIS.Application",
+        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "projectName": "SMIS.Core",
+        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "projectName": "SMIS.Infraestructure",
+        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

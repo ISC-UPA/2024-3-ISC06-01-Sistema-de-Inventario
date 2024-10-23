@@ -29,8 +29,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  dartdap: ^0.7.5
   flutter:
     sdk: flutter
+  google_fonts: ^6.2.1
+  liquid_swipe: ^3.1.0
+  logging: ^1.2.0
+  lottie: ^3.1.2
   provider: ^6.1.2
   shared_preferences: ^2.3.2
 
@@ -49,9 +54,18 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/lottie/login_phone.json
+    - assets/lottie/login_desktop.json
+    - assets/intro_data/intro.json
+    - assets/lottie/welcome.json
+    - assets/lottie/stock.json
+    - assets/lottie/email.json
+    - assets/lottie/search.json
+    - assets/lottie/report.json
+    - assets/lottie/inicio.json
+    - assets/lottie/start.json
+  #   - images/a_dot_ham.jpegd
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
