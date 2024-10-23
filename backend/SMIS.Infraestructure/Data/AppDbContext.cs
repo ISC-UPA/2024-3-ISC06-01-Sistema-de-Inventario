@@ -39,7 +39,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.CreatedByUser)
-                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
+                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.UpdatedByUser)

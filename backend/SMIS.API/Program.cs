@@ -30,11 +30,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //Register services and repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IRestockOrderRepository, RestockOrderRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<RestockOrderService>();
+builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<UserService>();
 
+//Current Current User Sercvice
 builder.Services.AddScoped<IUserService, UserService>();
+
+//HttpContext Service
 builder.Services.AddHttpContextAccessor();
 
 

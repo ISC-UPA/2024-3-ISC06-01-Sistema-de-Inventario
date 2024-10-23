@@ -26,7 +26,7 @@ namespace SMIS.Core.Entities
         public Guid? UpdatedBy { get; set; }
 
         //Navegation properties
-        public User CreatedByUser { get; set; }
+        public User? CreatedByUser { get; set; }
         public User UpdatedByUser { get; set; }
     }
 }
