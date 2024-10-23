@@ -8,5 +8,6 @@ namespace SMIS.Core.Interfaces
         Task<Customer> GetByIdAsync(Guid id);
         Task AddAsync(Customer customer);
         Task UpdateAsync(Customer customer);
+        Task DeleteAsync(Guid id);
     }
 }

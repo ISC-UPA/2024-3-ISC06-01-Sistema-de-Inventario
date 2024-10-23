@@ -8,5 +8,6 @@ namespace SMIS.Core.Interfaces
         Task<RestockOrder?> GetByIdAsync(Guid id);
         Task AddAsync (RestockOrder restockOrder);
         Task UpdateAsync (RestockOrder restockOrder);
+        Task DeleteAsync(Guid id);
     }
 }

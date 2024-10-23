@@ -9,5 +9,6 @@ namespace SMIS.Core.Interfaces
         Task<Product> GetByParamsAsync(string? name, EnumProductCategory? Category);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
+        Task DeleteAsync(Guid id);
     }
 }
