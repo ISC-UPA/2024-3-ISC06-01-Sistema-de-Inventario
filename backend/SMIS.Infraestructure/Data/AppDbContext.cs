@@ -39,7 +39,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.CreatedByUser)
-                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.UpdatedByUser)
@@ -57,7 +57,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Order>().HasOne(o => o.CreatedByUser)
-                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(o => o.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Order>().HasOne(o => o.UpdatedByUser)
@@ -67,7 +67,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Product>().HasOne(p => p.CreatedByUser)
-                .WithMany().HasForeignKey(p => p.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(p => p.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Product>().HasOne(p => p.UpdatedByUser)
@@ -85,7 +85,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.CreatedByUser)
-                .WithMany().HasForeignKey(ro => ro.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(ro => ro.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.UpdatedByUser)
@@ -95,7 +95,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Supplier>().HasOne(s => s.CreatedByUser)
-                .WithMany().HasForeignKey(s => s.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(s => s.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Supplier>().HasOne(s => s.UpdatedByUser)
@@ -105,7 +105,7 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<User>().HasOne(u => u.CreatedByUser)
-                .WithMany().HasForeignKey(u => u.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(u => u.CreatedByUser).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<User>().HasOne(u => u.UpdatedByUser)

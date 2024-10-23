@@ -41,7 +41,7 @@ namespace SMIS.Infraestructure.Repositories
             if (existingCustomer != null)
             {
                 existingCustomer = customer;
-                existingCustomer.Update = DateTime.UtcNow;
+                existingCustomer.Updated = DateTime.UtcNow;
                 existingCustomer.UpdatedBy = _userService.GetCurrentUserId();
 
                 _context.Customers.Update(existingCustomer);
