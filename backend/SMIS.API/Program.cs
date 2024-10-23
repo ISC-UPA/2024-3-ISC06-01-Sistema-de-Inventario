@@ -31,6 +31,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Register services and repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserService>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddHttpContextAccessor();
+
 
 // Ldap Controllers
 builder.Services.AddControllers();

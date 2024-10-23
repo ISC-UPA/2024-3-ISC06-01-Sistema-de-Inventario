@@ -42,7 +42,6 @@ namespace SMIS.Infraestructure.Repositories
             var existingUser = await _context.Users.FindAsync(user.IdUser);
             if (existingUser != null)
             {
-
                 existingUser = user;
                 existingUser.Update = DateTime.UtcNow;
                 existingUser.UpdatedBy = _userService.GetCurrentUserId();
@@ -52,10 +51,7 @@ namespace SMIS.Infraestructure.Repositories
             }
             else
             {
-
                 throw new InvalidOperationException("User Not Found");
-
-
             }
         }
 
@@ -73,9 +69,5 @@ namespace SMIS.Infraestructure.Repositories
                 throw new InvalidOperationException("User not found");
             }
         }
-
-
-
-
     }
 }

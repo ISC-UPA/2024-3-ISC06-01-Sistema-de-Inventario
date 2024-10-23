@@ -5,57 +5,26 @@ using SMIS.Infraestructure.Data;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using SMIS.Infraestructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace SMIS.Application.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
 
-        private readonly IUserRepository _userRepository;
+        //private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContext;
         private readonly AppDbContext _context;
 
-        public UserService(IUserRepository userRepository, IHttpContextAccessor httpContext)
+        public UserService(AppDbContext context, IHttpContextAccessor httpContext)
         {
-            _userRepository = userRepository;
+            _context = context;
             _httpContext = httpContext;
         }
 
-
-        public async Task<IEnumerable<User>> GetAllUsersAsync() { 
-        
-            return await _userRepository.GetAllAsync();   
-
-        }
-
-        public async Task<User> GetUserByIdAsync(Guid id) { 
-        
-            return await _userRepository.GetByIdAsync(id);
-
-        }
-
-        public async Task AddUserAsync(User user)
-        {
-
-            await _userRepository.AddAsync(user);
-        }
-
-        public async Task UpdateUserAsync(User user)
-        {
-            await _userRepository.UpdateAsync(user);
-        }
-
-        public async Task DeletedCustomerAsync(Guid id)
-        {
-
-            await _userRepository.DeleteAsync(id);
-        }
-
-
-        //User service Methods
         public Guid GetCurrentUserId()
         {
-            var userId = _httpContext.HttpContext?.User?.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = _httpContext.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             return userId != null ? Guid.Parse(userId) : Guid.Empty;
         }
 
@@ -63,6 +32,28 @@ namespace SMIS.Application.Services
         {
             var userId = GetCurrentUserId();
             return userId != Guid.Empty ? await _context.Users.FindAsync(userId) : null;
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User?> GetUserByIdAsync(Guid id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(Guid id)
