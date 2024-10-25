@@ -11,8 +11,6 @@ namespace SMIS.Application.Services
 {
     public class UserService : IUserService
     {
-
-        //private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContext;
         private readonly AppDbContext _context;
 

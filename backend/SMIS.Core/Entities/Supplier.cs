@@ -6,10 +6,10 @@ namespace SMIS.Core.Entities
     public class Supplier
     {
         [Key] 
-        public required Guid IdSupplier { get; set; }
+        public Guid IdSupplier { get; set; }
 
         [StringLength (100)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [StringLength (500)]
         public string Description { get; set; }
@@ -28,8 +28,8 @@ namespace SMIS.Core.Entities
         public Guid? UpdatedBy { get; set; }
 
         //Navegation properties
-        public User CreatedByUser { get; set; }
-        public User UpdatedByUser { get; set; }
+        public User? CreatedByUser { get; set; }
+        public User? UpdatedByUser { get; set; }
     }
 
     public enum EnumSupplierStatus

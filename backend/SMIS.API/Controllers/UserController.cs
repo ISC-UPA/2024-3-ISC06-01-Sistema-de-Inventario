@@ -32,6 +32,7 @@ namespace SMIS.API.Controllers
         public async Task AddUserAsync(User user)
         {
             await _userService.AddUserAsync(user);
+            //return CreatedAtAction(nameof(GetUserByIdAsync), new { id = user.IdUser }, user); ??? Que es esto¿
         }
 
         [HttpPut]
