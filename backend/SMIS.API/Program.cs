@@ -7,8 +7,8 @@ using SMIS.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 //LDAP-Server
-using Microsoft.Extensions.Options;
-using SMIS.Application.Configuration;
+//using Microsoft.Extensions.Options;
+//using SMIS.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
