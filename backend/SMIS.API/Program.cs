@@ -12,7 +12,8 @@ using SMIS.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Configuracion de LDAP-Server ---->
+/*
+//Configuracion de LDAP-Server ----> 
 builder.Services.Configure<LdapSettings>(builder.Configuration.GetSection("LdapSettings"));
 builder.Services.AddScoped<ILdapServer, LdapService>(sp =>
 {
@@ -21,7 +22,8 @@ builder.Services.AddScoped<ILdapServer, LdapService>(sp =>
 });
 // Ldap Controllers
 builder.Services.AddControllers();
-//---->
+//----> 
+*/
 
 // Add services to the container.
 builder.Services.AddControllers();

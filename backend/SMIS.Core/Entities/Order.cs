@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 
@@ -20,6 +21,7 @@ namespace SMIS.Core.Entities
 
         public int? Quantity { get; set; }
 
+        [Precision(18, 2)]
         public decimal TotalAmount { get; set; }
 
         public EnumOrderStatus Status { get; set; }

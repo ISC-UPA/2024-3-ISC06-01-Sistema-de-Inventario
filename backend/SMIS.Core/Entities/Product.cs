@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 
@@ -15,8 +16,10 @@ namespace SMIS.Core.Entities
         [StringLength(100)]
         public string? Description { get; set; }
 
+        [Precision(18, 2)]
         public decimal? Price { get; set; }
 
+        [Precision(18, 2)]
         public decimal? Cost { get; set; }
 
         public required int Stock { get; set; }
