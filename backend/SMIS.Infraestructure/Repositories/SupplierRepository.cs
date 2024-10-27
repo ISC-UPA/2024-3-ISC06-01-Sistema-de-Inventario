@@ -21,7 +21,7 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Suppliers.ToListAsync();
         }
 
-        public async Task<Supplier?> GetByIdAsync(Guid id)
+        public async Task<Supplier> GetByIdAsync(Guid id)
         {
             return await _context.Suppliers.FindAsync(id) ?? throw new InvalidOperationException("Supplier Not Found");
         }

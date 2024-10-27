@@ -21,7 +21,7 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.RestockOrders.ToListAsync();
         }
 
-        public async Task<RestockOrder?> GetByIdAsync(Guid id)
+        public async Task<RestockOrder> GetByIdAsync(Guid id)
         {
             return await _context.RestockOrders.FindAsync(id) ?? throw new InvalidOperationException("RestockOrder Not Found"); 
         }
