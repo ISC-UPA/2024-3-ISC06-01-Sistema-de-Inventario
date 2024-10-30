@@ -5,11 +5,10 @@ using System.Diagnostics;
 
 namespace SMIS.Infraestructure.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -21,17 +20,31 @@ namespace SMIS.Infraestructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        //Customer Relations            ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      Guid AutoIncrements         !!
+
+            modelBuilder.Entity<Customer>().Property(c => c.IdCustomer).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Order>().Property(o => o.IdOrder).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Product>().Property(p => p.IdProduct).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<RestockOrder>().Property(ro => ro.IdRestockOrder).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Supplier>().Property(s => s.IdSupplier).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<User>().Property(u => u.IdUser).ValueGeneratedOnAdd();
+
+            //------------------------------------------------------------------------------------------!!      Customer Relations      !!
 
             //To User (CreatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.CreatedByUser)
-                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(c => c.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-            //To User (UpdatedBy)
+            //To User(UpdatedBy)
             modelBuilder.Entity<Customer>().HasOne(c => c.UpdatedByUser)
-                .WithMany().HasForeignKey(o => o.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(c => c.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-        //Order Relations               ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      Order Relations     !!
 
             //To Customer
             modelBuilder.Entity<Order>().HasOne(o => o.Customer)
@@ -43,23 +56,23 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<Order>().HasOne(o => o.CreatedByUser)
-                .WithMany().HasForeignKey(c => c.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(o => o.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Order>().HasOne(o => o.UpdatedByUser)
-                .WithMany().HasForeignKey(o => o.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(o => o.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-        //Products Relations            ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      Products Relations      !!
 
             //To User (CreatedBy)
             modelBuilder.Entity<Product>().HasOne(p => p.CreatedByUser)
-                .WithMany().HasForeignKey(p => p.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(p => p.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Product>().HasOne(p => p.UpdatedByUser)
-                .WithMany().HasForeignKey(p => p.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(p => p.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-        //RestockOrder Relations        ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      RestockOrder Relations      !!
 
             //To Supplier
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.Supplier)
@@ -71,31 +84,31 @@ namespace SMIS.Infraestructure.Data
 
             //To User (CreatedBy)
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.CreatedByUser)
-                .WithMany().HasForeignKey(ro => ro.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(ro => ro.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.UpdatedByUser)
-                .WithMany().HasForeignKey(ro => ro.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(ro => ro.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-        //Supplier Relations            ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      Supplier Relations      !!
 
             //To User (CreatedBy)
             modelBuilder.Entity<Supplier>().HasOne(s => s.CreatedByUser)
-                .WithMany().HasForeignKey(s => s.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(s => s.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<Supplier>().HasOne(s => s.UpdatedByUser)
-                .WithMany().HasForeignKey(s => s.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(s => s.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
-        //User Relations                ------------------------------------------------------------------------------------------------------------!!
+            //------------------------------------------------------------------------------------------!!      User Relations      !!
 
             //To User (CreatedBy)
             modelBuilder.Entity<User>().HasOne(u => u.CreatedByUser)
-                .WithMany().HasForeignKey(u => u.CreatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(u => u.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
 
             //To User (UpdatedBy)
             modelBuilder.Entity<User>().HasOne(u => u.UpdatedByUser)
-                .WithMany().HasForeignKey(u => u.UpdatedByUser).OnDelete(DeleteBehavior.Restrict);
+                .WithMany().HasForeignKey(u => u.UpdatedBy).OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

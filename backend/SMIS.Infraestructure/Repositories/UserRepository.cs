@@ -32,7 +32,7 @@ namespace SMIS.Infraestructure.Repositories
             newUser.Created = DateTime.UtcNow;
             newUser.CreatedBy = _userService.GetCurrentUserId();
 
-            _context.Users.Add(user);
+            _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
         }
 

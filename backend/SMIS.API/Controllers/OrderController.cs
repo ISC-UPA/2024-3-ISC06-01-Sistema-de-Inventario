@@ -1,5 +1,4 @@
-﻿
-using SMIS.Application.Services;
+﻿using SMIS.Application.Services;
 using SMIS.Core.Entities;
 
 using Microsoft.AspNetCore.Mvc;
