@@ -27,7 +27,7 @@ namespace SMIS.Core.Entities
         public EnumProductCategory Category { get; set; }
 
         //Log
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [ForeignKey("CreatedByUser")]
         public Guid? CreatedBy { get; set; }

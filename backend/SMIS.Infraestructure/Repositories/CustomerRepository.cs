@@ -31,6 +31,7 @@ namespace SMIS.Infraestructure.Repositories
             var newCustomer = customer;
             newCustomer.Created = DateTime.UtcNow;
             newCustomer.CreatedBy = _userService.GetCurrentUserId();
+
             _context.Customers.Add(newCustomer);
             await _context.SaveChangesAsync();
         }

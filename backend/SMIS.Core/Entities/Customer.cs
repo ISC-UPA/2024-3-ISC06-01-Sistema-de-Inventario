@@ -15,7 +15,7 @@ namespace SMIS.Core.Entities
         public required string Email { get; set; }
 
         //Log
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [ForeignKey("CreatedByUser")]
         public Guid? CreatedBy { get; set; }

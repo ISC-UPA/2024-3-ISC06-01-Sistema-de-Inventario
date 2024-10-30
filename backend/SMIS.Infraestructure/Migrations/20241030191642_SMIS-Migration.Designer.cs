@@ -12,8 +12,8 @@ using SMIS.Infraestructure.Data;
 namespace SMIS.Infraestructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241027222513_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241030191642_SMIS-Migration")]
+    partial class SMISMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace SMIS.Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedBy")
@@ -126,7 +126,7 @@ namespace SMIS.Infraestructure.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedBy")
@@ -219,7 +219,7 @@ namespace SMIS.Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatedBy")
@@ -307,8 +307,7 @@ namespace SMIS.Infraestructure.Migrations
                 {
                     b.HasOne("SMIS.Core.Entities.User", "CreatedByUser")
                         .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CreatedBy");
 
                     b.HasOne("SMIS.Core.Entities.User", "UpdatedByUser")
                         .WithMany()

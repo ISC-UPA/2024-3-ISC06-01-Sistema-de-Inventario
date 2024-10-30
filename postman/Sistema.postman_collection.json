@@ -1,26 +1,120 @@
 {
 	"info": {
-		"_postman_id": "9f7d5b1b-b541-4425-a04e-ff329e5ffabd",
+		"_postman_id": "7ef3e334-10b5-47cb-b093-0cf6f033ddf4",
 		"name": "Sistema",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "39179288"
+		"_exporter_id": "38987472"
 	},
 	"item": [
 		{
-			"name": "Customer",
+			"name": "1- User",
 			"item": [
 				{
-					"name": "GetCustomer",
+					"name": "GetAllUsers",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}User",
+							"host": [
+								"{{url}}User"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "PostCustomer",
+					"name": "AddUser",
 					"request": {
 						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"UserTest\",\r\n    \"userDisplayName\": \"UserTest\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}User",
+							"host": [
+								"{{url}}User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"UserTest1\",\r\n    \"userDisplayName\": \"UserTest1\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\",\r\n    \"updatedBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}User",
+							"host": [
+								"{{url}}User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}User?id=",
+							"host": [
+								"{{url}}User"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}User/",
+							"host": [
+								"{{url}}User"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2- Customer",
+			"item": [
+				{
+					"name": "GetAllCustomer",
+					"request": {
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "{{url}}Customer",
@@ -32,10 +126,42 @@
 					"response": []
 				},
 				{
-					"name": "PutCustomer",
+					"name": "AddCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"CustomerTest\",\r\n  \"email\": \"customer@gmail.com\",\r\n  \"createdBy\" : \"7632ceed-c444-48e9-1c4b-08dcf917b825\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Customer",
+							"host": [
+								"{{url}}Customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCustomer",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"CustomerTest\",\r\n  \"email\": \"customer@gmail.com\",\r\n  \"UpdatedBy\" : \"7632ceed-c444-48e9-1c4b-08dcf917b825\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}Customer",
 							"host": [
@@ -51,16 +177,22 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Customer",
+							"raw": "{{url}}Customer?id=",
 							"host": [
 								"{{url}}Customer"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GetCustomerId",
+					"name": "GetCustomerById",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -79,10 +211,214 @@
 			]
 		},
 		{
-			"name": "Order",
+			"name": "3- Supplier",
 			"item": [
 				{
-					"name": "GetOrder",
+					"name": "GetAllSupplier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Supplier",
+							"host": [
+								"{{url}}Supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddSupplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"SupplierTest\",\r\n    \"description\": \"First supplier\",\r\n    \"supplierStatus\": 0,\r\n    \"createdBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Supplier",
+							"host": [
+								"{{url}}Supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateSupplier",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"SupplierTest\",\r\n    \"description\": \"First supplier\",\r\n    \"supplierStatus\": 0,\r\n    \"updatedBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Supplier",
+							"host": [
+								"{{url}}Supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSupplier",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Supplier?id=",
+							"host": [
+								"{{url}}Supplier"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSupplierById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Supplier/",
+							"host": [
+								"{{url}}Supplier"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4- Product",
+			"item": [
+				{
+					"name": "GetAllProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Product",
+							"host": [
+								"{{url}}Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ProductTest1\",\r\n    \"description\": \"First test product\",\r\n    \"price\": 50,\r\n    \"cost\": 50,\r\n    \"stock\": 10,\r\n    \"category\": 0,\r\n    \"createdBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Product",
+							"host": [
+								"{{url}}Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ProductTest1\",\r\n    \"description\": \"First test product\",\r\n    \"price\": 50,\r\n    \"cost\": 50,\r\n    \"stock\": 10,\r\n    \"category\": 0,\r\n    \"updatedBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}Product",
+							"host": [
+								"{{url}}Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Product?id=",
+							"host": [
+								"{{url}}Product"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Product/",
+							"host": [
+								"{{url}}Product"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5- Order",
+			"item": [
+				{
+					"name": "GetAllOrder",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -96,10 +432,19 @@
 					"response": []
 				},
 				{
-					"name": "PostOrder",
+					"name": "AddOrder",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idOrder\": \"\",\r\n  \"idCustomer\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"orderDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"deliveryDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"createdBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}Order",
 							"host": [
@@ -110,10 +455,19 @@
 					"response": []
 				},
 				{
-					"name": "PutOrder",
+					"name": "UpdateOrder",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idOrder\": \"\",\r\n  \"idCustomer\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"orderDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"deliveryDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"updatedBy\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}Order",
 							"host": [
@@ -129,104 +483,32 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Order",
-							"host": [
-								"{{url}}Order"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetOrderId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Order/{{id}}",
+							"raw": "{{url}}Order?id=",
 							"host": [
 								"{{url}}Order"
 							],
-							"path": [
-								"{{id}}"
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Product",
-			"item": [
+				},
 				{
-					"name": "New Request",
+					"name": "GetOrderById",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Product",
+							"raw": "{{url}}Order/",
 							"host": [
-								"{{url}}Product"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Product",
-							"host": [
-								"{{url}}Product"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Product",
-							"host": [
-								"{{url}}Product"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Product",
-							"host": [
-								"{{url}}Product"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Product/{{id}}",
-							"host": [
-								"{{url}}Product"
+								"{{url}}Order"
 							],
 							"path": [
-								"{{id}}"
+								""
 							]
 						}
 					},
@@ -235,20 +517,12 @@
 			]
 		},
 		{
-			"name": "RestockOrder",
+			"name": "6- RestockOrder",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "GetAllRestockOrder",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{url}}RestockOrder",
@@ -260,10 +534,19 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "AddRestockOrder",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRestockOrder\": \"\",\r\n  \"idSupplier\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"restockOrderDate\": \"2024-10-30T19:32:13.173Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"createdBy\": \"\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}RestockOrder",
 							"host": [
@@ -274,10 +557,19 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "UpdateRestockOrder",
 					"request": {
-						"method": "DELETE",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idRestockOrder\": \"\",\r\n  \"idSupplier\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"restockOrderDate\": \"2024-10-30T19:32:13.173Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"updatedBy\": \"\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}RestockOrder",
 							"host": [
@@ -288,173 +580,37 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "DeleteRestockOrder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}RestockOrder?id=",
+							"host": [
+								"{{url}}RestockOrder"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRestockOrderById",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}RestockOrder/{{id}}",
+							"raw": "{{url}}RestockOrder/",
 							"host": [
 								"{{url}}RestockOrder"
 							],
 							"path": [
-								"{{id}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Supplier",
-			"item": [
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Supplier",
-							"host": [
-								"{{url}}Supplier"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Supplier",
-							"host": [
-								"{{url}}Supplier"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Supplier",
-							"host": [
-								"{{url}}Supplier"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Supplier",
-							"host": [
-								"{{url}}Supplier"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}Supplier/{{id}}",
-							"host": [
-								"{{url}}Supplier"
-							],
-							"path": [
-								"{{id}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}User",
-							"host": [
-								"{{url}}User"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}User",
-							"host": [
-								"{{url}}User"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{url}}User",
-							"host": [
-								"{{url}}User"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}User",
-							"host": [
-								"{{url}}User"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}User/{{id}}",
-							"host": [
-								"{{url}}User"
-							],
-							"path": [
-								"{{id}}"
+								""
 							]
 						}
 					},

@@ -11,7 +11,7 @@ namespace SMIS.Core.Entities
         public required string UserName { get; set; }
 
         [StringLength(100)]
-        public string UserDisplayName { get; set; }
+        public required string UserDisplayName { get; set; }
 
         public EnumUserRole Role { get; set; }
 
