@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {}
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
         "projectName": "SMIS.API",
-        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
-        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,14 +29,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
-                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj"
               },
-              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
               },
-              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
-                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
               }
             }
           }
@@ -56,13 +56,27 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.9.0, )"
             }
           },
           "imports": [
@@ -88,17 +102,17 @@
         }
       }
     },
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
         "projectName": "SMIS.Application",
-        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
-        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -113,8 +127,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              },
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
               }
             }
           }
@@ -133,6 +150,30 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "System.DirectoryServices.Protocols": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -153,17 +194,17 @@
         }
       }
     },
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
         "projectName": "SMIS.Core",
-        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
-        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -194,6 +235,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -214,17 +271,17 @@
         }
       }
     },
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
         "projectName": "SMIS.Infraestructure",
-        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
-        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -239,8 +296,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
               }
             }
           }
@@ -262,7 +319,17 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.8, )"
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
             }
           },
           "imports": [

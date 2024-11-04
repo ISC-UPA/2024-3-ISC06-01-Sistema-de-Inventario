@@ -72,7 +72,7 @@ class LoginButtonState extends State<LoginButton> {
     final color = Theme.of(context).colorScheme;
 
     return ElevatedButton(
-      onPressed: _isLoading ? null : () => _authenticate(context), // Deshabilita el botón si está cargando
+      onPressed: () => Navigator.pushReplacementNamed(context, '/home'), // _isLoading ? null : () => _authenticate(context), // Deshabilita el botón si está cargando
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 60),
         shape: RoundedRectangleBorder(

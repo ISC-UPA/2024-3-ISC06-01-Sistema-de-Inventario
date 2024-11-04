@@ -1,21 +1,32 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\",
+  "WorkspaceRootPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}|..\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj|c:\\users\\kevin\\desktop\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.infraestructure\\repositories\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}|SMIS.API.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}|SMIS.API.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}|..\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj|c:\\users\\kevin\\desktop\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.infraestructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}|SMIS.API.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}|SMIS.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{507D6401-8191-4DE6-86D4-2F341CD69BE4}|..\\SMIS.Core\\SMIS.Core.csproj|c:\\users\\kevin\\desktop\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.core\\interfaces\\icustomerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}|..\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.infraestructure\\repositories\\orderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{507D6401-8191-4DE6-86D4-2F341CD69BE4}|..\\SMIS.Core\\SMIS.Core.csproj|c:\\users\\kevin\\desktop\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.core\\entities\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|c:\\users\\kevin\\desktop\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\customerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\supplierservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\restockorderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4793FBD3-04D8-423E-970C-542ECF93B1A7}|..\\SMIS.Application\\SMIS.Application.csproj|d:\\uni\\2024-3-isc06-01-sistema-de-inventario\\backend\\smis.application\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,71 +36,114 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CustomerService.cs",
-              "DocumentMoniker": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\CustomerService.cs",
-              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\CustomerService.cs",
-              "ToolTip": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\CustomerService.cs",
-              "RelativeToolTip": "..\\SMIS.Application\\Services\\CustomerService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T22:36:34.79Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "..\\SMIS.Infraestructure\\Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "..\\SMIS.Infraestructure\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T22:36:04.451Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Repositories\\CustomerRepository.cs",
-              "RelativeDocumentMoniker": "..\\SMIS.Infraestructure\\Repositories\\CustomerRepository.cs",
-              "ToolTip": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Repositories\\CustomerRepository.cs",
-              "RelativeToolTip": "..\\SMIS.Infraestructure\\Repositories\\CustomerRepository.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T22:34:15.533Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Customer.cs",
-              "DocumentMoniker": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\Entities\\Customer.cs",
-              "RelativeDocumentMoniker": "..\\SMIS.Core\\Entities\\Customer.cs",
-              "ToolTip": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\Entities\\Customer.cs",
-              "RelativeToolTip": "..\\SMIS.Core\\Entities\\Customer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\ProductService.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\ProductService.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\ProductService.cs",
+              "RelativeToolTip": "..\\SMIS.Application\\Services\\ProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T22:33:01.939Z",
+              "WhenOpened": "2024-10-30T20:50:31.721Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ICustomerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\Interfaces\\ICustomerRepository.cs",
-              "RelativeDocumentMoniker": "..\\SMIS.Core\\Interfaces\\ICustomerRepository.cs",
-              "ToolTip": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\Interfaces\\ICustomerRepository.cs",
-              "RelativeToolTip": "..\\SMIS.Core\\Interfaces\\ICustomerRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAApAAAAAAAAAA==",
+              "Title": "OrderRepository.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Repositories\\OrderRepository.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Infraestructure\\Repositories\\OrderRepository.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\Repositories\\OrderRepository.cs",
+              "RelativeToolTip": "..\\SMIS.Infraestructure\\Repositories\\OrderRepository.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T22:32:49.328Z",
+              "WhenOpened": "2024-10-30T20:47:46.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T20:39:58.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RestockOrderService.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\RestockOrderService.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\RestockOrderService.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\RestockOrderService.cs",
+              "RelativeToolTip": "..\\SMIS.Application\\Services\\RestockOrderService.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T20:18:05.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\UserService.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\UserService.cs",
+              "RelativeToolTip": "..\\SMIS.Application\\Services\\UserService.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T20:18:00.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SupplierService.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\SupplierService.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\SupplierService.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\SupplierService.cs",
+              "RelativeToolTip": "..\\SMIS.Application\\Services\\SupplierService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T20:17:48.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-30T20:16:12.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderService.cs",
+              "DocumentMoniker": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\OrderService.cs",
+              "RelativeDocumentMoniker": "..\\SMIS.Application\\Services\\OrderService.cs",
+              "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\OrderService.cs",
+              "RelativeToolTip": "..\\SMIS.Application\\Services\\OrderService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T21:05:43.567Z",
               "EditorCaption": ""
             }
           ]

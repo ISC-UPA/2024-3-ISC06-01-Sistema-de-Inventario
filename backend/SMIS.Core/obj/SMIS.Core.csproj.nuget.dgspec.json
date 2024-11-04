@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {}
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
         "projectName": "SMIS.Core",
-        "projectPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
-        "packagesPath": "C:\\Users\\KEVIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KEVIN\\Desktop\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KEVIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -45,6 +45,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
