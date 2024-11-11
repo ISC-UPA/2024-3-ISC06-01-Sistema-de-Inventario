@@ -42,7 +42,7 @@ class LoginButtonState extends State<LoginButton> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://localhost:7113/api/Auth?Email=$user&password=$password'),
+        Uri.parse('https://192.168.182.25:7113/api/Auth?Email=$user&password=$password'),
       );
 
       print(response);
@@ -53,9 +53,11 @@ class LoginButtonState extends State<LoginButton> {
           Navigator.pushReplacementNamed(context, '/home');
         }
       } else {
+        print('Error: Usuario o contraseña incorrectos');
         CustomSnackBar.show(context, 'Usuario o contraseña incorrectos');
       }
     } catch (e) {
+      print('Error: No fue posible conectar al servidor. $e');
       CustomSnackBar.show(context, 'No fue posible conectar al servidor.');
     } finally {
       setState(() {
