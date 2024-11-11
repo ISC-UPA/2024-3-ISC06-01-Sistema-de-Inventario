@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {}
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
         "projectName": "SMIS.Core",
-        "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
-        "packagesPath": "C:\\Users\\nicoq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nicoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

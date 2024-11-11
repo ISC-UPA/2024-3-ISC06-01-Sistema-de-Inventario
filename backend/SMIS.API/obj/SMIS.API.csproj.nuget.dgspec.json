@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {}
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
         "projectName": "SMIS.API",
-        "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
-        "packagesPath": "C:\\Users\\nicoq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\SMIS.API.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nicoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,14 +29,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj"
               },
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
               },
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
               }
             }
           }
@@ -98,21 +98,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
         "projectName": "SMIS.Application",
-        "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
-        "packagesPath": "C:\\Users\\nicoq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\SMIS.Application.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nicoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -127,11 +127,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
               },
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj"
               }
             }
           }
@@ -190,21 +190,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
         "projectName": "SMIS.Core",
-        "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
-        "packagesPath": "C:\\Users\\nicoq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nicoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -267,21 +267,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
+    "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "projectUniqueName": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
         "projectName": "SMIS.Infraestructure",
-        "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
-        "packagesPath": "C:\\Users\\nicoq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\obj\\",
+        "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\SMIS.Infraestructure.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Infraestructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nicoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -296,8 +296,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
-                "projectPath": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
+              "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj": {
+                "projectPath": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Core\\SMIS.Core.csproj"
               }
             }
           }
@@ -348,7 +348,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

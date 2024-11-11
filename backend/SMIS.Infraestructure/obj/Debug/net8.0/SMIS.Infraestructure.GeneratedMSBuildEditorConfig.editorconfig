@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SMIS.Infraestructure
-build_property.ProjectDir = C:\Users\nicoq\Desktop\SMIS\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Infraestructure\
+build_property.ProjectDir = D:\Uni\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Infraestructure\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
