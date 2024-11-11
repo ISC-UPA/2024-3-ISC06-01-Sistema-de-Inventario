@@ -20,7 +20,8 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
             child: Text(
               pageData.title,
               textAlign: TextAlign.center, // Centra el texto dentro del widget
-              style: GoogleFonts.modak(
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
                 textStyle: TextStyle(
                   fontSize: pageData.isLast ? 30 : 40, 
                   color: pageData.titleColor,
@@ -40,6 +41,7 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
               pageData.description,
               textAlign: TextAlign.center, // Centrar el texto de la descripción
               style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w400,
                 textStyle: TextStyle(color: pageData.subColor, fontSize: 15),
               ),
             ),
@@ -69,10 +71,10 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
                   },
                   child: Text(
                     "Iniciar sesión",
-                    style: GoogleFonts.notoSans(
+                    style: GoogleFonts.roboto(
                       fontSize: 18,
+                      fontWeight: FontWeight.w900,
                       color: Colors.white, // Color del texto en el botón
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -97,8 +99,9 @@ Widget buildMobileBody(BuildContext context, IntroData pageData) {
                     },
                     child: Text(
                       "Mostrar de nuevo",
-                      style: GoogleFonts.notoSans(
+                      style: GoogleFonts.roboto(
                         fontSize: 16,
+                        fontWeight: FontWeight.w900,
                         color: pageData.subColor, // Color del texto del checkbox
                       ),
                     ),

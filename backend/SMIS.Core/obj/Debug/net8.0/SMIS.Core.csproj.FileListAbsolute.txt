@@ -1,0 +1,15 @@
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\bin\Debug\net8.0\SMIS.Core.deps.json
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\bin\Debug\net8.0\SMIS.Core.runtimeconfig.json
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\bin\Debug\net8.0\SMIS.Core.dll
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\bin\Debug\net8.0\SMIS.Core.pdb
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.csproj.AssemblyReference.cache
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.AssemblyInfoInputs.cache
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.AssemblyInfo.cs
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.csproj.CoreCompileInputs.cache
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.sourcelink.json
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.dll
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\refint\SMIS.Core.dll
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.pdb
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\SMIS.Core.genruntimeconfig.cache
+C:\Users\KEVIN\Desktop\2024-3-ISC06-01-Sistema-de-Inventario\backend\SMIS.Core\obj\Debug\net8.0\ref\SMIS.Core.dll
