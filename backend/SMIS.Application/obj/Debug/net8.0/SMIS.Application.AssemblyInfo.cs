@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SMIS.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38a6bb74d5ba9a7fa457b3b9a7f6aa239efd3ce5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8692ca262bf7a4a294565c6c745a43a8e3a28d57")]
 [assembly: System.Reflection.AssemblyProductAttribute("SMIS.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SMIS.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

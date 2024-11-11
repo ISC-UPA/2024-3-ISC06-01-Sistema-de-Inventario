@@ -106,9 +106,10 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACwAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAIBJwCwAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T20:37:02.155Z"
+              "WhenOpened": "2024-11-09T20:37:02.155Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -116,7 +117,6 @@
               "Title": "Auth.cs",
               "DocumentMoniker": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\Auth.cs",
               "ToolTip": "C:\\Users\\nicoq\\Desktop\\SMIS\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.Application\\Services\\Auth.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T20:35:55.603Z"
             },
@@ -128,7 +128,7 @@
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
               "ToolTip": "D:\\Uni\\2024-3-ISC06-01-Sistema-de-Inventario\\backend\\SMIS.API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T20:28:11.13Z",
               "EditorCaption": ""
