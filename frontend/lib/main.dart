@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/swipe_intro.dart';
+import 'package:frontend/server/certificate.dart';
 import 'package:frontend/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  HttpOverrides.global = new MyHttpOverrides();
+  
   WidgetsFlutterBinding.ensureInitialized();
   
   // Crea el tema antes de ejecutar runApp()

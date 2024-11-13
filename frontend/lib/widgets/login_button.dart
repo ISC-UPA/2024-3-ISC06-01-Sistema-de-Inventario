@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:dartdap/dartdap.dart';
+import 'package:http/http.dart' as http;
 import 'package:frontend/widgets/snake_bar.dart';
 
 class LoginButton extends StatefulWidget {
@@ -21,13 +21,11 @@ class LoginButtonState extends State<LoginButton> {
   bool _isLoading = false;
   bool _isAuthenticating = false;
 
-  Future<void> _authenticate(BuildContext context) async {
+  Future<void> _authenticate() async {
     if (_isAuthenticating) return; // Previene múltiples clics seguidos
 
     _isAuthenticating = true;
 
-    const String ldapServer = "programines.com";
-    const String domain = "PROGRAMINES";
     final String user = widget.userController.text.trim();
     final String password = widget.passwordController.text.trim();
 
@@ -38,28 +36,30 @@ class LoginButtonState extends State<LoginButton> {
       return;
     }
 
-    final LdapConnection ldap = LdapConnection(
-      host: ldapServer,
-      port: 389,
-      ssl: false,
-    );
-
     setState(() {
       _isLoading = true; // Deshabilita el botón al iniciar la autenticación
     });
 
     try {
-      await ldap.open();
-      await ldap.bind(DN: "$domain\\$user", password: password);
-      Navigator.pushReplacementNamed(context, '/home');
-    } on LdapSocketException catch (_) {
-      CustomSnackBar.show(context, 'El servidor negó la conexión.');
-    } on LdapResultException catch (_) {
-      CustomSnackBar.show(context, 'Usuario o contraseña incorrectos');
+      final response = await http.post(
+        Uri.parse('https://192.168.182.25:7113/api/Auth?Email=$user&password=$password'),
+      );
+
+      print(response);
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      } else {
+        print('Error: Usuario o contraseña incorrectos');
+        CustomSnackBar.show(context, 'Usuario o contraseña incorrectos');
+      }
     } catch (e) {
+      print('Error: No fue posible conectar al servidor. $e');
       CustomSnackBar.show(context, 'No fue posible conectar al servidor.');
     } finally {
-      await ldap.close();
       setState(() {
         _isLoading = false; // Rehabilita el botón después de la autenticación
         _isAuthenticating = false; // Permite otra autenticación después
@@ -72,7 +72,7 @@ class LoginButtonState extends State<LoginButton> {
     final color = Theme.of(context).colorScheme;
 
     return ElevatedButton(
-      onPressed: () => Navigator.pushReplacementNamed(context, '/home'), // _isLoading ? null : () => _authenticate(context), // Deshabilita el botón si está cargando
+      onPressed: _isLoading ? null : _authenticate, // Deshabilita el botón si está cargando
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 60),
         shape: RoundedRectangleBorder(

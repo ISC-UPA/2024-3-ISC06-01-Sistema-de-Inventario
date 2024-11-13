@@ -30,7 +30,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"UserTest\",\r\n    \"userDisplayName\": \"UserTest\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"Test\",\r\n    \"userDisplayName\": \"TestUser\",\r\n    \"role\": 0,\r\n    \"email\": \"Test@gmail.com\",\r\n    \"password\": \"demo123\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,7 +53,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"UserTest1\",\r\n    \"userDisplayName\": \"UserTest1\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\",\r\n    \"updatedBy\": \"\"\r\n}",
+							"raw": "{\r\n    \"idUser\": \"7f6abd28-ebbb-4a3c-0723-08dcfea554f9\",\r\n    \"userName\": \"nicou\",\r\n    \"userDisplayName\": \"UserTest1\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\",\r\n    \"updatedBy\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -611,6 +611,35 @@
 							],
 							"path": [
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7- Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}Auth?Email=Test@gmail.com&password=demo123",
+							"host": [
+								"{{url}}Auth"
+							],
+							"query": [
+								{
+									"key": "Email",
+									"value": "Test@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "demo123"
+								}
 							]
 						}
 					},
