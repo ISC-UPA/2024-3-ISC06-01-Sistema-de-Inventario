@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/settings.dart';
 import 'package:frontend/pages/swipe_intro.dart';
 import 'package:frontend/server/certificate.dart';
 import 'package:frontend/theme/app_theme.dart';
@@ -64,7 +65,7 @@ class MyAppState extends State<MyApp> {
                 return const Center(child: Text('Error loading tutorial state.'));
               } else {
                 // Aquí ya tienes el valor de seenTutorial.
-                bool seenTutorial = snapshot.data ?? true;
+                bool seenTutorial = false; // snapshot.data ?? true;
                 String route = seenTutorial ? '/swipe_intro' : '/login';
 
                 return MaterialApp(
@@ -72,10 +73,11 @@ class MyAppState extends State<MyApp> {
                   theme: tema.appTheme.getTheme(),
                   initialRoute: route,
                   routes: {
-                    '/home': (context) => HomePage(themeNotifier: tema),
+                    '/': (context) => HomePage(themeNotifier: tema),
                     '/splash': (context) => const SplashScreen(),
                     '/login': (context) => const LoginPage(),
                     '/swipe_intro': (context) => const SwipeIntroPage(),
+                    '/settings': (context) => SettingsPage(themeNotifier: tema),
                   },
                 );
               }
