@@ -18,9 +18,6 @@ namespace SMIS.Core.Entities
         [StringLength(100)]
         public required string Email { get; set; }
 
-        [StringLength(100)]
-        public required string Password { get; set; }
-
         //Log
         public DateTime? Created { get; set; }
 

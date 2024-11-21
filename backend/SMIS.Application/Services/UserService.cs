@@ -2,10 +2,10 @@
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
 
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using SMIS.Infraestructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace SMIS.Application.Services
 {
