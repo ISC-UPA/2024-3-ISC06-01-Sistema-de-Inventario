@@ -12,9 +12,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-//LDAP-Server
-//using Microsoft.Extensions.Options;
-//using SMIS.Application.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,6 +118,8 @@ builder.Services.AddAuthorization(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
