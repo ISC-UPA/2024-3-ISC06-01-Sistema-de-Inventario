@@ -17,10 +17,10 @@ class SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: ResponsiveLayout(
-        mobileBody: SettingsMobile(),
-        desktopBody: SettingsDesktop(),
+        mobileBody: SettingsMobile(themeNotifier: widget.themeNotifier),
+        desktopBody: SettingsDesktop(themeNotifier: widget.themeNotifier),
       ),
     );
   }

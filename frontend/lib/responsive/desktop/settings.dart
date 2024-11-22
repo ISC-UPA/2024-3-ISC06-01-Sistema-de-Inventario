@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/configuracion.dart';
 import 'package:frontend/responsive/desktop/drawer.dart';
+import 'package:frontend/theme/app_theme.dart';
 
 class SettingsDesktop extends StatelessWidget {
-  const SettingsDesktop({super.key});
+  final AppThemeNotifier themeNotifier;
+
+  const SettingsDesktop({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Row(
         children: [
-          DesktopMenu(),
+          const DesktopMenu(),
           Expanded(
             child: Center(
-              child: Text('Settings'),
+              child: Configuracion(themeNotifier: themeNotifier),
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }

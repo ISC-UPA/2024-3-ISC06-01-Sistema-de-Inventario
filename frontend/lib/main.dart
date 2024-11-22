@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/clientes.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/productos.dart';
+import 'package:frontend/pages/proveedores.dart';
 import 'package:frontend/pages/settings.dart';
 import 'package:frontend/pages/swipe_intro.dart';
 import 'package:frontend/server/certificate.dart';
@@ -78,6 +81,9 @@ class MyAppState extends State<MyApp> {
                     '/login': (context) => const LoginPage(),
                     '/swipe_intro': (context) => const SwipeIntroPage(),
                     '/settings': (context) => SettingsPage(themeNotifier: tema),
+                    '/clientes': (context) => const ClientesPage(),
+                    '/proveedores': (context) => const ProveedoresPage(),
+                    '/productos': (context) => const ProductosPage(),
                   },
                 );
               }
