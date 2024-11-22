@@ -18,19 +18,6 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*
-//Configuracion de LDAP-Server ----> 
-builder.Services.Configure<LdapSettings>(builder.Configuration.GetSection("LdapSettings"));
-builder.Services.AddScoped<ILdapServer, LdapService>(sp =>
-{
-    var ldapSettings = sp.GetRequiredService<IOptions<LdapSettings>>().Value;
-    return new LdapService(ldapSettings.Server, ldapSettings.Domain, ldapSettings.User, ldapSettings.Password, ldapSettings.BaseDN);
-});
-// Ldap Controllers
-builder.Services.AddControllers();
-//----> 
-*/
-
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -139,7 +126,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
+    //app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
