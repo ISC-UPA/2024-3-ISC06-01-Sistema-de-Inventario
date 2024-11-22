@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.DirectoryServices.Protocols;
 using System.Net;
 
-namespace SMIS.Application.Services
+namespace SMIS.Application.Helpers
 {
     public class LdapService 
     {

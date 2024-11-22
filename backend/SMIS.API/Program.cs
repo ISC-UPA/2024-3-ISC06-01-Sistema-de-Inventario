@@ -2,32 +2,22 @@ using SMIS.Application.Services;
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Repositories;
 using SMIS.Infraestructure.Data;
+using SMIS.Application.Helpers;
 
 //SQL-Server
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Configuration;
-using CRM.Application.Helpers;
-using DotNetEnv;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 //LDAP-Server
 //using Microsoft.Extensions.Options;
 //using SMIS.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-Env.Load();
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables();
+
 /*
 //Configuracion de LDAP-Server ----> 
 builder.Services.Configure<LdapSettings>(builder.Configuration.GetSection("LdapSettings"));
@@ -122,7 +112,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .addjwtBearer(options =>
+    .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -155,4 +145,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.Run(); 
+app.Run();
+
+
+public class CorsSettings
+{
+    public string[] AllowedOrigins { get; set; }
+}

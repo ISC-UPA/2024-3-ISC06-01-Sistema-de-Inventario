@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SMIS.Application.Helpers;
 using SMIS.Core.Entities;
 using SMIS.Infraestructure.Data;
 using System.Runtime.Versioning;
@@ -47,6 +48,7 @@ namespace SMIS.Application.Services
             catch(Exception ex)
             {
                 throw new Exception(string.Format("Unexpected error occurred while validating user {0}", username), ex);
+                return null;
             }
         }
 

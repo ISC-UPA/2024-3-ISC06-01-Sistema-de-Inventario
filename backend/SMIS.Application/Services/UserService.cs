@@ -1,11 +1,13 @@
 ﻿using SMIS.Core.Entities;
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
+using SMIS.Application.Helpers;
 
 using System.Security.Claims;
 using SMIS.Infraestructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using System.Runtime.Versioning;
 
 namespace SMIS.Application.Services
 {
@@ -13,11 +15,13 @@ namespace SMIS.Application.Services
     {
         private readonly IHttpContextAccessor _httpContext;
         private readonly AppDbContext _context;
+        private readonly LdapService _ldapService;
 
-        public UserService(AppDbContext context, IHttpContextAccessor httpContext)
+        public UserService(AppDbContext context, IHttpContextAccessor httpContext, LdapService ldapService)
         {
             _context = context;
             _httpContext = httpContext;
+            _ldapService = ldapService;
         }
 
         public Guid GetCurrentUserId()
