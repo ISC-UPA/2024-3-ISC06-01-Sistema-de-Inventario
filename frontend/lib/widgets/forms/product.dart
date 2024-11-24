@@ -127,7 +127,7 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                     _isLoading = false;
                   });
                 },
-                child: _isLoading ? CircularProgressIndicator(color: Colors.white) : const Text('Guardar'),
+                child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Guardar'),
               ),
             ],
           );

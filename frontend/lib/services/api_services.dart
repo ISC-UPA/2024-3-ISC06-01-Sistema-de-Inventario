@@ -110,15 +110,19 @@ class ApiServices {
   }
 
   // Actualizar un producto
-  Future<Product> updateProduct(String id, Map<String, dynamic> product) async {
+  Future<void> updateProduct(String id, Map<String, dynamic> product) async {
     final response = await http.put(
       Uri.parse('$baseUrl/api/Product/$id'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(product),
     );
-    if (response.statusCode == 200) {
-      return Product.fromJson(json.decode(response.body));
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // La actualización fue exitosa
+      return;
     } else {
+      // La actualización falló
+      print('Error: ${response.body}');
       throw Exception('Error al actualizar el producto');
     }
   }
