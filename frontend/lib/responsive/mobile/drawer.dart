@@ -15,12 +15,16 @@ class MobileDrawerState extends State<MobileDrawer> {
   int _currentImageIndex = 0;
 
   final List<String> images = [
-    'assets/lottie/welcome.json',
-    'assets/lottie/stock.json',
-    'assets/lottie/email.json',
-    'assets/lottie/search.json',
-    'assets/lottie/report.json',
-    'assets/lottie/start.json',
+   'assets/lottie/a.json',
+    'assets/lottie/b.json',
+    'assets/lottie/c.json',
+    'assets/lottie/d.json',
+    'assets/lottie/e.json',
+    'assets/lottie/f.json',
+    'assets/lottie/g.json'
+    'assets/lottie/h.json'
+    'assets/lottie/i.json'
+    'assets/lottie/j.json'
   ];
 
   @override
