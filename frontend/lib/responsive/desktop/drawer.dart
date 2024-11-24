@@ -35,7 +35,7 @@ class DesktopMenuState extends State<DesktopMenu> {
   }
 
   void _startImageTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % images.length;
       });
