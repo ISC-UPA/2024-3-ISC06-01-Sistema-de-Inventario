@@ -57,7 +57,7 @@ class DesktopMenuState extends State<DesktopMenu> {
         children: <Widget>[
           SizedBox(
             child: Center(
-              child: Lottie.asset(images[_currentImageIndex], width: 200, height: 200),
+              child: Lottie.asset(images[_currentImageIndex], width: 180, height: 180),
             ),
           ),
           const SizedBox(height: 20),
