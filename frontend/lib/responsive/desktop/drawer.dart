@@ -56,10 +56,14 @@ class DesktopMenuState extends State<DesktopMenu> {
       child: Column(
         children: <Widget>[
           SizedBox(
-            child: Center(
-              child: Lottie.asset(images[_currentImageIndex], width: 180, height: 180),
-            ),
-          ),
+  child: Center(
+    child: Padding(
+      padding: const EdgeInsets.only(top: 50), // Cambia el valor para ajustar la posición
+      child: Lottie.asset(images[_currentImageIndex], width: 180, height: 180),
+    ),
+  ),
+),
+
           const SizedBox(height: 20),
           Center(
             child: Text(
