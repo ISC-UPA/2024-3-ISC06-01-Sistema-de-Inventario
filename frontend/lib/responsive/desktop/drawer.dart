@@ -15,12 +15,12 @@ class DesktopMenuState extends State<DesktopMenu> {
   int _currentImageIndex = 0;
 
   List<String> images = [
-    'assets/lottie/welcome.json',
-    'assets/lottie/stock.json',
-    'assets/lottie/email.json',
-    'assets/lottie/search.json',
-    'assets/lottie/report.json',
-    'assets/lottie/start.json',
+    'assets/lottie/a.json',
+    'assets/lottie/b.json',
+    'assets/lottie/c.json',
+    'assets/lottie/d.json',
+    'assets/lottie/e.json',
+    'assets/lottie/f.json',
   ];
 
   @override
@@ -31,7 +31,7 @@ class DesktopMenuState extends State<DesktopMenu> {
   }
 
   void _startImageTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % images.length;
       });

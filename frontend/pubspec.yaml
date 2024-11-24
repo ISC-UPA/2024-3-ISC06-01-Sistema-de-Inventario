@@ -34,7 +34,6 @@ dependencies:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
   google_fonts: ^6.2.1
-  http: ^1.2.2
   liquid_swipe: ^3.1.0
   logging: ^1.2.0
   lottie: ^3.1.2
@@ -67,6 +66,14 @@ flutter:
     - assets/lottie/report.json
     - assets/lottie/inicio.json
     - assets/lottie/start.json
+    - assets/lottie/a.json
+    - assets/lottie/b.json
+    - assets/lottie/c.json
+    - assets/lottie/d.json
+    - assets/lottie/e.json
+    - assets/lottie/f.json
+
+
   #   - images/a_dot_ham.jpegd
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
