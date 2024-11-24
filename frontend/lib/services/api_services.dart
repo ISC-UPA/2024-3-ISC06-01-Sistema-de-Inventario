@@ -18,6 +18,16 @@ class ApiServices {
     }
   }
 
+  // Obtener un producto por ID
+  Future<Product> getProductById(String id) async {
+    final response = await http.get(Uri.parse('$baseUrl/api/Product/$id'));
+    if (response.statusCode == 200) {
+      return Product.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error al obtener el producto con ID $id');
+    }
+  }
+
   // Obtener un usuario por ID
   Future<User> getUserById(String id) async {
     final response = await http.get(Uri.parse('$baseUrl/api/User/$id'));
@@ -82,6 +92,42 @@ class ApiServices {
     final response = await http.delete(Uri.parse('$baseUrl/api/Customer/$id'));
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el cliente con ID $id');
+    }
+  }
+
+  // Crear un producto
+  Future<void> createProduct(Map<String, dynamic> product) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/Product'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(product),
+    );
+
+    if (response.statusCode <= 200 && response.statusCode > 300) {
+      print('Error: ${response.body}');
+      throw Exception('Error al crear el producto');
+    }
+  }
+
+  // Actualizar un producto
+  Future<Product> updateProduct(String id, Map<String, dynamic> product) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/Product/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(product),
+    );
+    if (response.statusCode == 200) {
+      return Product.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error al actualizar el producto');
+    }
+  }
+
+  // Eliminar un producto
+  Future<void> deleteProduct(String id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/api/Product?id=$id'));
+    if (response.statusCode != 200) {
+      throw Exception('Error al eliminar el producto con ID $id');
     }
   }
 }

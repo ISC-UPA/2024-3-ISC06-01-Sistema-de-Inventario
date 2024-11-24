@@ -10,9 +10,9 @@ import 'package:frontend/pages/proveedores.dart';
 import 'package:frontend/pages/settings.dart';
 import 'package:frontend/pages/swipe_intro.dart';
 import 'package:frontend/services/certificate.dart';
+import 'package:frontend/services/shared_preferences.dart';
 import 'package:frontend/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -41,12 +41,9 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _seenTutorialFuture = _checkIfFirstTime();
-  }
-
-  Future<bool> _checkIfFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('seenTutorial') ?? true;
+    //SharedPreferencesService().setSeenTutorial(true);
+    SharedPreferencesService().setUserId("c4e3a7de-8858-4de1-1d90-08dd0c311c6a");
+    _seenTutorialFuture = SharedPreferencesService().getSeenTutorial();
   }
 
   @override
@@ -67,8 +64,9 @@ class MyAppState extends State<MyApp> {
                 // Manejo de error, podrías mostrar un mensaje o redirigir.
                 return const Center(child: Text('Error loading tutorial state.'));
               } else {
+                    print('Seen tutorial: ${snapshot.data}');
                 // Aquí ya tienes el valor de seenTutorial.
-                bool seenTutorial = false; // snapshot.data ?? true;
+                bool seenTutorial = snapshot.data ?? false;
                 String route = seenTutorial ? '/swipe_intro' : '/login';
 
                 return MaterialApp(

@@ -3,6 +3,7 @@ import 'package:frontend/responsive/mobile/drawer.dart';
 import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
+import 'package:frontend/widgets/forms/product.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductosMobile extends StatefulWidget {
@@ -13,12 +14,29 @@ class ProductosMobile extends StatefulWidget {
 }
 
 class ProductosMobileState extends State<ProductosMobile> {
-  late Future<List<Product>> productos;
+  List<Product> _products = [];
+  bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
-    productos = ApiServices().getAllProducts();
+    _fetchProducts();
+  }
+
+  Future<void> _fetchProducts() async {
+    try {
+      final products = await ApiServices().getAllProducts();
+      setState(() {
+        _products = products;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _isLoading = false;
+      });
+    }
   }
 
   Future<String> _getUserName(String userId) async {
@@ -30,16 +48,28 @@ class ProductosMobileState extends State<ProductosMobile> {
     }
   }
 
-  void _editProduct(Product product) {
-    // Implementar la lógica para editar el producto
+  void _editProduct(Product product) async {
+    final updatedProduct = await showProductDialog(context, product: product);
+    if (updatedProduct != null) {
+      await _fetchProducts();
+    }
   }
 
-  void _deleteProduct(String productId) {
-    // Implementar la lógica para borrar el producto
+  void _deleteProduct(String productId) async {
+    final shouldDelete = await showDeleteConfirmationDialog(context, productId);
+    if (shouldDelete == true) {
+      setState(() {
+        // Elimina el producto de la lista
+        _products.removeWhere((p) => p.idProduct == productId);
+      });
+    }
   }
 
-  void _addProduct() {
-    // Implementar la lógica para agregar un nuevo producto
+  void _addProduct() async {
+    final newProduct = await showProductDialog(context);
+    if (newProduct != null) {
+      await _fetchProducts();
+    }
   }
 
   @override
@@ -60,30 +90,21 @@ class ProductosMobileState extends State<ProductosMobile> {
         backgroundColor: theme.primary,
       ),
       drawer: const MobileDrawer(),
-      body: FutureBuilder<List<Product>>(
-        future: productos,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No hay productos disponibles'));
-          } else {
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                child: DataTable(
-                  headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                  headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                  columns: _buildColumns(),
-                  rows: _buildRows(snapshot.data!, theme),
-                ),
-              ),
-            );
-          }
-        },
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _error != null
+              ? Center(child: Text('Error: $_error'))
+              : _products.isEmpty
+                  ? const Center(child: Text('No hay productos disponibles'))
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        headingRowColor: MaterialStateColor.resolveWith((states) => theme.primary),
+                        headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                        columns: _buildColumns(),
+                        rows: _buildRows(_products, theme),
+                      ),
+                    ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addProduct,
         backgroundColor: theme.primary,

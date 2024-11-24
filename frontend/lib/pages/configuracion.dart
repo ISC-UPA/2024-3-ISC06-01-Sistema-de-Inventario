@@ -15,12 +15,28 @@ class Configuracion extends StatefulWidget {
 class _ConfiguracionState extends State<Configuracion> {
   late Color _selectedColor;
   late bool _isDarkMode;
+  bool _showTutorialAgain = true;
 
   @override
   void initState() {
     super.initState();
     _selectedColor = widget.themeNotifier.appTheme.selectedColor;
     _isDarkMode = widget.themeNotifier.appTheme.brightness == Brightness.dark;
+    _loadShowTutorialAgain();
+  }
+
+  // Cargar el estado de seenTutorial desde SharedPreferences
+  void _loadShowTutorialAgain() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _showTutorialAgain = prefs.getBool('seenTutorial') ?? true;
+    });
+  }
+
+  // Guardar el estado de seenTutorial en SharedPreferences
+  void _saveShowTutorialAgain(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('seenTutorial', value);
   }
 
   void _showColorPicker(BuildContext context) {
@@ -79,12 +95,30 @@ class _ConfiguracionState extends State<Configuracion> {
     ));
   }
 
+  void _onShowTutorialChanged(bool newValue) {
+    setState(() {
+      _showTutorialAgain = newValue;
+      _saveShowTutorialAgain(newValue);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
     return ListView(
       children: [
+        SwitchListTile(
+          activeColor: theme.primary,
+          inactiveTrackColor: theme.inversePrimary,
+          title: Text(
+            'Mostrar tutorial',
+            style: TextStyle(color: theme.inverseSurface),
+          ),
+          value: _showTutorialAgain,
+          onChanged: _onShowTutorialChanged,
+          secondary: const Icon(Icons.help_outline),
+        ),
         SwitchListTile(
           activeColor: theme.primary,
           inactiveTrackColor: theme.inversePrimary,
