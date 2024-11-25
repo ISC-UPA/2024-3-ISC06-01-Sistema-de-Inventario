@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/snake_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/models/model_product.dart';
+import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/services/api_services.dart';
 
-Future<bool?> showProductDialog(BuildContext context, {Product? product}) async {
+Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final userId = prefs.getString('userId') ?? '';
 
-  final nameController = TextEditingController(text: product?.name ?? '');
-  final descriptionController = TextEditingController(text: product?.description ?? '');
-  final priceController = TextEditingController(text: product?.price.toString() ?? '');
-  final costController = TextEditingController(text: product?.cost.toString() ?? '');
-  final stockController = TextEditingController(text: product?.stock.toString() ?? '');
-  final categoryController = TextEditingController(text: product?.category.toString() ?? '');
+  final nameController = TextEditingController(text: customer?.name ?? '');
+  final emailController = TextEditingController(text: customer?.email ?? '');
 
   bool _isLoading = false;
 
@@ -26,7 +22,7 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text(product == null ? 'Agregar Producto' : 'Editar Producto'),
+            title: Text(customer == null ? 'Agregar Cliente' : 'Editar Cliente'),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -35,29 +31,9 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                     decoration: const InputDecoration(labelText: 'Nombre'),
                   ),
                   TextField(
-                    controller: descriptionController,
-                    decoration: const InputDecoration(labelText: 'Descripción'),
-                    maxLength: 100,
-                  ),
-                  TextField(
-                    controller: priceController,
-                    decoration: const InputDecoration(labelText: 'Precio'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextField(
-                    controller: costController,
-                    decoration: const InputDecoration(labelText: 'Costo'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextField(
-                    controller: stockController,
-                    decoration: const InputDecoration(labelText: 'Stock'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextField(
-                    controller: categoryController,
-                    decoration: const InputDecoration(labelText: 'Categoría'),
-                    keyboardType: TextInputType.number,
+                    controller: emailController,
+                    decoration: const InputDecoration(labelText: 'Email'),
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ],
               ),
@@ -78,43 +54,31 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                   });
 
                   final name = nameController.text;
-                  final description = descriptionController.text;
-                  final price = double.tryParse(priceController.text) ?? 0;
-                  final cost = double.tryParse(costController.text) ?? 0;
-                  final stock = int.tryParse(stockController.text) ?? 0;
-                  final category = int.tryParse(categoryController.text) ?? 0;
+                  final email = emailController.text;
 
                   try {
-                    if (product == null) {
-                      final newProduct = {
-                        'name': name,
-                        'description': description,
-                        'price': price,
-                        'cost': cost,
-                        'stock': stock,
-                        'category': category,
-                        'createdBy': userId,
+                    if (customer == null) {
+                      final newCustomer = {
+                        'Name': name,
+                        'Email': email,
+                        'CreatedBy': userId,
                       };
-                      await ApiServices().createProduct(newProduct);
-                      CustomSnackBar.show(context, 'Producto creado exitosamente');
+                      await ApiServices().createCustomer(newCustomer);
+                      CustomSnackBar.show(context, 'Cliente creado exitosamente');
                       if (context.mounted) {
                         Navigator.of(context).pop(true);
                       }
                     } else {
-                      final updatedProduct = {
-                        'idProduct': product.idProduct,
-                        'name': name,
-                        'description': description,
-                        'price': price,
-                        'cost': cost,
-                        'stock': stock,
-                        'category': category,
-                        'created' : product.created, // Preservar el campo created
-                        'createdBy': product.createdBy, // Preservar el campo createdBy
-                        'updatedBy': userId,
+                      final updatedCustomer = {
+                        'IdCustomer': customer.idCustomer,
+                        'Name': name,
+                        'Email': email,
+                        'Created': customer.created, // Preservar el campo created
+                        'CreatedBy': customer.createdBy, // Preservar el campo createdBy
+                        'UpdatedBy': userId,
                       };
-                      await ApiServices().updateProduct(product.idProduct, updatedProduct);
-                      CustomSnackBar.show(context, 'Producto actualizado exitosamente');
+                      await ApiServices().updateCustomer(customer.idCustomer, updatedCustomer);
+                      CustomSnackBar.show(context, 'Cliente actualizado exitosamente');
                       if (context.mounted) {
                         Navigator.of(context).pop(true);
                       }
@@ -141,7 +105,7 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
   );
 }
 
-Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productId) async {
+Future<bool?> showDeleteConfirmationDialog(BuildContext context, String customerId) async {
   bool _isLoading = false;
 
   return showDialog<bool>(
@@ -152,7 +116,7 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productI
         builder: (context, setState) {
           return AlertDialog(
             title: const Text('Confirmar Eliminación'),
-            content: const Text('¿Estás seguro de que deseas eliminar este producto?'),
+            content: const Text('¿Estás seguro de que deseas eliminar este cliente?'),
             actions: [
               TextButton(
                 onPressed: _isLoading ? null : () {
@@ -167,8 +131,8 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productI
                   });
 
                   try {
-                    await ApiServices().deleteProduct(productId);
-                    CustomSnackBar.show(context, 'Producto eliminado exitosamente');
+                    await ApiServices().deleteCustomer(customerId);
+                    CustomSnackBar.show(context, 'Cliente eliminado exitosamente');
                     if (context.mounted) {
                       Navigator.of(context).pop(true);
                     }

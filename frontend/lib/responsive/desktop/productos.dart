@@ -4,6 +4,7 @@ import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
 import 'package:frontend/widgets/forms/product.dart';
+import 'package:intl/intl.dart';
 
 class ProductosDesktop extends StatefulWidget {
   const ProductosDesktop({super.key});
@@ -43,7 +44,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
       User user = await ApiServices().getUserById(userId);
       return user.userName;
     } catch (e) {
-      return 'Desconocido';
+      return '';
     }
   }
 
@@ -66,6 +67,11 @@ class ProductosDesktopState extends State<ProductosDesktop> {
     if (newProduct != null) {
       await _fetchProducts();
     }
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 
   @override
@@ -134,7 +140,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
           DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
           DataCell(Text(product.stock.toString())),
           DataCell(Text(product.category.toString())),
-          DataCell(Text(product.created?.toIso8601String() ?? '')),
+          DataCell(Text(_formatDate(product.created))),
           DataCell(
             FutureBuilder<String>(
               future: _getUserName(product.createdBy ?? ''),
@@ -149,8 +155,21 @@ class ProductosDesktopState extends State<ProductosDesktop> {
               },
             ),
           ),
-          DataCell(Text(product.updated?.toIso8601String() ?? '')),
-          DataCell(Text(product.updatedBy ?? '')),
+          DataCell(Text(_formatDate(product.updated))),
+          DataCell(
+            FutureBuilder<String>(
+              future: _getUserName(product.updatedBy ?? ''),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Cargando...');
+                } else if (snapshot.hasError) {
+                  return const Text('Error');
+                } else {
+                  return Text(snapshot.data ?? 'Desconocido');
+                }
+              },
+            ),
+          ),
           DataCell(
             Row(
               children: [

@@ -23,10 +23,11 @@ namespace SMIS.API.Controllers{
         }
 
         [HttpGet("{id}")]
-        public async Task<Order> GetOrderByIdAsync(Guid id)
+        public async Task<Order?> GetOrderByIdAsync(Guid id)
         {
             return await _orderService.GetOrderByIdAsync(id);
         }
+
 
         [HttpPost]
         public async Task AddOrder(Order order)

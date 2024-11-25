@@ -15,7 +15,7 @@ class MobileDrawerState extends State<MobileDrawer> {
   int _currentImageIndex = 0;
 
   final List<String> images = [
-   'assets/lottie/a.json',
+    'assets/lottie/a.json',
     'assets/lottie/b.json',
     'assets/lottie/c.json',
     'assets/lottie/d.json',

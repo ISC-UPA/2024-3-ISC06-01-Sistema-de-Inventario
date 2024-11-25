@@ -5,6 +5,7 @@ import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
 import 'package:frontend/widgets/forms/product.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class ProductosMobile extends StatefulWidget {
   const ProductosMobile({super.key});
@@ -44,7 +45,7 @@ class ProductosMobileState extends State<ProductosMobile> {
       User user = await ApiServices().getUserById(userId);
       return user.userName;
     } catch (e) {
-      return 'Desconocido';
+      return '';
     }
   }
 
@@ -58,10 +59,7 @@ class ProductosMobileState extends State<ProductosMobile> {
   void _deleteProduct(String productId) async {
     final shouldDelete = await showDeleteConfirmationDialog(context, productId);
     if (shouldDelete == true) {
-      setState(() {
-        // Elimina el producto de la lista
-        _products.removeWhere((p) => p.idProduct == productId);
-      });
+      await _fetchProducts();
     }
   }
 
@@ -70,6 +68,11 @@ class ProductosMobileState extends State<ProductosMobile> {
     if (newProduct != null) {
       await _fetchProducts();
     }
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 
   @override
@@ -99,7 +102,7 @@ class ProductosMobileState extends State<ProductosMobile> {
                   : SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
-                        headingRowColor: MaterialStateColor.resolveWith((states) => theme.primary),
+                        headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
                         headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
                         columns: _buildColumns(),
                         rows: _buildRows(_products, theme),
@@ -139,7 +142,7 @@ class ProductosMobileState extends State<ProductosMobile> {
           DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
           DataCell(Text(product.stock.toString())),
           DataCell(Text(product.category.toString())),
-          DataCell(Text(product.created?.toIso8601String() ?? '')),
+          DataCell(Text(_formatDate(product.created))),
           DataCell(
             FutureBuilder<String>(
               future: _getUserName(product.createdBy ?? ''),
@@ -154,8 +157,21 @@ class ProductosMobileState extends State<ProductosMobile> {
               },
             ),
           ),
-          DataCell(Text(product.updated?.toIso8601String() ?? '')),
-          DataCell(Text(product.updatedBy ?? '')),
+          DataCell(Text(_formatDate(product.updated))),
+          DataCell(
+            FutureBuilder<String>(
+              future: _getUserName(product.updatedBy ?? ''),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Cargando...');
+                } else if (snapshot.hasError) {
+                  return const Text('Error');
+                } else {
+                  return Text(snapshot.data ?? 'Desconocido');
+                }
+              },
+            ),
+          ),
           DataCell(
             Row(
               children: [

@@ -9,6 +9,7 @@ namespace SMIS.Application.Services
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly AppDbContext _context;
+
         public CustomerService(ICustomerRepository customerRepository, AppDbContext context)
         {
             _customerRepository = customerRepository;
@@ -27,12 +28,32 @@ namespace SMIS.Application.Services
 
         public async Task AddCustomerAsync(Customer customer)
         {
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            customer.Created = localTime; // Set Created to local time
+
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCustomerAsync(Customer customer)
         {
+            // Detach tracked entity if it exists to avoid conflicts
+            var trackedEntity = _context.Customers.Local.FirstOrDefault(c => c.IdCustomer == customer.IdCustomer);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            customer.Updated = localTime; // Set Updated to local time
+
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
         }
