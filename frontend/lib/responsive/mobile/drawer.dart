@@ -55,6 +55,7 @@ class MobileDrawerState extends State<MobileDrawer> {
     return Drawer(
       child: Column(
         children: <Widget>[
+          SizedBox(height: 50,),
           SizedBox(
             child: Center(
               child: Lottie.asset(images[_currentImageIndex], width: 200, height: 200),
