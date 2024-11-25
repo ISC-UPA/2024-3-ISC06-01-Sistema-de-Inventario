@@ -21,10 +21,10 @@ class MobileDrawerState extends State<MobileDrawer> {
     'assets/lottie/d.json',
     'assets/lottie/e.json',
     'assets/lottie/f.json',
-    'assets/lottie/g.json',
-    'assets/lottie/h.json',
-    'assets/lottie/i.json',
-    'assets/lottie/j.json'
+    'assets/lottie/gg.json',
+    'assets/lottie/hh.json',
+    'assets/lottie/ii.json',
+    'assets/lottie/jj.json'
   ];
 
   @override

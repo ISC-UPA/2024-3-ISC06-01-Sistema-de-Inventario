@@ -78,6 +78,10 @@ flutter:
     - assets/lottie/h.json
     - assets/lottie/i.json
     - assets/lottie/j.json
+    - assets/lottie/jj.json
+    - assets/lottie/gg.json
+    - assets/lottie/hh.json
+    - assets/lottie/ii.json
   #   - images/a_dot_ham.jpegd
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
