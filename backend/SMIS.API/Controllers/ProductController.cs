@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SMIS.API.Controllers
 {
-        [ApiController]
-        [Route("api/[controller]")]
-
-    public class ProductController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
         public ProductController(ProductService productService)
@@ -23,28 +22,66 @@ namespace SMIS.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Product> GetProductByIdAsync(Guid id)
+        public async Task<ActionResult<Product>> GetProductByIdAsync(Guid id)
         {
-            return await _productService.GetProductByIdAsync(id);
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound($"Product with id {id} not found.");
+            }
+            return product;
         }
 
-        [HttpGet("{name},{category}")]
-        public async Task<Product> GetProductByParams(string? name, EnumProductCategory? category)
+        [HttpGet("search")]
+        public async Task<ActionResult<Product>> GetProductByParams([FromQuery] string? name, [FromQuery] EnumProductCategory? category)
         {
-            return await _productService.GetProductByParamsAsync(name, category);
+            var product = await _productService.GetProductByParamsAsync(name, category);
+            if (product == null)
+            {
+                return NotFound("Product not found with the given parameters.");
+            }
+            return product;
         }
 
         [HttpPost]
-        public async Task AddProductAsync(Product product)
+        public async Task<IActionResult> AddProductAsync(Product product)
         {
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            product.Created = localTime; // Usar la hora local en lugar de UTC
+
             await _productService.AddProductAsync(product);
+            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = product.IdProduct }, product);
         }
 
         [HttpPut]
-        public async Task UpdateProduct(Product product)
+        public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
+            if (product.IdProduct == Guid.Empty)
+            {
+                return BadRequest("Product ID cannot be empty.");
+            }
+
+            var existingProduct = await _productService.GetProductByIdAsync(product.IdProduct);
+            if (existingProduct == null)
+            {
+                return NotFound($"Product with id {product.IdProduct} not found.");
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            product.Updated = localTime;
+
             await _productService.UpdateProductAsync(product);
+            return NoContent();
         }
+
+
 
         [HttpDelete]
         public async Task DeletedProductAsync(Guid id)

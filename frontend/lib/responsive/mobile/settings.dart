@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/configuracion.dart';
 import 'package:frontend/responsive/mobile/drawer.dart';
+import 'package:frontend/theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeMobile extends StatelessWidget {
-  const HomeMobile({super.key});
+class SettingsMobile extends StatelessWidget {
+  final AppThemeNotifier themeNotifier;
+
+  const SettingsMobile({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +15,7 @@ class HomeMobile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Stock Master',
+          'Configuración',
           style: GoogleFonts.patrickHand(
             textStyle: TextStyle(
               fontSize: 30,
@@ -23,7 +27,9 @@ class HomeMobile extends StatelessWidget {
         backgroundColor: theme.primary,
       ),
       drawer: const MobileDrawer(),
-      body: const Center(child: Text('Home')),
+      body: Center(
+        child: Configuracion(themeNotifier: themeNotifier),
+      ),
     );
   }
 }

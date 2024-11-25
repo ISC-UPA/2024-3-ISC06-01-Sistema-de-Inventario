@@ -54,9 +54,15 @@ class AppTheme {
 
   // Obtener el tema para aplicar a la aplicación
   ThemeData getTheme() {
+    final ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: selectedColor,
+      brightness: brightness,
+    );
+
     return ThemeData(
-      brightness: Brightness.light, // brightness,
-      colorSchemeSeed: selectedColor, // Usa el color seleccionado
+      brightness: brightness,
+      colorScheme: colorScheme,
+      scaffoldBackgroundColor: colorScheme.surfaceContainerHigh,
     );
   }
 }

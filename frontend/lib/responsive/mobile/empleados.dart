@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/responsive/mobile/drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeMobile extends StatelessWidget {
-  const HomeMobile({super.key});
+class EmpleadosMobile extends StatelessWidget {
+  const EmpleadosMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class HomeMobile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Stock Master',
+          'Empleados',
           style: GoogleFonts.patrickHand(
             textStyle: TextStyle(
               fontSize: 30,
@@ -23,7 +23,7 @@ class HomeMobile extends StatelessWidget {
         backgroundColor: theme.primary,
       ),
       drawer: const MobileDrawer(),
-      body: const Center(child: Text('Home')),
+      body: const Center(child: Text('Empleados')),
     );
   }
 }

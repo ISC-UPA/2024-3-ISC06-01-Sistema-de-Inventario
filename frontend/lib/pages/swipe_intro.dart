@@ -55,8 +55,8 @@ class SwipeIntroPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: bgColor,
       body: ResponsiveLayout(
-        mobileBody: buildMobileBody(context, pageData),
-        desktopBody: buildDesktopBody(context, pageData),
+        mobileBody: MobileIntro(pageData,),
+        desktopBody: DesktopIntro(pageData),
       ),
     );
   }
