@@ -55,7 +55,7 @@ class AuthService {
   // Login with API
   Future<bool> login(String email, String password) async {
     final response = await http.post(
-      Uri.parse('https://api.example.com/login'),
+      Uri.parse('http://localhost:5000/login'),
       body: {'email': email, 'password': password},
     );
 
@@ -64,7 +64,7 @@ class AuthService {
 
       // Save token and user data
       await saveToken(data['token']);
-      await saveUserData(User.fromJson(data['user'])); // Assuming 'user' contains user data
+      await saveUserData(User.fromJson(data['user']));
 
       return true;
     } else {

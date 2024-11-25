@@ -6,13 +6,13 @@ import 'package:frontend/models/model_user.dart';
 import 'package:frontend/services/auth_service.dart';
 
 class ApiServices {
-  final String baseUrl = 'http://localhost:5000';
+  final String _baseUrl = 'http://localhost:5000';
   final AuthService _authService = AuthService();
 
   /////////////////////////////////////////////////////////////////////////////////////         PRODUCTOS
 
   Future<List<Product>> getAllProducts() async {
-    final response = await _authService.get('$baseUrl/api/Product');
+    final response = await _authService.get('$_baseUrl/api/Product');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Product.fromJson(json)).toList();
@@ -22,7 +22,7 @@ class ApiServices {
   }
 
   Future<Product> getProductById(String id) async {
-    final response = await _authService.get('$baseUrl/api/Product/$id');
+    final response = await _authService.get('$_baseUrl/api/Product/$id');
     if (response.statusCode == 200) {
       return Product.fromJson(json.decode(response.body));
     } else {
@@ -32,7 +32,7 @@ class ApiServices {
 
   Future<void> createProduct(Map<String, dynamic> product) async {
     final response = await _authService.post(
-      '$baseUrl/api/Product',
+      '$_baseUrl/api/Product',
       product,
     );
 
@@ -51,7 +51,7 @@ class ApiServices {
     });
 
     final response = await _authService.put(
-      '$baseUrl/api/Product/$id',
+      '$_baseUrl/api/Product/$id',
       sanitizedProduct,
     );
 
@@ -62,7 +62,7 @@ class ApiServices {
   }
 
   Future<void> deleteProduct(String id) async {
-    final response = await _authService.delete('$baseUrl/api/Product?id=$id');
+    final response = await _authService.delete('$_baseUrl/api/Product?id=$id');
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el producto con ID $id');
     }
@@ -71,7 +71,7 @@ class ApiServices {
   /////////////////////////////////////////////////////////////////////////////////////         USUARIOS
 
   Future<List<User>> getAllUsers() async {
-    final response = await _authService.get('$baseUrl/api/User');
+    final response = await _authService.get('$_baseUrl/api/User');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => User.fromJson(json)).toList();
@@ -81,7 +81,7 @@ class ApiServices {
   }
 
   Future<User> getUserById(String id) async {
-    final response = await _authService.get('$baseUrl/api/User/$id');
+    final response = await _authService.get('$_baseUrl/api/User/$id');
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
@@ -91,7 +91,7 @@ class ApiServices {
 
   Future<void> createUser(Map<String, dynamic> user) async {
     final response = await _authService.post(
-      '$baseUrl/api/User',
+      '$_baseUrl/api/User',
       user,
     );
 
@@ -110,7 +110,7 @@ class ApiServices {
     });
 
     final response = await _authService.put(
-      '$baseUrl/api/User/$id',
+      '$_baseUrl/api/User/$id',
       sanitizedUser,
     );
 
@@ -121,7 +121,7 @@ class ApiServices {
   }
 
   Future<void> deleteUser(String id) async {
-    final response = await _authService.delete('$baseUrl/api/User?id=$id');
+    final response = await _authService.delete('$_baseUrl/api/User?id=$id');
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el empleado con ID $id');
     }
@@ -130,7 +130,7 @@ class ApiServices {
   /////////////////////////////////////////////////////////////////////////////////////         CUSTOMERS
 
   Future<List<Customer>> getAllCustomers() async {
-    final response = await _authService.get('$baseUrl/api/Customer');
+    final response = await _authService.get('$_baseUrl/api/Customer');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Customer.fromJson(json)).toList();
@@ -140,7 +140,7 @@ class ApiServices {
   }
 
   Future<Customer> getCustomerById(String id) async {
-    final response = await _authService.get('$baseUrl/api/Customer/$id');
+    final response = await _authService.get('$_baseUrl/api/Customer/$id');
     if (response.statusCode == 200) {
       return Customer.fromJson(json.decode(response.body));
     } else {
@@ -150,7 +150,7 @@ class ApiServices {
 
   Future<void> createCustomer(Map<String, dynamic> customer) async {
     final response = await _authService.post(
-      '$baseUrl/api/Customer',
+      '$_baseUrl/api/Customer',
       customer,
     );
 
@@ -169,7 +169,7 @@ class ApiServices {
     });
 
     final response = await _authService.put(
-      '$baseUrl/api/Customer/$id',
+      '$_baseUrl/api/Customer/$id',
       sanitizedCustomer,
     );
 
@@ -180,7 +180,7 @@ class ApiServices {
   }
 
   Future<void> deleteCustomer(String id) async {
-    final response = await _authService.delete('$baseUrl/api/Customer?id=$id');
+    final response = await _authService.delete('$_baseUrl/api/Customer?id=$id');
     if (response.statusCode != 204) {
       throw Exception('Error al eliminar el cliente con ID $id');
     }
