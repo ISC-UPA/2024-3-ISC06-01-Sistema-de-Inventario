@@ -1,4 +1,4 @@
-// Modelo de User
+// user.dart
 class User {
   final String idUser;
   final String userName;
@@ -10,8 +10,8 @@ class User {
   final String? createdBy;
   final DateTime? updated;
   final String? updatedBy;
-  final String? createdByUser;
-  final String? updatedByUser;
+  final User? createdByUser;
+  final User? updatedByUser;
 
   User({
     required this.idUser,
@@ -28,6 +28,7 @@ class User {
     this.updatedByUser,
   });
 
+  // Factory constructor to create a User instance from JSON.
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       idUser: json['idUser'],
@@ -40,11 +41,16 @@ class User {
       createdBy: json['createdBy'],
       updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
       updatedBy: json['updatedBy'],
-      createdByUser: json['createdByUser'],
-      updatedByUser: json['updatedByUser'],
+      createdByUser: json['createdByUser'] != null
+          ? User.fromJson(json['createdByUser'])
+          : null,
+      updatedByUser: json['updatedByUser'] != null
+          ? User.fromJson(json['updatedByUser'])
+          : null,
     );
   }
 
+  // Method to convert a User instance to JSON.
   Map<String, dynamic> toJson() {
     return {
       'idUser': idUser,
@@ -57,8 +63,8 @@ class User {
       'createdBy': createdBy,
       'updated': updated?.toIso8601String(),
       'updatedBy': updatedBy,
-      'createdByUser': createdByUser,
-      'updatedByUser': updatedByUser,
+      'createdByUser': createdByUser?.toJson(),
+      'updatedByUser': updatedByUser?.toJson(),
     };
   }
 }

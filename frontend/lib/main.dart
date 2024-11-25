@@ -43,7 +43,7 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     //SharedPreferencesService().setSeenTutorial(true);
-    SharedPreferencesService().setUserId("c4e3a7de-8858-4de1-1d90-08dd0c311c6a");
+    SharedPreferencesService().setUserId("8c2495da-acbf-4deb-9d13-859c72566705");
     _seenTutorialFuture = SharedPreferencesService().getSeenTutorial();
   }
 
@@ -65,7 +65,6 @@ class MyAppState extends State<MyApp> {
                 // Manejo de error, podrías mostrar un mensaje o redirigir.
                 return const Center(child: Text('Error loading tutorial state.'));
               } else {
-                    print('Seen tutorial: ${snapshot.data}');
                 // Aquí ya tienes el valor de seenTutorial.
                 bool seenTutorial = snapshot.data ?? false;
                 String route = seenTutorial ? '/swipe_intro' : '/login';

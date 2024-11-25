@@ -106,7 +106,7 @@ class ClientesMobileState extends State<ClientesMobile> {
                         child: ConstrainedBox(
                           constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
                           child: DataTable(
-                            headingRowColor: MaterialStateColor.resolveWith((states) => theme.primary),
+                            headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
                             headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
                             columns: _buildColumns(),
                             rows: _buildRows(_customers, theme),

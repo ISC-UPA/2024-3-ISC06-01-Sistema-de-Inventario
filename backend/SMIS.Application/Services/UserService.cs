@@ -1,11 +1,10 @@
-﻿using SMIS.Core.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using SMIS.Core.Entities;
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
-
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using SMIS.Infraestructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace SMIS.Application.Services
 {
@@ -44,12 +43,32 @@ namespace SMIS.Application.Services
 
         public async Task AddUserAsync(User user)
         {
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            user.Created = localTime; // Usar la hora local en lugar de UTC
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(User user)
         {
+            // Buscar y eliminar cualquier instancia rastreada
+            var trackedEntity = _context.Users.Local.FirstOrDefault(u => u.IdUser == user.IdUser);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            user.Updated = localTime;
+
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }

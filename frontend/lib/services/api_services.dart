@@ -74,12 +74,64 @@ class ApiServices {
 
   /////////////////////////////////////////////////////////////////////////////////////         USUARIOS
 
+  Future<List<User>> getAllUsers() async {
+    final response = await http.get(Uri.parse('$baseUrl/api/User'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => User.fromJson(json)).toList();
+    } else {
+      throw Exception('Error al obtener los empleados');
+    }
+  }
+
   Future<User> getUserById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/api/User/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/api/User'));
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Error al obtener el usuario con ID $id');
+      throw Exception('Error al obtener el empleado con ID $id');
+    }
+  }
+
+  Future<void> createUser(Map<String, dynamic> user) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/User'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(user),
+    );
+
+    if (response.statusCode <= 200 && response.statusCode > 300) {
+      print('Error: ${response.body}');
+      throw Exception('Error al crear el empleado');
+    }
+  }
+
+  Future<void> updateUser(String id, Map<String, dynamic> user) async {
+    final sanitizedCustomer = user.map((key, value) {
+      if (value is DateTime) {
+        return MapEntry(key, value.toIso8601String());
+      }
+      return MapEntry(key, value);
+    });
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/User'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(sanitizedCustomer),
+    );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return;
+    } else {
+      print('Error: ${response.body}');
+      throw Exception('Error al actualizar el empleado');
+    }
+  }
+
+  Future<void> deleteUser(String id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/api/User?id=$id'));
+    if (response.statusCode != 200) {
+      throw Exception('Error al eliminar el empleado con ID $id');
     }
   }
 
