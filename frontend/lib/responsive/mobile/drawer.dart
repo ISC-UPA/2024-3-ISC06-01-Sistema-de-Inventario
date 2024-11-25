@@ -21,9 +21,9 @@ class MobileDrawerState extends State<MobileDrawer> {
     'assets/lottie/d.json',
     'assets/lottie/e.json',
     'assets/lottie/f.json',
-    'assets/lottie/g.json'
-    'assets/lottie/h.json'
-    'assets/lottie/i.json'
+    'assets/lottie/g.json',
+    'assets/lottie/h.json',
+    'assets/lottie/i.json',
     'assets/lottie/j.json'
   ];
 
@@ -96,6 +96,13 @@ class MobileDrawerState extends State<MobileDrawer> {
                   title: Text('Clientes', style: TextStyle(color: theme.onSurface)),
                   onTap: () {
                     Navigator.pushNamed(context, '/clientes');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.person_pin_rounded, color: theme.primary),
+                  title: Text('Empleados', style: TextStyle(color: theme.onSurface)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/empleados');
                   },
                 ),
                 ListTile(

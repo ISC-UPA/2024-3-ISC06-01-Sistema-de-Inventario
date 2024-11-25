@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/clientes.dart';
+import 'package:frontend/pages/empleados.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
@@ -82,6 +83,7 @@ class MyAppState extends State<MyApp> {
                     '/clientes': (context) => const ClientesPage(),
                     '/proveedores': (context) => const ProveedoresPage(),
                     '/productos': (context) => const ProductosPage(),
+                    '/empleados': (context) => const EmpleadosPage(),
                   },
                 );
               }
