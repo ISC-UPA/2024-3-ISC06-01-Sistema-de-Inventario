@@ -4,8 +4,11 @@ using SMIS.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using SMIS.Core.Interfaces;
 using SMIS.Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SMIS.API.Controllers{
+
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
 

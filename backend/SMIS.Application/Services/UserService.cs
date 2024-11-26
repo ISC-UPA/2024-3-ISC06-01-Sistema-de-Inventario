@@ -18,7 +18,6 @@ namespace SMIS.Application.Services
     {
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContext;
-        private readonly AppDbContext _context;
         private readonly LdapService _ldapService;
 
         public UserService(AppDbContext context, IHttpContextAccessor httpContext, LdapService ldapService)

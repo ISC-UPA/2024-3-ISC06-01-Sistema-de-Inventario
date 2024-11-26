@@ -1,35 +1,48 @@
 ﻿using SMIS.Application.Services;
-using SMIS.Core.Entities;
-
-using Microsoft.AspNetCore.Mvc;
+using SMIS.Application.Helpers;
 using SMIS.Application.DTOs;
+
+using SMIS.Core.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace SMIS.API.Controllers
 {
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-
-    public class AuthController :ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly Auth _auth;
         private readonly IConfiguration _configuration;
         private readonly LdapService _ldapService;
-        public AuthController(Auth auth, IConfiguration configuration, LdapService ldapService)
+
+        private readonly UserService _userService;
+        public AuthController(Auth auth, IConfiguration configuration, LdapService ldapService, UserService userService)
         {
             _auth = auth;
             _configuration = configuration;
             _ldapService = ldapService;
+            _userService = userService;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> LogIn([FromBody] LoginRequest request)
         {
-            var user = await _auth.ValidateUserAsync(request.Username, request.Password);
-            if(user == null)
-            {
-                return Unauthorized();
-            }
+            // Código original comentado para utilizar después
+            //var user = await _auth.ValidateUserAsync(request.Username, request.Password);
+            //if(user == null)
+            //{
+            //    return Unauthorized();
+            //}
+
+            Guid id = new Guid("C96F85F4-A9A2-43B5-B118-79878C0DD70A");
+            var user = await _userService.GetUserByIdAsync(id);
+
             var expirationTime = DateTime.UtcNow.AddHours(1);
             var token = GenerateJwtToken(user, expirationTime);
             return Ok(new { User = user, Token = token, Expiration = expirationTime });
@@ -57,11 +70,5 @@ namespace SMIS.API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-    }
-
-    public class LoginModel
-    {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
     }
 }

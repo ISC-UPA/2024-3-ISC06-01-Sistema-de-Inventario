@@ -3,9 +3,11 @@ using SMIS.Application.Services;
 using SMIS.Core.Entities;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SMIS.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
