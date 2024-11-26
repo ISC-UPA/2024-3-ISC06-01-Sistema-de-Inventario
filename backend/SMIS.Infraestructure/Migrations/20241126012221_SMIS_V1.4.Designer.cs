@@ -12,7 +12,7 @@ using SMIS.Infraestructure.Data;
 namespace SMIS.Infraestructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241126011215_SMIS_V1.4")]
+    [Migration("20241126012221_SMIS_V1.4")]
     partial class SMIS_V14
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace SMIS.Infraestructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -122,6 +125,9 @@ namespace SMIS.Infraestructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MinStock")
                         .HasColumnType("int");
@@ -221,9 +227,11 @@ namespace SMIS.Infraestructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -264,6 +272,9 @@ namespace SMIS.Infraestructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()

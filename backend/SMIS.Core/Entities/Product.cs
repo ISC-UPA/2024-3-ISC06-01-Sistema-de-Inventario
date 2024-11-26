@@ -26,6 +26,8 @@ namespace SMIS.Core.Entities
 
         public required int MinStock { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
 
         //Log
         public DateTime? Created { get; set; }
