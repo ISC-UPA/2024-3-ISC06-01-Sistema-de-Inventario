@@ -13,20 +13,54 @@ class AuthService {
 
   // In-memory user data
   User? _currentUser;
+  DateTime? _tokenExpiry;
 
-  // Save token
-  Future<void> saveToken(String token) async {
-    await _storage.write(key: 'auth_token', value: token);
+  // Configuration for testing
+  bool isTesting = true;
+
+  // Simulated token for testing
+  final String simulatedToken = 'simulated_token';
+
+  // Save token and expiry time
+  Future<void> saveToken(String token, DateTime expiry) async {
+    if (isTesting) {
+      _tokenExpiry = expiry;
+    } else {
+      await _storage.write(key: 'auth_token', value: token);
+      await _storage.write(key: 'token_expiry', value: expiry.toIso8601String());
+      _tokenExpiry = expiry;
+    }
   }
 
   // Read token
   Future<String?> getToken() async {
-    return await _storage.read(key: 'auth_token');
+    if (isTesting) {
+      return simulatedToken;
+    }
+
+    final token = await _storage.read(key: 'auth_token');
+    final expiryString = await _storage.read(key: 'token_expiry');
+    if (expiryString != null) {
+      _tokenExpiry = DateTime.parse(expiryString);
+    }
+
+    if (_tokenExpiry != null && DateTime.now().isAfter(_tokenExpiry!)) {
+      await deleteToken();
+      return null;
+    }
+
+    return token;
   }
 
   // Delete token
   Future<void> deleteToken() async {
-    await _storage.delete(key: 'auth_token');
+    if (isTesting) {
+      _tokenExpiry = null;
+    } else {
+      await _storage.delete(key: 'auth_token');
+      await _storage.delete(key: 'token_expiry');
+      _tokenExpiry = null;
+    }
   }
 
   // Save user data
@@ -52,8 +86,26 @@ class AuthService {
     await _storage.delete(key: 'user_data');
   }
 
+  // Check if user is logged in
+  Future<bool> isLoggedIn() async {
+    final token = await getToken();
+    if (token != null) {
+      final user = await getUserData();
+      if (user != null) {
+        _currentUser = user;
+        return true;
+      }
+    }
+    return false;
+  }
+
   // Login with API
   Future<bool> login(String email, String password) async {
+    if (isTesting) {
+      await saveToken(simulatedToken, DateTime.now().add(Duration(hours: 1)));
+      return true;
+    }
+
     final response = await http.post(
       Uri.parse('http://localhost:5000/login'),
       body: {'email': email, 'password': password},
@@ -63,7 +115,8 @@ class AuthService {
       final data = json.decode(response.body);
 
       // Save token and user data
-      await saveToken(data['token']);
+      final tokenExpiry = DateTime.now().add(Duration(seconds: data['expiresIn']));
+      await saveToken(data['token'], tokenExpiry);
       await saveUserData(User.fromJson(data['user']));
 
       return true;
@@ -81,6 +134,9 @@ class AuthService {
   // Interceptor to add token to requests
   Future<http.Response> get(String url) async {
     final token = await getToken();
+    if (token == null) {
+      throw Exception('Token has expired');
+    }
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -93,6 +149,9 @@ class AuthService {
 
   Future<http.Response> post(String url, Map<String, dynamic> body) async {
     final token = await getToken();
+    if (token == null) {
+      throw Exception('Token has expired');
+    }
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -106,6 +165,9 @@ class AuthService {
 
   Future<http.Response> put(String url, Map<String, dynamic> body) async {
     final token = await getToken();
+    if (token == null) {
+      throw Exception('Token has expired');
+    }
     final response = await http.put(
       Uri.parse(url),
       headers: {
@@ -119,6 +181,9 @@ class AuthService {
 
   Future<http.Response> delete(String url) async {
     final token = await getToken();
+    if (token == null) {
+      throw Exception('Token has expired');
+    }
     final response = await http.delete(
       Uri.parse(url),
       headers: {

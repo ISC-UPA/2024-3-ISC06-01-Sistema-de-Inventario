@@ -3,7 +3,7 @@ class User {
   final String idUser;
   final String userName;
   final String userDisplayName;
-  final int role;
+  final String role;
   final String email;
   final String password;
   final DateTime? created;
@@ -34,7 +34,7 @@ class User {
       idUser: json['idUser'],
       userName: json['userName'],
       userDisplayName: json['userDisplayName'],
-      role: json['role'],
+      role: json['role'] == 0 ? "Admin" : "User",
       email: json['email'],
       password: json['password'],
       created: json['created'] != null ? DateTime.parse(json['created']) : null,

@@ -84,7 +84,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                         'email': email,
                         'password': password,
                         'role': role,
-                        'createdBy': userId,
+                        //'createdBy': userId,
                       };
                       await ApiServices().createUser(newUser);
                       CustomSnackBar.show(context, 'Usuario creado exitosamente');

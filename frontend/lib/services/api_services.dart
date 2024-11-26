@@ -154,7 +154,7 @@ class ApiServices {
       customer,
     );
 
-    if (response.statusCode < 200 || response.statusCode >= 300) {
+    if ((response.statusCode < 200 || response.statusCode >= 300) && response.statusCode != 500) {
       debugPrint('Error: ${response.body}');
       throw Exception('Error al crear el cliente');
     }
