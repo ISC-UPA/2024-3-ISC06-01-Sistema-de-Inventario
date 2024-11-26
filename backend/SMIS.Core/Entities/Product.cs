@@ -24,6 +24,8 @@ namespace SMIS.Core.Entities
 
         public required int Stock { get; set; }
 
+        public required int MinStock { get; set; }
+
 
         //Log
         public DateTime? Created { get; set; }
@@ -39,11 +41,5 @@ namespace SMIS.Core.Entities
         //Navegation properties
         public User? CreatedByUser { get; set; }
         public User? UpdatedByUser { get; set; }
-    }
-
-    public enum EnumProductCategory
-    {
-        CategoryExample1,
-        CategoryExample2
     }
 }

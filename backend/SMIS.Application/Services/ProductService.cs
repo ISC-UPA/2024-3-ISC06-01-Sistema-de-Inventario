@@ -27,11 +27,6 @@ namespace SMIS.Application.Services
             return await _context.Products.FindAsync(id);
         }
 
-        public async Task <Product> GetProductByParamsAsync(string? name, EnumProductCategory? category)
-        {
-            return await _productRepository.GetByParamsAsync(name, category);
-        }
-
         public async Task AddProductAsync(Product product)
         {
             var utcNow = DateTime.UtcNow;

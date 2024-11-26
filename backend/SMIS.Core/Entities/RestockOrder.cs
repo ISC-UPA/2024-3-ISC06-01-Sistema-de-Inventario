@@ -16,6 +16,9 @@ namespace SMIS.Core.Entities
         [ForeignKey("Product")]
         public required Guid IdProduct { get; set; }
 
+        [ForeignKey("Order")]
+        public required Guid IdOrder { get; set; }
+
         public DateTime RestockOrderDate { get; set; }
 
         public required int Quantity { get; set; }
@@ -39,6 +42,7 @@ namespace SMIS.Core.Entities
         //Navegation properties
         public Supplier? Supplier { get; set; }
         public Product? Product { get; set; }
+        public Order? Order { get; set; }
         public User? CreatedByUser { get; set; }
         public User? UpdatedByUser { get; set; }
     }

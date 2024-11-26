@@ -32,17 +32,6 @@ namespace SMIS.API.Controllers
             return product;
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Product>> GetProductByParams([FromQuery] string? name, [FromQuery] EnumProductCategory? category)
-        {
-            var product = await _productService.GetProductByParamsAsync(name, category);
-            if (product == null)
-            {
-                return NotFound("Product not found with the given parameters.");
-            }
-            return product;
-        }
-
         [HttpPost]
         public async Task<IActionResult> AddProductAsync(Product product)
         {
