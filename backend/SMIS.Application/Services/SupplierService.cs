@@ -19,7 +19,7 @@ namespace SMIS.Application.Services
 
         public async Task<IEnumerable<Supplier>> GetAllSuppliersAsync() {
 
-            return await _context.Suppliers.ToListAsync();
+            return await _context.Suppliers.Where(s => s.IsActive == true).ToListAsync();
         }
 
         public async Task<Supplier?> GetSupplierByIdAsync(Guid id)
@@ -44,7 +44,13 @@ namespace SMIS.Application.Services
             var supplier = await _context.Suppliers.FindAsync(id);
             if (supplier != null)
             {
-                _context.Suppliers.Remove(supplier);
+                supplier.IsActive = false;
+                var utcNow = DateTime.UtcNow;
+                var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+                var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+                supplier.Updated = localTime;
+
+                _context.Suppliers.Update(supplier);
                 await _context.SaveChangesAsync();
             }
         }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMIS.Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SMISMigration : Migration
+    public partial class SMIS_V141 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace SMIS.Infraestructure.Migrations
                     UserDisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -48,6 +48,7 @@ namespace SMIS.Infraestructure.Migrations
                     IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -78,7 +79,8 @@ namespace SMIS.Infraestructure.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    Category = table.Column<int>(type: "int", nullable: false),
+                    MinStock = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -105,8 +107,9 @@ namespace SMIS.Infraestructure.Migrations
                 {
                     IdSupplier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     SupplierStatus = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -133,11 +136,8 @@ namespace SMIS.Infraestructure.Migrations
                 {
                     IdOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: true),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -148,17 +148,11 @@ namespace SMIS.Infraestructure.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.IdOrder);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_IdProduct",
-                        column: x => x.IdProduct,
+                        name: "FK_Orders_Customers_IdCustomer",
+                        column: x => x.IdCustomer,
                         principalTable: "Customers",
                         principalColumn: "IdCustomer",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Products_IdProduct",
-                        column: x => x.IdProduct,
-                        principalTable: "Products",
-                        principalColumn: "IdProduct",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Users_CreatedBy",
                         column: x => x.CreatedBy,
@@ -178,6 +172,7 @@ namespace SMIS.Infraestructure.Migrations
                     IdRestockOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdSupplier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RestockOrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -190,6 +185,12 @@ namespace SMIS.Infraestructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RestockOrders", x => x.IdRestockOrder);
+                    table.ForeignKey(
+                        name: "FK_RestockOrders_Orders_IdOrder",
+                        column: x => x.IdOrder,
+                        principalTable: "Orders",
+                        principalColumn: "IdOrder",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RestockOrders_Products_IdProduct",
                         column: x => x.IdProduct,
@@ -230,9 +231,9 @@ namespace SMIS.Infraestructure.Migrations
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_IdProduct",
+                name: "IX_Orders_IdCustomer",
                 table: "Orders",
-                column: "IdProduct");
+                column: "IdCustomer");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UpdatedBy",
@@ -253,6 +254,11 @@ namespace SMIS.Infraestructure.Migrations
                 name: "IX_RestockOrders_CreatedBy",
                 table: "RestockOrders",
                 column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RestockOrders_IdOrder",
+                table: "RestockOrders",
+                column: "IdOrder");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RestockOrders_IdProduct",
@@ -294,19 +300,19 @@ namespace SMIS.Infraestructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "RestockOrders");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Users");
