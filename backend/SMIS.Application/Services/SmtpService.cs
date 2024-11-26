@@ -2,7 +2,7 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 
-namespace TuProyecto.Services
+namespace SMIS.Application.Services
 {
     public class SmtpService
     {
