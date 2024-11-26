@@ -24,7 +24,6 @@ namespace SMIS.Core.Entities
 
         public required int Stock { get; set; }
 
-        public EnumProductCategory Category { get; set; }
 
         //Log
         public DateTime? Created { get; set; }
