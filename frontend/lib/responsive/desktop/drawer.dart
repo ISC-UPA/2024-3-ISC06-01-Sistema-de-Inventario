@@ -25,6 +25,10 @@ class DesktopMenuState extends State<DesktopMenu> {
     'assets/lottie/h.json',
     'assets/lottie/i.json',
     'assets/lottie/j.json',
+    'assets/lottie/gg.json',
+    'assets/lottie/hh.json',
+    'assets/lottie/ii.json',
+    'assets/lottie/jj.json'
   ];
 
   @override

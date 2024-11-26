@@ -24,7 +24,11 @@ class MobileDrawerState extends State<MobileDrawer> {
     'assets/lottie/g.json',
     'assets/lottie/h.json',
     'assets/lottie/i.json',
-    'assets/lottie/j.json'
+    'assets/lottie/j.json',
+    'assets/lottie/gg.json',
+    'assets/lottie/hh.json',
+    'assets/lottie/ii.json',
+    'assets/lottie/jj.json'
   ];
 
   @override
@@ -55,6 +59,7 @@ class MobileDrawerState extends State<MobileDrawer> {
     return Drawer(
       child: Column(
         children: <Widget>[
+          SizedBox(height: 50,),
           SizedBox(
             child: Center(
               child: Lottie.asset(images[_currentImageIndex], width: 200, height: 200),
