@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using TuProyecto.Services;
+using SMIS.Application.Services;
+using SMIS.Application.Models;  // Asegúrate de agregar el using para el modelo
 
-namespace TuProyecto.Controllers
+namespace SMIS.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -15,11 +16,11 @@ namespace TuProyecto.Controllers
         }
 
         [HttpPost("send-email")]
-        public async Task<IActionResult> SendEmail(string toEmail, string subject, string body)
+        public async Task<IActionResult> SendEmail([FromBody] EmailRequest request)  // Usamos EmailRequest aquí
         {
             try
             {
-                await _smtpService.SendEmailAsync(toEmail, subject, body);
+                await _smtpService.SendEmailAsync(request.ToEmail, request.Subject, request.Body);
                 return Ok("Correo enviado correctamente.");
             }
             catch (Exception ex)
