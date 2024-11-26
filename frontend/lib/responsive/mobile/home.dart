@@ -1,42 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/responsive/mobile/drawer.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeMobile extends StatelessWidget {
   const HomeMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SIARAvCE'),
-        centerTitle: true,
-        backgroundColor: Colors.redAccent,
-      ),
-      body: const Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Sistema de Inventario con Autenticación y Reportes de Actividad vía Correo Electrónico',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.blueGrey),
+        title: Text(
+          'Stock Master',
+          style: GoogleFonts.patrickHand(
+            textStyle: TextStyle(
+              fontSize: 30,
+              color: theme.onPrimary,
             ),
-            SizedBox(height: 30),
-            Text("Integrantes del equipo:"),
-            SizedBox(height: 30),
-            Text("Daniel Eduardo Pedroza Rodríguez"),
-            SizedBox(height: 10),
-            Text("KEVIN JAVIER MEDINA HERNANDEZ"),
-            SizedBox(height: 10),
-            Text("Nico Emmanuel Quintanilla Navarro"),
-            SizedBox(height: 10),
-            Text("Lenin Gerardo Silva Sabas"),
-          ],
+          ),
         ),
+        centerTitle: true,
+        backgroundColor: theme.primary,
       ),
+      drawer: const MobileDrawer(),
+      body: const Center(child: Text('Home')),
     );
   }
 }

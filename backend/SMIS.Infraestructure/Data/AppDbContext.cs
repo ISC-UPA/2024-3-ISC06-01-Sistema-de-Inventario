@@ -50,10 +50,6 @@ namespace SMIS.Infraestructure.Data
             modelBuilder.Entity<Order>().HasOne(o => o.Customer)
                 .WithMany().HasForeignKey(o => o.IdCustomer).OnDelete(DeleteBehavior.Restrict);
 
-            //To Product
-            modelBuilder.Entity<Order>().HasOne(o => o.Customer)
-                .WithMany().HasForeignKey(o => o.IdProduct).OnDelete(DeleteBehavior.Restrict);
-
             //To User (CreatedBy)
             modelBuilder.Entity<Order>().HasOne(o => o.CreatedByUser)
                 .WithMany().HasForeignKey(o => o.CreatedBy).OnDelete(DeleteBehavior.ClientSetNull);
@@ -81,6 +77,10 @@ namespace SMIS.Infraestructure.Data
             //To product
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.Product)
                 .WithMany().HasForeignKey(ro => ro.IdProduct).OnDelete(DeleteBehavior.Restrict);
+
+            //To Order
+            modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.Order)
+                .WithMany().HasForeignKey(ro => ro.IdOrder).OnDelete(DeleteBehavior.Restrict);
 
             //To User (CreatedBy)
             modelBuilder.Entity<RestockOrder>().HasOne(ro => ro.CreatedByUser)

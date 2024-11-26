@@ -2,12 +2,7 @@
 using SMIS.Core.Entities;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using SMIS.Application.Helpers;
+using SMIS.Application.DTOs;
 
 namespace SMIS.API.Controllers
 {
@@ -28,9 +23,9 @@ namespace SMIS.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LogIn([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> LogIn([FromBody] LoginRequest request)
         {
-            var user = await _auth.ValidateUserAsync(loginModel.Username, loginModel.Password);
+            var user = await _auth.ValidateUserAsync(request.Username, request.Password);
             if(user == null)
             {
                 return Unauthorized();

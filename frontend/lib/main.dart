@@ -1,17 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/clientes.dart';
+import 'package:frontend/pages/empleados.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/productos.dart';
+import 'package:frontend/pages/proveedores.dart';
+import 'package:frontend/pages/settings.dart';
 import 'package:frontend/pages/swipe_intro.dart';
-import 'package:frontend/server/certificate.dart';
+import 'package:frontend/services/certificate.dart';
+import 'package:frontend/services/shared_preferences.dart';
 import 'package:frontend/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  HttpOverrides.global = new MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides();
   
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -37,12 +42,9 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _seenTutorialFuture = _checkIfFirstTime();
-  }
-
-  Future<bool> _checkIfFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('seenTutorial') ?? true; // Retorna el valor.
+    //SharedPreferencesService().setSeenTutorial(true);
+    SharedPreferencesService().setUserId("8c2495da-acbf-4deb-9d13-859c72566705");
+    _seenTutorialFuture = SharedPreferencesService().getSeenTutorial();
   }
 
   @override
@@ -64,7 +66,7 @@ class MyAppState extends State<MyApp> {
                 return const Center(child: Text('Error loading tutorial state.'));
               } else {
                 // Aquí ya tienes el valor de seenTutorial.
-                bool seenTutorial = snapshot.data ?? true;
+                bool seenTutorial = snapshot.data ?? false;
                 String route = seenTutorial ? '/swipe_intro' : '/login';
 
                 return MaterialApp(
@@ -72,10 +74,15 @@ class MyAppState extends State<MyApp> {
                   theme: tema.appTheme.getTheme(),
                   initialRoute: route,
                   routes: {
-                    '/home': (context) => HomePage(themeNotifier: tema),
+                    '/': (context) => HomePage(themeNotifier: tema),
                     '/splash': (context) => const SplashScreen(),
                     '/login': (context) => const LoginPage(),
                     '/swipe_intro': (context) => const SwipeIntroPage(),
+                    '/settings': (context) => SettingsPage(themeNotifier: tema),
+                    '/clientes': (context) => const ClientesPage(),
+                    '/proveedores': (context) => const ProveedoresPage(),
+                    '/productos': (context) => const ProductosPage(),
+                    '/empleados': (context) => const EmpleadosPage(),
                   },
                 );
               }

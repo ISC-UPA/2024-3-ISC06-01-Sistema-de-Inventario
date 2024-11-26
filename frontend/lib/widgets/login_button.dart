@@ -50,7 +50,7 @@ class LoginButtonState extends State<LoginButton> {
 
       if (response.statusCode == 200) {
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/');
         }
       } else {
         print('Error: Usuario o contraseña incorrectos');
@@ -72,7 +72,7 @@ class LoginButtonState extends State<LoginButton> {
     final color = Theme.of(context).colorScheme;
 
     return ElevatedButton(
-      onPressed: _isLoading ? null : _authenticate, // Deshabilita el botón si está cargando
+      onPressed: _isLoading ? null : () => Navigator.pushReplacementNamed(context, '/'),  //_authenticate, // Deshabilita el botón si está cargando
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 60),
         shape: RoundedRectangleBorder(

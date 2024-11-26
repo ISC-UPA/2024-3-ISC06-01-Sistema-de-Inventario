@@ -25,11 +25,6 @@ namespace SMIS.Infraestructure.Repositories
             return await _context.Products.FindAsync(id) ?? throw new InvalidOperationException("Product Not Found");
         }
 
-        public async Task<Product> GetByParamsAsync(string? name, EnumProductCategory? category)
-        {
-            return await _context.Products.FindAsync(name, category) ?? throw new InvalidOperationException("Product Not Found");
-        }
-
         public async Task AddAsync(Product product)
         {
             var newProduct = product;

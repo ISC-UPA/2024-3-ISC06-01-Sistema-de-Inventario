@@ -1,4 +1,6 @@
-﻿using SMIS.Core.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using SMIS.Core.Entities;
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Data;
 using SMIS.Application.Helpers;
@@ -8,11 +10,13 @@ using SMIS.Infraestructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Runtime.Versioning;
+using System.Security.Claims;
 
 namespace SMIS.Application.Services
 {
     public class UserService : IUserService
     {
+        private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContext;
         private readonly AppDbContext _context;
         private readonly LdapService _ldapService;
@@ -38,7 +42,7 @@ namespace SMIS.Application.Services
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Where(u => u.IsActive == true).ToListAsync();
         }
 
         public async Task<User?> GetUserByIdAsync(Guid id)
@@ -48,12 +52,32 @@ namespace SMIS.Application.Services
 
         public async Task AddUserAsync(User user)
         {
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            user.Created = localTime; // Usar la hora local en lugar de UTC
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(User user)
         {
+            // Buscar y eliminar cualquier instancia rastreada
+            var trackedEntity = _context.Users.Local.FirstOrDefault(u => u.IdUser == user.IdUser);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            user.Updated = localTime;
+
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
@@ -63,7 +87,13 @@ namespace SMIS.Application.Services
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                user.IsActive = false;
+                var utcNow = DateTime.UtcNow;
+                var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+                var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+                user.Updated = localTime;
+
+                _context.Users.Update(user);
                 await _context.SaveChangesAsync();
             }
         }
