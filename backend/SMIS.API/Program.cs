@@ -6,9 +6,8 @@ using SMIS.Infraestructure.Data;
 //SQL-Server
 using Microsoft.EntityFrameworkCore;
 
-//LDAP-Server
-//using Microsoft.Extensions.Options;
-//using SMIS.Application.Configuration;
+//SMTP
+using SMIS.Application.Services.Email; // Asegúrate de que exista este namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,11 +54,16 @@ builder.Services.AddScoped<RestockOrderService>();
 builder.Services.AddScoped<SupplierService>();
 builder.Services.AddScoped<UserService>();
 
-//Current User Sercvice
+//Current User Service
 builder.Services.AddScoped<IUserService, UserService>();
 
 //HttpContext Service
 builder.Services.AddHttpContextAccessor();
+
+/* ---- NUEVO: Configuración de SMTP ---- */
+builder.Services.AddScoped<SmtpService>(); // Registrar el servicio SMTP
+
+/* ---- Fin configuración SMTP ---- */
 
 var app = builder.Build();
 
@@ -74,4 +78,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.Run(); 
+app.Run();
