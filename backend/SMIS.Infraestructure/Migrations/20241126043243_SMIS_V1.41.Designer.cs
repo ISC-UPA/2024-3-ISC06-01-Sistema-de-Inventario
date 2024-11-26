@@ -12,8 +12,8 @@ using SMIS.Infraestructure.Data;
 namespace SMIS.Infraestructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241126012221_SMIS_V1.4")]
-    partial class SMIS_V14
+    [Migration("20241126043243_SMIS_V1.41")]
+    partial class SMIS_V141
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,11 +275,6 @@ namespace SMIS.Infraestructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");

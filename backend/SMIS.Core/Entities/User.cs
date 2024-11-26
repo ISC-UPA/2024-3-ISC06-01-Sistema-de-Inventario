@@ -18,9 +18,6 @@ namespace SMIS.Core.Entities
         [StringLength(100)]
         public required string Email { get; set; }
 
-        [StringLength(100)]
-        public required string Password { get; set; }
-
         public bool IsActive { get; set; } = true;
 
         //Log

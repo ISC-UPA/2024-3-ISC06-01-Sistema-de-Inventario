@@ -14,7 +14,7 @@ namespace SMIS.Application.Services
 
         public async Task<User> LogIn(String Email, String Password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == Email && u.Password == Password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == Email);
 
             if (user != null)
             {

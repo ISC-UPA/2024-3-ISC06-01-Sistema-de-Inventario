@@ -5,6 +5,7 @@ using SMIS.Infraestructure.Data;
 
 //SQL-Server
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 //LDAP-Server
 //using Microsoft.Extensions.Options;

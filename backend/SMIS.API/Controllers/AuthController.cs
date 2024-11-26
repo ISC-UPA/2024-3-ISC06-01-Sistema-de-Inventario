@@ -2,6 +2,7 @@
 using SMIS.Core.Entities;
 
 using Microsoft.AspNetCore.Mvc;
+using SMIS.Application.DTOs;
 
 namespace SMIS.API.Controllers
 {
@@ -17,9 +18,9 @@ namespace SMIS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<User> LogIn(String Email, String password)
+        public async Task<User> LogIn([FromBody] LoginRequest request)
         {
-            return await _auth.LogIn(Email, password);
+            return await _auth.LogIn(request.Username, request.Password);
         }
     }
 }

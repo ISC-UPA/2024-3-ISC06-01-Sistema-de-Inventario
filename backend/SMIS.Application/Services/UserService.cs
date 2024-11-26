@@ -10,8 +10,8 @@ namespace SMIS.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly IHttpContextAccessor _httpContext;
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContext;
 
         public UserService(AppDbContext context, IHttpContextAccessor httpContext)
         {
