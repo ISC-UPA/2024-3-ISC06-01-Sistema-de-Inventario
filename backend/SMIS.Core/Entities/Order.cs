@@ -12,17 +12,9 @@ namespace SMIS.Core.Entities
         [ForeignKey("Customer")]
         public required Guid IdCustomer { get; set; }
 
-        [ForeignKey("Product")]
-        public required Guid IdProduct { get; set; }
-
         public required DateTime OrderDate { get; set; }
 
         public DateTime? DeliveryDate { get; set; }
-
-        public int? Quantity { get; set; }
-
-        [Precision(18, 2)]
-        public decimal TotalAmount { get; set; }
 
         public EnumOrderStatus Status { get; set; }
 
@@ -39,7 +31,6 @@ namespace SMIS.Core.Entities
 
         //Navegation properties
         public Customer? Customer { get; set; }
-        public Product? Product { get; set; }
         public User? CreatedByUser { get; set; }
         public User? UpdatedByUser { get; set; }
     }

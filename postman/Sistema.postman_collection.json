@@ -12,6 +12,16 @@
 				{
 					"name": "GetAllUsers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -26,11 +36,21 @@
 				{
 					"name": "AddUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"Test\",\r\n    \"userDisplayName\": \"TestUser\",\r\n    \"role\": 0,\r\n    \"email\": \"Test@gmail.com\",\r\n    \"password\": \"demo123\"\r\n    \r\n}",
+							"raw": "{\r\n  \"User\": {\r\n    \"UserName\": \"exampleUser\",\r\n    \"UserDisplayName\": \"Example User\",\r\n    \"Role\": 1,\r\n    \"Email\": \"exampleuser@example.com\"\r\n  },\r\n  \"Id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -49,11 +69,21 @@
 				{
 					"name": "UpdateUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idUser\": \"7f6abd28-ebbb-4a3c-0723-08dcfea554f9\",\r\n    \"userName\": \"nicou\",\r\n    \"userDisplayName\": \"UserTest1\",\r\n    \"role\": 0,\r\n    \"email\": \"UserTest@gmail.com\",\r\n    \"password\": \"demo123\",\r\n    \"updatedBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"user\": {\r\n    \"idUser\": \"\",\r\n    \"userName\": \"testing\",\r\n    \"userDisplayName\": \"testing\",\r\n    \"role\": 0,\r\n    \"email\": \"string\"\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -72,18 +102,25 @@
 				{
 					"name": "DeleteUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}User?id=",
+							"raw": "{{url}}User/",
 							"host": [
 								"{{url}}User"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -92,6 +129,16 @@
 				{
 					"name": "GetUserById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -114,6 +161,16 @@
 				{
 					"name": "GetAllCustomer",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -128,11 +185,21 @@
 				{
 					"name": "AddCustomer",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"CustomerTest\",\r\n  \"email\": \"customer@gmail.com\",\r\n  \"createdBy\" : \"7632ceed-c444-48e9-1c4b-08dcf917b825\"\r\n}",
+							"raw": "{\r\n  \"customer\": {\r\n    \"name\": \"string\",\r\n    \"email\": \"string\"\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,11 +218,21 @@
 				{
 					"name": "UpdateCustomer",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"CustomerTest\",\r\n  \"email\": \"customer@gmail.com\",\r\n  \"UpdatedBy\" : \"7632ceed-c444-48e9-1c4b-08dcf917b825\"\r\n}",
+							"raw": "{\r\n  \"customer\": {\r\n    \"idCustomer\": \"\",\r\n    \"name\": \"string\",\r\n    \"email\": \"string\"\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,18 +251,25 @@
 				{
 					"name": "DeleteCustomer",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Customer?id=",
+							"raw": "{{url}}Customer/",
 							"host": [
 								"{{url}}Customer"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -194,6 +278,16 @@
 				{
 					"name": "GetCustomerById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -216,6 +310,16 @@
 				{
 					"name": "GetAllSupplier",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -230,11 +334,21 @@
 				{
 					"name": "AddSupplier",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"SupplierTest\",\r\n    \"description\": \"First supplier\",\r\n    \"supplierStatus\": 0,\r\n    \"createdBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"supplier\": {\r\n    \"name\": \"string\",\r\n    \"description\": \"string\",\r\n    \"supplierStatus\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -253,11 +367,21 @@
 				{
 					"name": "UpdateSupplier",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"SupplierTest\",\r\n    \"description\": \"First supplier\",\r\n    \"supplierStatus\": 0,\r\n    \"updatedBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"supplier\": {\r\n    \"idSupplier\": \"\",\r\n    \"name\": \"string\",\r\n    \"description\": \"string\",\r\n    \"supplierStatus\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -276,18 +400,25 @@
 				{
 					"name": "DeleteSupplier",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Supplier?id=",
+							"raw": "{{url}}Supplier/",
 							"host": [
 								"{{url}}Supplier"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -296,6 +427,16 @@
 				{
 					"name": "GetSupplierById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -318,6 +459,16 @@
 				{
 					"name": "GetAllProduct",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -332,11 +483,21 @@
 				{
 					"name": "AddProduct",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ProductTest1\",\r\n    \"description\": \"First test product\",\r\n    \"price\": 50,\r\n    \"cost\": 50,\r\n    \"stock\": 10,\r\n    \"category\": 0,\r\n    \"createdBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"product\": {\r\n    \"name\": \"string\",\r\n    \"description\": \"string\",\r\n    \"price\": 0,\r\n    \"cost\": 0,\r\n    \"stock\": 0,\r\n    \"minStock\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -355,11 +516,21 @@
 				{
 					"name": "UpdateProduct",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"ProductTest1\",\r\n    \"description\": \"First test product\",\r\n    \"price\": 50,\r\n    \"cost\": 50,\r\n    \"stock\": 10,\r\n    \"category\": 0,\r\n    \"updatedBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"product\": {\r\n    \"idProduct\": \"\",\r\n    \"name\": \"string\",\r\n    \"description\": \"string\",\r\n    \"price\": 0,\r\n    \"cost\": 0,\r\n    \"stock\": 0,\r\n    \"minStock\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -378,18 +549,25 @@
 				{
 					"name": "DeleteProduct",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Product?id=",
+							"raw": "{{url}}Product/",
 							"host": [
 								"{{url}}Product"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -398,6 +576,16 @@
 				{
 					"name": "GetProductById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -420,6 +608,16 @@
 				{
 					"name": "GetAllOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -434,11 +632,21 @@
 				{
 					"name": "AddOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idOrder\": \"\",\r\n  \"idCustomer\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"orderDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"deliveryDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"createdBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"order\": {\r\n    \"idCustomer\": \"\",\r\n    \"orderDate\": \"\",\r\n    \"deliveryDate\": \"\",\r\n    \"status\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -457,11 +665,21 @@
 				{
 					"name": "UpdateOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idOrder\": \"\",\r\n  \"idCustomer\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"orderDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"deliveryDate\": \"2024-10-30T19:30:05.758Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"updatedBy\": \"\"\r\n}",
+							"raw": "{\r\n  \"order\": {\r\n    \"idOrder\": \"\",\r\n    \"idCustomer\": \"\",\r\n    \"orderDate\": \"\",\r\n    \"deliveryDate\": \"\",\r\n    \"status\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -480,18 +698,25 @@
 				{
 					"name": "DeleteOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}Order?id=",
+							"raw": "{{url}}Order/",
 							"host": [
 								"{{url}}Order"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -500,6 +725,16 @@
 				{
 					"name": "GetOrderById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -522,6 +757,16 @@
 				{
 					"name": "GetAllRestockOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -536,11 +781,21 @@
 				{
 					"name": "AddRestockOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idRestockOrder\": \"\",\r\n  \"idSupplier\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"restockOrderDate\": \"2024-10-30T19:32:13.173Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"createdBy\": \"\"\r\n}\r\n",
+							"raw": "{\r\n  \"restockOrder\": {\r\n    \"idSupplier\": \"\",\r\n    \"idProduct\": \"\",\r\n    \"idOrder\": \"\",\r\n    \"restockOrderDate\": \"\",\r\n    \"quantity\": 0,\r\n    \"totalAmount\": 0,\r\n    \"status\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -559,11 +814,21 @@
 				{
 					"name": "UpdateRestockOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idRestockOrder\": \"\",\r\n  \"idSupplier\": \"\",\r\n  \"idProduct\": \"\",\r\n  \"restockOrderDate\": \"2024-10-30T19:32:13.173Z\",\r\n  \"quantity\": 0,\r\n  \"totalAmount\": 0,\r\n  \"status\": 0,\r\n  \"updatedBy\": \"\"\r\n}\r\n",
+							"raw": "{\r\n  \"restockOrder\": {\r\n    \"idRestockOrder\": \"\",\r\n    \"idSupplier\": \"\",\r\n    \"idProduct\": \"\",\r\n    \"idOrder\": \"\",\r\n    \"restockOrderDate\": \"\",\r\n    \"quantity\": 0,\r\n    \"totalAmount\": 0,\r\n    \"status\": 0\r\n  },\r\n  \"id\": \"{{id}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -582,18 +847,25 @@
 				{
 					"name": "DeleteRestockOrder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}RestockOrder?id=",
+							"raw": "{{url}}RestockOrder/",
 							"host": [
 								"{{url}}RestockOrder"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": ""
-								}
+							"path": [
+								""
 							]
 						}
 					},
@@ -602,6 +874,16 @@
 				{
 					"name": "GetRestockOrderById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -626,20 +908,22 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{url}}Auth?Email=Test@gmail.com&password=demo123",
+							"raw": "{{url}}Auth/login",
 							"host": [
 								"{{url}}Auth"
 							],
-							"query": [
-								{
-									"key": "Email",
-									"value": "Test@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "demo123"
-								}
+							"path": [
+								"login"
 							]
 						}
 					},
