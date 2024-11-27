@@ -124,7 +124,7 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
         cells: [
           DataCell(Text(employee.userName)),
           DataCell(Text(employee.userDisplayName)),
-          DataCell(Text(employee.role.toString())),
+          DataCell(Text(employee.role.toString() == '0' ? 'Administrador' : 'Empleado')),
           DataCell(Text(employee.email)),
           DataCell(Text(_formatDate(employee.created))),
           DataCell(Text(employee.createdByUser?.userDisplayName ?? '')),

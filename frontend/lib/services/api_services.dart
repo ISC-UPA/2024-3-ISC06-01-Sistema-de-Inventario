@@ -91,8 +91,8 @@ class ApiServices {
     print('Headers: $headers');
     
     final response = await http.get(Uri.parse('$baseUrl/api/User'), headers: headers);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -142,7 +142,9 @@ class ApiServices {
 
   Future<void> deleteUser(String id) async {
     final headers = await _getHeaders();
-    final response = await http.delete(Uri.parse('$baseUrl/api/User?id=$id'), headers: headers);
+    final response = await http.delete(Uri.parse('$baseUrl/api/User/$id'), headers: headers);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el empleado con ID $id');
     }
