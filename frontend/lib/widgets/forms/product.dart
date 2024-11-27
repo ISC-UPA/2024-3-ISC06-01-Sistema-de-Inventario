@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/snake_bar.dart';
@@ -194,7 +196,7 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                       }
                     } catch (e) {
                       CustomSnackBar.show(context, 'Error: ${e.toString()}');
-                      print(e);
+                      debugPrint(e.toString());
                       if (context.mounted) {
                         Navigator.of(context).pop(null);
                       }
@@ -216,7 +218,7 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
 }
 
 Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productId) async {
-  bool _isLoading = false;
+  bool isLoading = false;
 
   return showDialog<bool>(
     context: context,
@@ -229,15 +231,15 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productI
             content: const Text('¿Estás seguro de que deseas eliminar este producto?'),
             actions: [
               TextButton(
-                onPressed: _isLoading ? null : () {
+                onPressed: isLoading ? null : () {
                   Navigator.of(context).pop(false);
                 },
                 child: const Text('Cancelar'),
               ),
               ElevatedButton(
-                onPressed: _isLoading ? null : () async {
+                onPressed: isLoading ? null : () async {
                   setState(() {
-                    _isLoading = true;
+                    isLoading = true;
                   });
 
                   try {
@@ -254,10 +256,10 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String productI
                   }
 
                   setState(() {
-                    _isLoading = false;
+                    isLoading = false;
                   });
                 },
-                child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Eliminar'),
+                child: isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Eliminar'),
               ),
             ],
           );

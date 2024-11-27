@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -55,7 +57,7 @@ class DesktopMenuState extends State<DesktopMenu> {
       await _authService.logout();
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } catch (e) {
-      print('Error al cerrar sesión: $e');
+      debugPrint('Error al cerrar sesión: $e');
     }
   }
 

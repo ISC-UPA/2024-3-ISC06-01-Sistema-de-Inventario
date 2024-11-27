@@ -39,7 +39,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
     }
   }
 
-  Future<String> _getUserName(String userId) async {
+  Future<String> getUserName(String userId) async {
     try {
       User user = await ApiServices().getUserById(userId);
       return user.userName;
@@ -94,7 +94,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: DataTable(
-                                    headingRowColor: MaterialStateColor.resolveWith((states) => theme.primary),
+                                    headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
                                     headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
                                     columns: _buildColumns(),
                                     rows: _buildRows(_products, theme),

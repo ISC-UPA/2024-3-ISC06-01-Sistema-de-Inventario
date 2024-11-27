@@ -53,7 +53,7 @@ class ApiServices {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al crear el producto');
     }
   }
@@ -78,7 +78,7 @@ class ApiServices {
 
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar el producto');
     }
   }
@@ -128,7 +128,7 @@ class ApiServices {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al crear el empleado');
     }
   }
@@ -142,7 +142,7 @@ class ApiServices {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar el empleado');
     }
   }
@@ -150,8 +150,8 @@ class ApiServices {
   Future<void> deleteUser(String id) async {
     final headers = await _getHeaders();
     final response = await http.delete(Uri.parse('$baseUrl/api/User/$id'), headers: headers);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el empleado con ID $id');
     }
@@ -189,7 +189,7 @@ class ApiServices {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al crear el cliente');
     }
   }
@@ -210,7 +210,7 @@ class ApiServices {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('Error: ${response.body}');
+      debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar el cliente');
     }
   }

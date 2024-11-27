@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/snake_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +13,7 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
   final nameController = TextEditingController(text: customer?.name ?? '');
   final emailController = TextEditingController(text: customer?.email ?? '');
 
-  bool _isLoading = false;
+  bool isLoading = false;
 
   if (!context.mounted) return null;
 
@@ -40,7 +42,7 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
             ),
             actions: [
               TextButton(
-                onPressed: _isLoading ? null : () {
+                onPressed: isLoading ? null : () {
                   if (context.mounted) {
                     Navigator.of(context).pop(null);
                   }
@@ -48,9 +50,9 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
                 child: const Text('Cancelar'),
               ),
               ElevatedButton(
-                onPressed: _isLoading ? null : () async {
+                onPressed: isLoading ? null : () async {
                   setState(() {
-                    _isLoading = true;
+                    isLoading = true;
                   });
 
                   final name = nameController.text;
@@ -85,17 +87,17 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
                     }
                   } catch (e) {
                     CustomSnackBar.show(context, 'Error: ${e.toString()}');
-                    print(e);
+                    debugPrint(e.toString());
                     if (context.mounted) {
                       Navigator.of(context).pop(null);
                     }
                   }
 
                   setState(() {
-                    _isLoading = false;
+                    isLoading = false;
                   });
                 },
-                child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Guardar'),
+                child: isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Guardar'),
               ),
             ],
           );
@@ -106,7 +108,7 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
 }
 
 Future<bool?> showDeleteConfirmationDialog(BuildContext context, String customerId) async {
-  bool _isLoading = false;
+  bool isLoading = false;
 
   return showDialog<bool>(
     context: context,
@@ -119,15 +121,15 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String customer
             content: const Text('¿Estás seguro de que deseas eliminar este cliente?'),
             actions: [
               TextButton(
-                onPressed: _isLoading ? null : () {
+                onPressed: isLoading ? null : () {
                   Navigator.of(context).pop(false);
                 },
                 child: const Text('Cancelar'),
               ),
               ElevatedButton(
-                onPressed: _isLoading ? null : () async {
+                onPressed: isLoading ? null : () async {
                   setState(() {
-                    _isLoading = true;
+                    isLoading = true;
                   });
 
                   try {
@@ -144,10 +146,10 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String customer
                   }
 
                   setState(() {
-                    _isLoading = false;
+                    isLoading = false;
                   });
                 },
-                child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Eliminar'),
+                child: isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('Eliminar'),
               ),
             ],
           );
