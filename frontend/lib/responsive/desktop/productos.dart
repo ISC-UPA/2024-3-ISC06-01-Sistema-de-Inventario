@@ -94,7 +94,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: DataTable(
-                                    headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                                    headingRowColor: MaterialStateColor.resolveWith((states) => theme.primary),
                                     headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
                                     columns: _buildColumns(),
                                     rows: _buildRows(_products, theme),
@@ -121,7 +121,7 @@ class ProductosDesktopState extends State<ProductosDesktop> {
       DataColumn(label: Text('Precio')),
       DataColumn(label: Text('Costo')),
       DataColumn(label: Text('Stock')),
-      DataColumn(label: Text('Categoría')),
+      DataColumn(label: Text('Stock Mínimo')),
       DataColumn(label: Text('Creado')),
       DataColumn(label: Text('Creado Por')),
       DataColumn(label: Text('Actualizado')),
@@ -139,37 +139,11 @@ class ProductosDesktopState extends State<ProductosDesktop> {
           DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
           DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
           DataCell(Text(product.stock.toString())),
-          DataCell(Text(product.category.toString())),
+          DataCell(Text(product.minStock.toString())),
           DataCell(Text(_formatDate(product.created))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(product.createdBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
+          DataCell(Text(product.createdByUser?.userDisplayName ?? '')),
           DataCell(Text(_formatDate(product.updated))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(product.updatedBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
+          DataCell(Text(product.updatedByUser?.userDisplayName ?? '')),
           DataCell(
             Row(
               children: [

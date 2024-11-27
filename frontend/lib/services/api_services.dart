@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
@@ -23,6 +24,8 @@ class ApiServices {
   Future<List<Product>> getAllProducts() async {
     final headers = await _getHeaders();
     final response = await http.get(Uri.parse('$baseUrl/api/Product'), headers: headers);
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Product.fromJson(json)).toList();
@@ -65,10 +68,14 @@ class ApiServices {
     });
 
     final response = await http.put(
-      Uri.parse('$baseUrl/api/Product/$id'),
+      Uri.parse('$baseUrl/api/Product'),
       headers: headers,
       body: json.encode(sanitizedProduct),
     );
+    
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       print('Error: ${response.body}');
@@ -78,7 +85,7 @@ class ApiServices {
 
   Future<void> deleteProduct(String id) async {
     final headers = await _getHeaders();
-    final response = await http.delete(Uri.parse('$baseUrl/api/Product?id=$id'), headers: headers);
+    final response = await http.delete(Uri.parse('$baseUrl/api/Product/$id'), headers: headers);
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el producto con ID $id');
     }
@@ -88,12 +95,12 @@ class ApiServices {
 
   Future<List<User>> getAllUsers() async {
     final headers = await _getHeaders();
-    print('Headers: $headers');
-    
+    //print('Headers: $headers');
+
     final response = await http.get(Uri.parse('$baseUrl/api/User'), headers: headers);
     //print('Response status: ${response.statusCode}');
     //print('Response body: ${response.body}');
-    
+
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => User.fromJson(json)).toList();

@@ -1,4 +1,3 @@
-// Modelo de Product
 import 'package:frontend/models/model_user.dart';
 
 class Product {
@@ -8,7 +7,7 @@ class Product {
   final double price;
   final double cost;
   final int stock;
-  final int category;
+  final int minStock; // Nuevo campo
   final DateTime? created;
   final String? createdBy;
   final DateTime? updated;
@@ -23,7 +22,7 @@ class Product {
     required this.price,
     required this.cost,
     required this.stock,
-    required this.category,
+    required this.minStock, // Nuevo campo
     this.created,
     this.createdBy,
     this.updated,
@@ -40,7 +39,7 @@ class Product {
       price: json['price'].toDouble(),
       cost: json['cost'].toDouble(),
       stock: json['stock'],
-      category: json['category'],
+      minStock: json['minStock'], // Nuevo campo
       created: json['created'] != null ? DateTime.parse(json['created']) : null,
       createdBy: json['createdBy'],
       updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
@@ -62,7 +61,7 @@ class Product {
       'price': price,
       'cost': cost,
       'stock': stock,
-      'category': category,
+      'minStock': minStock, // Nuevo campo
       'created': created?.toIso8601String(),
       'createdBy': createdBy,
       'updated': updated?.toIso8601String(),

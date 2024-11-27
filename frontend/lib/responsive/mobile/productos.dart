@@ -123,7 +123,7 @@ class ProductosMobileState extends State<ProductosMobile> {
       DataColumn(label: Text('Precio')),
       DataColumn(label: Text('Costo')),
       DataColumn(label: Text('Stock')),
-      DataColumn(label: Text('Categoría')),
+      DataColumn(label: Text('Stock Mínimo')),
       DataColumn(label: Text('Creado')),
       DataColumn(label: Text('Creado Por')),
       DataColumn(label: Text('Actualizado')),
@@ -141,7 +141,7 @@ class ProductosMobileState extends State<ProductosMobile> {
           DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
           DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
           DataCell(Text(product.stock.toString())),
-          DataCell(Text(product.category.toString())),
+          DataCell(Text(product.minStock.toString())), // Nuevo campo
           DataCell(Text(_formatDate(product.created))),
           DataCell(
             FutureBuilder<String>(

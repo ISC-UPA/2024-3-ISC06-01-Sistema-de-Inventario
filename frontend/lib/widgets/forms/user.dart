@@ -25,7 +25,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text(user == null ? 'Agregar Usuario' : 'Editar Usuario'),
+            title: Text(user == null ? 'Agregar Empleado' : 'Editar Empleado'),
             content: SingleChildScrollView(
               child: Form(
                 key: formKey,
@@ -33,10 +33,10 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                   children: [
                     TextFormField(
                       controller: userNameController,
-                      decoration: const InputDecoration(labelText: 'Nombre de Usuario'),
+                      decoration: const InputDecoration(labelText: 'Nombre de Empleado'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el nombre de usuario';
+                          return 'Por favor ingrese el nombre de Empleado';
                         }
                         return null;
                       },
@@ -70,7 +70,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                       decoration: const InputDecoration(labelText: 'Rol'),
                       items: const [
                         DropdownMenuItem(value: 0, child: Text('Administrador')),
-                        DropdownMenuItem(value: 1, child: Text('Usuario')),
+                        DropdownMenuItem(value: 1, child: Text('Empleado')),
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -123,7 +123,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                           'Id': userId,
                         };
                         await ApiServices().createUser(newUser);
-                        CustomSnackBar.show(context, 'Usuario creado exitosamente');
+                        CustomSnackBar.show(context, 'Empleado creado exitosamente');
                         if (context.mounted) {
                           Navigator.of(context).pop(true);
                         }
@@ -139,7 +139,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                           'Id': userId,
                         };
                         await ApiServices().updateUser(user.idUser, updatedUser);
-                        CustomSnackBar.show(context, 'Usuario actualizado exitosamente');
+                        CustomSnackBar.show(context, 'Empleado actualizado exitosamente');
                         if (context.mounted) {
                           Navigator.of(context).pop(true);
                         }
@@ -180,7 +180,7 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String userId) 
         builder: (context, setState) {
           return AlertDialog(
             title: const Text('Confirmar Eliminación'),
-            content: const Text('¿Estás seguro de que deseas eliminar este usuario?'),
+            content: const Text('¿Estás seguro de que deseas eliminar este Empleado?'),
             actions: [
               TextButton(
                 onPressed: _isLoading ? null : () {
@@ -196,7 +196,7 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String userId) 
 
                   try {
                     await ApiServices().deleteUser(userId);
-                    CustomSnackBar.show(context, 'Usuario eliminado exitosamente');
+                    CustomSnackBar.show(context, 'Empleado eliminado exitosamente');
                     if (context.mounted) {
                       Navigator.of(context).pop(true);
                     }
