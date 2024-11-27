@@ -34,7 +34,7 @@ namespace SMIS.Application.Helpers
                     _logger.LogInformation("LDAP connection succes");
 
                     var searchRequest = new SearchRequest(
-                        "dc=isc,dc=upa,dc=edu,dc=mx", //base DN
+                        "dc=smis,dc=com", //base DN
                         $"(sAMAccountName={username})", //LDAP filter
                         SearchScope.Subtree,
                         null

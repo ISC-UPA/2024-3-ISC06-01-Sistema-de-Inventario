@@ -34,11 +34,12 @@ namespace SMIS.API.Controllers
         public async Task<IActionResult> LogIn([FromBody] LoginRequest request)
         {
             // Código original comentado para utilizar después
-            //var user = await _auth.ValidateUserAsync(request.Username, request.Password);
-            //if(user == null)
-            //{
-            //    return Unauthorized();
-            //}
+            // var user = await _auth.ValidateUserAsync(request.Username, request.Password);
+            // if(user == null)
+            // {
+            //     return Unauthorized();
+            // }
+
 
             Guid id = new Guid("8c2495da-acbf-4deb-9d13-859c72566705");
             var user = await _userService.GetUserByIdAsync(id);
