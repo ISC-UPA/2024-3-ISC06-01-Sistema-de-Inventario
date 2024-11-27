@@ -3,6 +3,7 @@ import 'package:frontend/responsive/desktop/drawer.dart';
 import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/models/model_user.dart';
+import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/forms/customer.dart';
 import 'package:intl/intl.dart';
 
@@ -17,11 +18,13 @@ class ClientesDesktopState extends State<ClientesDesktop> {
   List<Customer> _customers = [];
   bool _isLoading = true;
   String? _error;
+  User? _user;
 
   @override
   void initState() {
     super.initState();
     _fetchCustomers();
+    _fetchUserData();
   }
 
   Future<void> _fetchCustomers() async {
@@ -39,12 +42,15 @@ class ClientesDesktopState extends State<ClientesDesktop> {
     }
   }
 
-  Future<String> _getUserName(String userId) async {
+  Future<void> _fetchUserData() async {
     try {
-      User user = await ApiServices().getUserById(userId);
-      return user.userName;
+      final AuthService authService = AuthService();
+      final user = await authService.getUserData();
+      setState(() {
+        _user = user;
+      });
     } catch (e) {
-      return '';
+      debugPrint(e.toString());
     }
   }
 
@@ -121,53 +127,35 @@ class ClientesDesktopState extends State<ClientesDesktop> {
   }
 
   List<DataColumn> _buildColumns() {
-    return const [
-      DataColumn(label: Text('Nombre')),
-      DataColumn(label: Text('Email')),
-      DataColumn(label: Text('Creado')),
-      DataColumn(label: Text('Creado Por')),
-      DataColumn(label: Text('Actualizado')),
-      DataColumn(label: Text('Actualizado Por')),
-      DataColumn(label: Text('Acciones')),
+    final columns = [
+      const DataColumn(label: Text('Nombre')),
+      const DataColumn(label: Text('Email')),
+      const DataColumn(label: Text('Creado')),
+      const DataColumn(label: Text('Creado Por')),
+      const DataColumn(label: Text('Actualizado')),
+      const DataColumn(label: Text('Actualizado Por')),
     ];
+
+    if (_user?.role == 0) {
+      columns.add(const DataColumn(label: Text('Acciones')));
+    }
+
+    return columns;
   }
 
   List<DataRow> _buildRows(List<Customer> customers, ColorScheme theme) {
     return customers.map((customer) {
-      return DataRow(
-        cells: [
-          DataCell(Text(customer.name)),
-          DataCell(Text(customer.email)),
-          DataCell(Text(_formatDate(customer.created))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(customer.createdBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
-          DataCell(Text(_formatDate(customer.updated))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(customer.updatedBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
+      final cells = [
+        DataCell(Text(customer.name)),
+        DataCell(Text(customer.email)),
+        DataCell(Text(_formatDate(customer.created))),
+        DataCell(Text(customer.createdByUser?.userDisplayName ?? '')),
+        DataCell(Text(_formatDate(customer.updated))),
+        DataCell(Text(customer.updatedByUser?.userDisplayName ?? '')),
+      ];
+
+      if (_user?.role == 0) {
+        cells.add(
           DataCell(
             Row(
               children: [
@@ -182,8 +170,10 @@ class ClientesDesktopState extends State<ClientesDesktop> {
               ],
             ),
           ),
-        ],
-      );
+        );
+      }
+
+      return DataRow(cells: cells);
     }).toList();
   }
 }

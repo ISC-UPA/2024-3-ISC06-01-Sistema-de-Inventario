@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
+import 'package:frontend/models/model_supplier.dart';
 import 'package:frontend/services/auth_services.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,77 @@ class ApiServices {
       'accept': 'text/plain',
       'Authorization': 'Bearer $token',
     };
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////         PROVEEDORES
+
+  Future<List<Supplier>> getAllSuppliers() async {
+    final headers = await _getHeaders();
+    final response = await http.get(Uri.parse('$baseUrl/api/Supplier'), headers: headers);
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Supplier.fromJson(json)).toList();
+    } else {
+      throw Exception('Error al obtener los proveedores');
+    }
+  }
+
+  Future<Supplier> getSupplierById(String id) async {
+    final headers = await _getHeaders();
+    final response = await http.get(Uri.parse('$baseUrl/api/Supplier/$id'), headers: headers);
+    if (response.statusCode == 200) {
+      return Supplier.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Error al obtener el proveedor con ID $id');
+    }
+  }
+
+  Future<void> createSupplier(Map<String, dynamic> supplier) async {
+    final headers = await _getHeaders();
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/Supplier'),
+      headers: headers,
+      body: json.encode(supplier),
+    );
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al crear el proveedor');
+    }
+  }
+
+  Future<void> updateSupplier(String id, Map<String, dynamic> supplier) async {
+    final headers = await _getHeaders();
+    final sanitizedSupplier = supplier.map((key, value) {
+      if (value is DateTime) {
+        return MapEntry(key, value.toIso8601String());
+      }
+      return MapEntry(key, value);
+    });
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/Supplier'),
+      headers: headers,
+      body: json.encode(sanitizedSupplier),
+    );
+    
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al actualizar el proveedor');
+    }
+  }
+
+  Future<void> deleteSupplier(String id) async {
+    final headers = await _getHeaders();
+    final response = await http.delete(Uri.parse('$baseUrl/api/Supplier/$id'), headers: headers);
+    if (response.statusCode != 200) {
+      throw Exception('Error al eliminar el proveedor con ID $id');
+    }
   }
 
   /////////////////////////////////////////////////////////////////////////////////////         PRODUCTOS
@@ -204,10 +276,13 @@ class ApiServices {
     });
 
     final response = await http.put(
-      Uri.parse('$baseUrl/api/Customer/$id'),
+      Uri.parse('$baseUrl/api/Customer'),
       headers: headers,
       body: json.encode(sanitizedCustomer),
     );
+
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
@@ -217,7 +292,7 @@ class ApiServices {
 
   Future<void> deleteCustomer(String id) async {
     final headers = await _getHeaders();
-    final response = await http.delete(Uri.parse('$baseUrl/api/Customer?id=$id'), headers: headers);
+    final response = await http.delete(Uri.parse('$baseUrl/api/Customer/$id'), headers: headers);
     if (response.statusCode != 204) {
       throw Exception('Error al eliminar el cliente con ID $id');
     }

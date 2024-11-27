@@ -1,18 +1,19 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/snake_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/services/api_services.dart';
 
 Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final userId = prefs.getString('userId') ?? '';
+  final AuthService authService = AuthService();
+  final userId = await authService.getUserData().then((value) => value?.idUser);
 
   final nameController = TextEditingController(text: customer?.name ?? '');
   final emailController = TextEditingController(text: customer?.email ?? '');
 
+  final formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
   if (!context.mounted) return null;
@@ -26,18 +27,42 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
           return AlertDialog(
             title: Text(customer == null ? 'Agregar Cliente' : 'Editar Cliente'),
             content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextField(
-                    controller: nameController,
-                    decoration: const InputDecoration(labelText: 'Nombre'),
-                  ),
-                  TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: nameController,
+                        decoration: const InputDecoration(labelText: 'Nombre'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el nombre';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: emailController,
+                        decoration: const InputDecoration(labelText: 'Email'),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el email';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Por favor ingrese un email válido';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             actions: [
@@ -51,6 +76,10 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
               ),
               ElevatedButton(
                 onPressed: isLoading ? null : () async {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+
                   setState(() {
                     isLoading = true;
                   });
@@ -61,9 +90,11 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
                   try {
                     if (customer == null) {
                       final newCustomer = {
-                        'Name': name,
-                        'Email': email,
-                        'CreatedBy': userId,
+                        'customer': {
+                          'name': name,
+                          'email': email,
+                        },
+                        'id': userId,
                       };
                       await ApiServices().createCustomer(newCustomer);
                       CustomSnackBar.show(context, 'Cliente creado exitosamente');
@@ -72,13 +103,16 @@ Future<bool?> showCustomerDialog(BuildContext context, {Customer? customer}) asy
                       }
                     } else {
                       final updatedCustomer = {
-                        'IdCustomer': customer.idCustomer,
-                        'Name': name,
-                        'Email': email,
-                        'Created': customer.created, // Preservar el campo created
-                        'CreatedBy': customer.createdBy, // Preservar el campo createdBy
-                        'UpdatedBy': userId,
-                      };
+                          'customer': {
+                            'idCustomer': customer.idCustomer,
+                            'name': name,
+                            'email': email,
+                            //'created': customer.created?.toIso8601String(),
+                            //'createdBy': customer.createdBy,
+                            'updated': DateTime.now().toIso8601String(),
+                          },
+                          'id': userId,
+                        };
                       await ApiServices().updateCustomer(customer.idCustomer, updatedCustomer);
                       CustomSnackBar.show(context, 'Cliente actualizado exitosamente');
                       if (context.mounted) {

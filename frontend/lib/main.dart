@@ -7,6 +7,7 @@ import 'package:frontend/pages/empleados.dart';
 import 'package:frontend/pages/home.dart';
 import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/ordenes.dart';
 import 'package:frontend/pages/productos.dart';
 import 'package:frontend/pages/proveedores.dart';
 import 'package:frontend/pages/settings.dart';
@@ -93,6 +94,7 @@ class MyAppState extends State<MyApp> {
                     '/proveedores': (context) => const ProveedoresPage(),
                     '/productos': (context) => const ProductosPage(),
                     '/empleados': (context) => const EmpleadosPage(),
+                    '/ordenes': (context) => const OrderPage(),
                   },
                 );
               }

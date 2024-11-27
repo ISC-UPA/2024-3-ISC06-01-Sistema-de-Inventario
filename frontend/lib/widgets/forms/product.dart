@@ -35,100 +35,118 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                 key: formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: nameController,
-                      decoration: const InputDecoration(labelText: 'Nombre'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el nombre del producto';
-                        }
-                        if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
-                          return 'El nombre solo puede contener letras, números y espacios';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: nameController,
+                        decoration: const InputDecoration(labelText: 'Nombre'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el nombre del producto';
+                          }
+                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                            return 'El nombre solo puede contener letras, números y espacios';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: descriptionController,
-                      decoration: const InputDecoration(labelText: 'Descripción'),
-                      maxLength: 100,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese la descripción del producto';
-                        }
-                        if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
-                          return 'La descripción solo puede contener letras, números y espacios';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: descriptionController,
+                        decoration: const InputDecoration(labelText: 'Descripción'),
+                        maxLength: 100,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese la descripción del producto';
+                          }
+                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                            return 'La descripción solo puede contener letras, números y espacios';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: priceController,
-                      decoration: const InputDecoration(labelText: 'Precio'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el precio del producto';
-                        }
-                        if (double.tryParse(value) == null) {
-                          return 'Por favor ingrese un precio válido';
-                        }
-                        if (double.parse(value) <= 0) {
-                          return 'El precio debe ser mayor que cero';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: priceController,
+                        decoration: const InputDecoration(labelText: 'Precio'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el precio del producto';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Por favor ingrese un precio válido';
+                          }
+                          if (double.parse(value) <= 0) {
+                            return 'El precio debe ser mayor que cero';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: costController,
-                      decoration: const InputDecoration(labelText: 'Costo'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el costo del producto';
-                        }
-                        if (double.tryParse(value) == null) {
-                          return 'Por favor ingrese un costo válido';
-                        }
-                        if (double.parse(value) <= 0) {
-                          return 'El costo debe ser mayor que cero';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: costController,
+                        decoration: const InputDecoration(labelText: 'Costo'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el costo del producto';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Por favor ingrese un costo válido';
+                          }
+                          if (double.parse(value) <= 0) {
+                            return 'El costo debe ser mayor que cero';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: stockController,
-                      decoration: const InputDecoration(labelText: 'Stock'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el stock del producto';
-                        }
-                        if (int.tryParse(value) == null) {
-                          return 'Por favor ingrese un stock válido';
-                        }
-                        if (int.parse(value) < 0) {
-                          return 'El stock no puede ser negativo';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: stockController,
+                        decoration: const InputDecoration(labelText: 'Stock'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el stock del producto';
+                          }
+                          if (int.tryParse(value) == null) {
+                            return 'Por favor ingrese un stock válido';
+                          }
+                          if (int.parse(value) < 0) {
+                            return 'El stock no puede ser negativo';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: minStockController,
-                      decoration: const InputDecoration(labelText: 'Stock Mínimo'), // Nuevo campo
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor ingrese el stock mínimo del producto';
-                        }
-                        if (int.tryParse(value) == null) {
-                          return 'Por favor ingrese un stock mínimo válido';
-                        }
-                        if (int.parse(value) < 0) {
-                          return 'El stock mínimo no puede ser negativo';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: minStockController,
+                        decoration: const InputDecoration(labelText: 'Stock Mínimo'), // Nuevo campo
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese el stock mínimo del producto';
+                          }
+                          if (int.tryParse(value) == null) {
+                            return 'Por favor ingrese un stock mínimo válido';
+                          }
+                          if (int.parse(value) < 0) {
+                            return 'El stock mínimo no puede ser negativo';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),

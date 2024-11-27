@@ -28,12 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  barcode: ^2.2.8
   cupertino_icons: ^1.0.8
   dartdap: ^0.7.5
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
   flutter_secure_storage: ^9.2.2
+  flutter_svg: ^2.0.16
   google_fonts: ^6.2.1
   http: ^1.2.2
   intl: ^0.20.0
@@ -42,6 +44,7 @@ dependencies:
   lottie: ^3.1.2
   provider: ^6.1.2
   shared_preferences: ^2.3.2
+  ticket_widget: ^1.0.2
 
 dev_dependencies:
   flutter_lints: ^4.0.0

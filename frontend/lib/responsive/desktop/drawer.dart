@@ -108,6 +108,13 @@ class DesktopMenuState extends State<DesktopMenu> {
                   },
                 ),
                 ListTile(
+                  leading: Icon(Icons.shopping_cart, color: theme.primary),
+                  title: Text('Pedidos', style: TextStyle(color: theme.onSurface)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/ordenes');
+                  },
+                ),
+                ListTile(
                   leading: Icon(Icons.supervised_user_circle, color: theme.primary),
                   title: Text('Clientes', style: TextStyle(color: theme.onSurface)),
                   onTap: () {

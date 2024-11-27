@@ -38,3 +38,7 @@ VALUES
     NULL,  -- Updated es NULL porque es un nuevo registro
     NULL   -- UpdatedBy es NULL porque es un nuevo registro
 );
+
+UPDATE [SMIS-DB].[dbo].[Users] 
+SET Role = 1
+WHERE IdUser = '8c2495da-acbf-4deb-9d13-859c72566705';

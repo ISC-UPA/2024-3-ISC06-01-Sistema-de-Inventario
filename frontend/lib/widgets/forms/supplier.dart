@@ -3,20 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/snake_bar.dart';
-import 'package:frontend/models/model_user.dart';
+import 'package:frontend/models/model_supplier.dart';
 import 'package:frontend/services/api_services.dart';
 
-Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
+Future<bool?> showSupplierDialog(BuildContext context, {Supplier? supplier}) async {
   final AuthService authService = AuthService();
   final userId = await authService.getUserData().then((value) => value?.idUser);
 
-  final userNameController = TextEditingController(text: user?.userName ?? '');
-  final userDisplayNameController = TextEditingController(text: user?.userDisplayName ?? '');
-  final emailController = TextEditingController(text: user?.email ?? '');
+  final nameController = TextEditingController(text: supplier?.name ?? '');
+  final descriptionController = TextEditingController(text: supplier?.description ?? '');
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  int selectedRole = user?.role ?? 1;
 
   if (!context.mounted) return null;
 
@@ -27,7 +25,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: Text(user == null ? 'Agregar Empleado' : 'Editar Empleado'),
+            title: Text(supplier == null ? 'Agregar Proveedor' : 'Editar Proveedor'),
             content: SingleChildScrollView(
               child: Form(
                 key: formKey,
@@ -36,11 +34,14 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
-                        controller: userNameController,
-                        decoration: const InputDecoration(labelText: 'Nombre de Empleado'),
+                        controller: nameController,
+                        decoration: const InputDecoration(labelText: 'Nombre'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el nombre de Empleado';
+                            return 'Por favor ingrese el nombre del proveedor';
+                          }
+                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                            return 'El nombre solo puede contener letras, números y espacios';
                           }
                           return null;
                         },
@@ -49,56 +50,20 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
-                        controller: userDisplayNameController,
-                        decoration: const InputDecoration(labelText: 'Nombre Completo'),
+                        controller: descriptionController,
+                        decoration: const InputDecoration(labelText: 'Descripción'),
+                        maxLength: 100,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el nombre completo';
+                            return 'Por favor ingrese la descripción del proveedor';
+                          }
+                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
+                            return 'La descripción solo puede contener letras, números y espacios';
                           }
                           return null;
                         },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextFormField(
-                        controller: emailController,
-                        decoration: const InputDecoration(labelText: 'Email'),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el email';
-                          }
-                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                            return 'Por favor ingrese un email válido';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: DropdownButtonFormField<int>(
-                        value: selectedRole,
-                        decoration: const InputDecoration(labelText: 'Rol'),
-                        items: const [
-                          DropdownMenuItem(value: 0, child: Text('Administrador')),
-                          DropdownMenuItem(value: 1, child: Text('Empleado')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            selectedRole = value ?? 1;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Por favor seleccione un rol';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
+                    ),                  ],
                 ),
               ),
             ),
@@ -118,42 +83,35 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                       isLoading = true;
                     });
 
-                    final userName = userNameController.text;
-                    final userDisplayName = userDisplayNameController.text;
-                    final email = emailController.text;
-                    final role = selectedRole;
-                    debugPrint('Role: $role');
-                    debugPrint('User: $userId');
+                    final name = nameController.text;
+                    final description = descriptionController.text;
 
                     try {
-                      if (user == null) {
-                        final newUser = {
-                          'User': {
-                            'UserName': userName,
-                            'UserDisplayName': userDisplayName,
-                            'Role': role,
-                            'Email': email,
+                      if (supplier == null) {
+                        final newSupplier = {
+                          'supplier': {
+                            'name': name,
+                            'description': description,
+                            'supplierStatus': 1,
                           },
-                          'Id': userId,
+                          'id': userId,
                         };
-                        await ApiServices().createUser(newUser);
-                        CustomSnackBar.show(context, 'Empleado creado exitosamente');
+                        await ApiServices().createSupplier(newSupplier);
+                        CustomSnackBar.show(context, 'Proveedor creado exitosamente');
                         if (context.mounted) {
                           Navigator.of(context).pop(true);
                         }
                       } else {
-                        final updatedUser = {
-                          'User': {
-                            'idUser': user.idUser,
-                            'userName': userName,
-                            'userDisplayName': userDisplayName,
-                            'role': role,
-                            'email': email,
+                        final updatedSupplier = {
+                          'supplier': {
+                            'idSupplier': supplier.idSupplier,
+                            'name': name,
+                            'description': description,
                           },
-                          'Id': userId,
+                          'id': userId,
                         };
-                        await ApiServices().updateUser(user.idUser, updatedUser);
-                        CustomSnackBar.show(context, 'Empleado actualizado exitosamente');
+                        await ApiServices().updateSupplier(supplier.idSupplier, updatedSupplier);
+                        CustomSnackBar.show(context, 'Proveedor actualizado exitosamente');
                         if (context.mounted) {
                           Navigator.of(context).pop(true);
                         }
@@ -181,7 +139,7 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
   );
 }
 
-Future<bool?> showDeleteConfirmationDialog(BuildContext context, String userId) async {
+Future<bool?> showDeleteConfirmationDialog(BuildContext context, String supplierId) async {
   bool isLoading = false;
 
   return showDialog<bool>(
@@ -192,7 +150,7 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String userId) 
         builder: (context, setState) {
           return AlertDialog(
             title: const Text('Confirmar Eliminación'),
-            content: const Text('¿Estás seguro de que deseas eliminar este Empleado?'),
+            content: const Text('¿Estás seguro de que deseas eliminar este proveedor?'),
             actions: [
               TextButton(
                 onPressed: isLoading ? null : () {
@@ -207,8 +165,8 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context, String userId) 
                   });
 
                   try {
-                    await ApiServices().deleteUser(userId);
-                    CustomSnackBar.show(context, 'Empleado eliminado exitosamente');
+                    await ApiServices().deleteSupplier(supplierId);
+                    CustomSnackBar.show(context, 'Proveedor eliminado exitosamente');
                     if (context.mounted) {
                       Navigator.of(context).pop(true);
                     }
