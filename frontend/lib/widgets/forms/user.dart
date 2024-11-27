@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/snake_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/models/model_user.dart';
 import 'package:frontend/services/api_services.dart';
 
 Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final userId = prefs.getString('userId') ?? '';
+  final AuthService authService = AuthService();
+  final userId = await authService.getUserData().then((value) => value?.idUser);
+  print('User ID: $userId');
 
   final userNameController = TextEditingController(text: user?.userName ?? '');
   final userDisplayNameController = TextEditingController(text: user?.userDisplayName ?? '');
   final emailController = TextEditingController(text: user?.email ?? '');
-  final passwordController = TextEditingController(text: user?.password ?? '');
   final roleController = TextEditingController(text: user?.role.toString() ?? '');
 
   bool _isLoading = false;
@@ -43,11 +43,6 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                     keyboardType: TextInputType.emailAddress,
                   ),
                   TextField(
-                    controller: passwordController,
-                    decoration: const InputDecoration(labelText: 'Contraseña'),
-                    obscureText: true,
-                  ),
-                  TextField(
                     controller: roleController,
                     decoration: const InputDecoration(labelText: 'Rol'),
                     keyboardType: TextInputType.number,
@@ -73,18 +68,18 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                   final userName = userNameController.text;
                   final userDisplayName = userDisplayNameController.text;
                   final email = emailController.text;
-                  final password = passwordController.text;
                   final role = int.tryParse(roleController.text) ?? 0;
 
                   try {
                     if (user == null) {
                       final newUser = {
-                        'userName': userName,
-                        'userDisplayName': userDisplayName,
-                        'email': email,
-                        'password': password,
-                        'role': role,
-                        'createdBy': userId,
+                        'User': {
+                          'UserName': userName,
+                          'UserDisplayName': userDisplayName,
+                          'Role': role,
+                          'Email': email,
+                        },
+                        'Id': userId,
                       };
                       await ApiServices().createUser(newUser);
                       CustomSnackBar.show(context, 'Usuario creado exitosamente');
@@ -93,15 +88,14 @@ Future<bool?> showUserDialog(BuildContext context, {User? user}) async {
                       }
                     } else {
                       final updatedUser = {
-                        'idUser': user.idUser,
-                        'userName': userName,
-                        'userDisplayName': userDisplayName,
-                        'email': email,
-                        'password': password,
-                        'role': role,
-                        'created': user.created, // Preservar el campo created
-                        'createdBy': user.createdBy, // Preservar el campo createdBy
-                        'updatedBy': userId,
+                        'User': {
+                          'idUser': user.idUser,
+                          'userName': userName,
+                          'userDisplayName': userDisplayName,
+                          'role': role,
+                          'email': email,
+                        },
+                        'Id': userId,
                       };
                       await ApiServices().updateUser(user.idUser, updatedUser);
                       CustomSnackBar.show(context, 'Usuario actualizado exitosamente');

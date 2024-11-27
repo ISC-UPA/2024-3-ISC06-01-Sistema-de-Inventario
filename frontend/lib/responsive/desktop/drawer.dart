@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:frontend/services/auth_services.dart';
 
 class DesktopMenu extends StatefulWidget {
   const DesktopMenu({super.key});
@@ -13,6 +14,7 @@ class DesktopMenu extends StatefulWidget {
 class DesktopMenuState extends State<DesktopMenu> {
   late Timer _timer;
   int _currentImageIndex = 0;
+  final AuthService _authService = AuthService();
 
   List<String> images = [
     'assets/lottie/a.json',
@@ -48,6 +50,15 @@ class DesktopMenuState extends State<DesktopMenu> {
     super.dispose();
   }
 
+  Future<void> _logout() async {
+    try {
+      await _authService.logout();
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    } catch (e) {
+      print('Error al cerrar sesión: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -56,14 +67,13 @@ class DesktopMenuState extends State<DesktopMenu> {
       child: Column(
         children: <Widget>[
           SizedBox(
-  child: Center(
-    child: Padding(
-      padding: const EdgeInsets.only(top: 50), // Cambia el valor para ajustar la posición
-      child: Lottie.asset(images[_currentImageIndex], width: 180, height: 180),
-    ),
-  ),
-),
-
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Lottie.asset(images[_currentImageIndex], width: 180, height: 180),
+              ),
+            ),
+          ),
           const SizedBox(height: 20),
           Center(
             child: Text(
@@ -129,7 +139,7 @@ class DesktopMenuState extends State<DesktopMenu> {
           ListTile(
             leading: Icon(Icons.logout_rounded, color: theme.primary),
             title: Text('Cerrar Sesión', style: TextStyle(color: theme.onSurface)),
-            onTap: () {},
+            onTap: _logout,
           ),
         ],
       ),

@@ -40,10 +40,18 @@ namespace SMIS.API.Controllers
             //    return Unauthorized();
             //}
 
-            Guid id = new Guid("C96F85F4-A9A2-43B5-B118-79878C0DD70A");
+            Guid id = new Guid("8c2495da-acbf-4deb-9d13-859c72566705");
             var user = await _userService.GetUserByIdAsync(id);
 
-            var expirationTime = DateTime.UtcNow.AddHours(1);
+            if(request.Username != "a")
+            {
+                return Unauthorized();
+            }
+
+
+
+            //var expirationTime = DateTime.UtcNow.AddHours(1);
+            var expirationTime = DateTime.UtcNow.AddDays(31);
             var token = GenerateJwtToken(user, expirationTime);
             return Ok(new { User = user, Token = token, Expiration = expirationTime });
         }

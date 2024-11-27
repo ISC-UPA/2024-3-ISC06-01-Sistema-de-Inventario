@@ -1,15 +1,16 @@
-SELECT TOP (1000) [IdUser]
-      ,[UserName]
-      ,[UserDisplayName]
-      ,[Role]
-      ,[Email]
-      ,[Password]
-      ,[Created]
-      ,[CreatedBy]
-      ,[Updated]
-      ,[UpdatedBy]
-  FROM [SMIS-DB].[dbo].[Users];
-
+SELECT TOP (1000) 
+    [IdUser],
+    [UserName],
+    [UserDisplayName],
+    [Role],
+    [Email],
+    [IsActive],  -- Se ha añadido el nuevo campo 'IsActive'
+    [Created],
+    [CreatedBy],
+    [Updated],
+    [UpdatedBy]
+FROM 
+    [SMIS-DB].[dbo].[Users];
 
 INSERT INTO [SMIS-DB].[dbo].[Users] 
 (
@@ -18,7 +19,7 @@ INSERT INTO [SMIS-DB].[dbo].[Users]
     [UserDisplayName],
     [Role],
     [Email],
-    [Password],
+    [IsActive],  -- Se ha añadido el campo 'IsActive'
     [Created],
     [CreatedBy],
     [Updated],
@@ -29,15 +30,11 @@ VALUES
     '8c2495da-acbf-4deb-9d13-859c72566705',
     'Admin',
     'Administrator',
-    0,
+    0,  -- Rol: 0, puedes cambiar esto según los roles definidos
     'admin@stockmaster',
-    'admin',
+    1,  -- 'IsActive' = 1 para indicar que el usuario está activo
     GETDATE(),
-    NULL,
-    NULL,
-    NULL
+    NULL,  -- CreatedBy puede ser un valor de usuario si se necesita
+    NULL,  -- Updated es NULL porque es un nuevo registro
+    NULL   -- UpdatedBy es NULL porque es un nuevo registro
 );
-
-
-DELETE FROM [SMIS-DB].[dbo].[Users]
-WHERE [IdUser] = 'C4E3A7DE-8858-4DE1-1D90-08DD0C311C6A';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
+import 'package:frontend/services/auth_services.dart'; // Importa AuthService
 import 'package:frontend/widgets/snake_bar.dart';
 
 class LoginButton extends StatefulWidget {
@@ -20,6 +20,7 @@ class LoginButton extends StatefulWidget {
 class LoginButtonState extends State<LoginButton> {
   bool _isLoading = false;
   bool _isAuthenticating = false;
+  final AuthService _authService = AuthService(); // Inicializa AuthService
 
   Future<void> _authenticate() async {
     if (_isAuthenticating) return; // Previene múltiples clics seguidos
@@ -41,23 +42,29 @@ class LoginButtonState extends State<LoginButton> {
     });
 
     try {
-      final response = await http.post(
-        Uri.parse('https://192.168.182.25:7113/api/Auth?Email=$user&password=$password'),
-      );
+      final bool isAuthenticated = await _authService.login(user, password);
 
-      print(response);
-      print(response.statusCode);
+      if (isAuthenticated) {
+        final expirationString = await _authService.getTokenExpiration();
+        final expiration = DateTime.parse(expirationString!);
+        final now = DateTime.now();
+        final difference = expiration.difference(now);
 
-      if (response.statusCode == 200) {
+        final hours = difference.inHours;
+        final minutes = difference.inMinutes % 60;
+        final seconds = difference.inSeconds % 60;
+
+        debugPrint('Login successful, token expires in: $hours:$minutes:$seconds');
+
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/');
         }
       } else {
-        print('Error: Usuario o contraseña incorrectos');
+        debugPrint('Error: Usuario o contraseña incorrectos');
         CustomSnackBar.show(context, 'Usuario o contraseña incorrectos');
       }
     } catch (e) {
-      print('Error: No fue posible conectar al servidor. $e');
+      debugPrint('Error: No fue posible conectar al servidor. $e');
       CustomSnackBar.show(context, 'No fue posible conectar al servidor.');
     } finally {
       setState(() {
@@ -72,7 +79,7 @@ class LoginButtonState extends State<LoginButton> {
     final color = Theme.of(context).colorScheme;
 
     return ElevatedButton(
-      onPressed: _isLoading ? null : () => Navigator.pushReplacementNamed(context, '/'),  //_authenticate, // Deshabilita el botón si está cargando
+      onPressed: _isLoading ? null : _authenticate, // Deshabilita el botón si está cargando
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 60),
         shape: RoundedRectangleBorder(
