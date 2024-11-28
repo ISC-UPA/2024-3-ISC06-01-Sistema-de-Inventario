@@ -32,11 +32,34 @@ namespace SMIS.Application.Services
 
         public async Task AddOrderAsync(Order order) {
 
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            order.Created = localTime; // Set Created to local time
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateOrderAsync(Order order) {
+
+            // Detach tracked entity if it exists to avoid conflicts
+            var trackedEntity = _context.Orders.Local.FirstOrDefault(o => o.IdOrder == order.IdOrder);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            order.Updated = localTime; // Set Updated to local time
+
+            order.Created = trackedEntity.Created;
+
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();
         }
@@ -46,7 +69,14 @@ namespace SMIS.Application.Services
             var order = await _context.Orders.FindAsync(id);
             if (order != null)
             {
-                _context.Orders.Remove(order);
+                order.Status = EnumOrderStatus.Closed;
+                
+                var utcNow = DateTime.UtcNow;
+                var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+                var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+                order.Updated = localTime;
+
+                _context.Orders.Update(order);
                 await _context.SaveChangesAsync();
             }
         }
