@@ -40,5 +40,5 @@ VALUES
 );
 
 UPDATE [SMIS-DB].[dbo].[Users] 
-SET Role = 1
+SET Role = 0
 WHERE IdUser = '8c2495da-acbf-4deb-9d13-859c72566705';

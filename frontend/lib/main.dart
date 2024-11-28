@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/clientes.dart';
 import 'package:frontend/pages/empleados.dart';
 import 'package:frontend/pages/home.dart';
-import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/ordenes.dart';
 import 'package:frontend/pages/productos.dart';
@@ -86,7 +85,6 @@ class MyAppState extends State<MyApp> {
                   initialRoute: initialRoute,
                   routes: {
                     '/': (context) => HomePage(themeNotifier: tema),
-                    '/splash': (context) => const SplashScreen(),
                     '/login': (context) => const LoginPage(),
                     '/swipe_intro': (context) => const SwipeIntroPage(),
                     '/settings': (context) => SettingsPage(themeNotifier: tema),
