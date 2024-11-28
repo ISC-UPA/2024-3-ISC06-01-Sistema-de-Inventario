@@ -77,6 +77,8 @@ namespace SMIS.Application.Services
             var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
             user.Updated = localTime;
 
+            user.Created = trackedEntity.Created;
+
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
