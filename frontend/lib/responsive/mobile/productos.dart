@@ -115,14 +115,17 @@ class ProductosMobileState extends State<ProductosMobile> {
               : _products.isEmpty
                   ? const Center(child: Text('No hay productos disponibles'))
                   : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                        headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                        columns: _buildColumns(),
-                        rows: _buildRows(_products, theme),
+                      scrollDirection: Axis.vertical,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                          headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                          columns: _buildColumns(),
+                          rows: _buildRows(_products, theme),
+                        ),
                       ),
-                    ),
+                  ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addProduct,
         backgroundColor: theme.primary,

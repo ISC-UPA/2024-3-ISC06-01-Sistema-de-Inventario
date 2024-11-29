@@ -105,14 +105,17 @@ class EmpleadosMobileState extends State<EmpleadosMobile> {
               : _employees.isEmpty
                   ? const Center(child: Text('No hay empleados disponibles'))
                   : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                        headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                        columns: _buildColumns(),
-                        rows: _buildRows(_employees, theme),
+                        scrollDirection: Axis.vertical,
+                        child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                          headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                          columns: _buildColumns(),
+                          rows: _buildRows(_employees, theme),
+                        ),
                       ),
-                    ),
+                  ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addEmployee,
         backgroundColor: theme.primary,

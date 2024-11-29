@@ -13,7 +13,13 @@ class OrderDesktop extends StatefulWidget {
 
 class _OrderDesktopState extends State<OrderDesktop> {
   int selectedCategoryIndex = 0;
-  final List<String> categories = ['Todos', 'Abierto', 'Pendiente', 'Cerrado', 'Cancelado'];
+  final List<String> categories = [
+    'Todos',
+    'Abierto',
+    'Pendiente',
+    'Cerrado',
+    'Cancelado'
+  ];
   late List<int> allTickets;
 
   @override
@@ -59,37 +65,47 @@ class _OrderDesktopState extends State<OrderDesktop> {
                 const DesktopMenu(),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Column(
                       children: [
                         Center(
                           child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(categories.length, (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: selectedCategoryIndex == index ? Colors.blue : Colors.grey,
+                            scrollDirection: Axis.vertical,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children:
+                                    List.generate(categories.length, (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            selectedCategoryIndex == index
+                                                ? Colors.blue
+                                                : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          selectedCategoryIndex = index;
+                                        });
+                                      },
+                                      child: Text(categories[index]),
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        selectedCategoryIndex = index;
-                                      });
-                                    },
-                                    child: Text(categories[index]),
-                                  ),
-                                );
-                              }),
+                                  );
+                                }),
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
                         Expanded(
                           child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: crossAxisCount,
                               crossAxisSpacing: 30.0,
                               mainAxisSpacing: 30.0,
@@ -102,7 +118,8 @@ class _OrderDesktopState extends State<OrderDesktop> {
                                 isCornerRounded: true,
                                 padding: const EdgeInsets.all(20),
                                 child: SingleChildScrollView(
-                                  child: TicketData(ticketNumber: filteredTickets[index]),
+                                  child: TicketData(
+                                      ticketNumber: filteredTickets[index]),
                                 ),
                               );
                             },
@@ -153,7 +170,8 @@ class TicketData extends StatelessWidget {
               children: [
                 Text(
                   'LHR',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 8.0),
@@ -166,7 +184,8 @@ class TicketData extends StatelessWidget {
                   padding: EdgeInsets.only(left: 8.0),
                   child: Text(
                     'ISL',
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                 )
               ],
@@ -177,7 +196,10 @@ class TicketData extends StatelessWidget {
           padding: EdgeInsets.only(top: 20.0),
           child: Text(
             'Flight Ticket',
-            style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
@@ -185,7 +207,8 @@ class TicketData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ticketDetailsWidget('Passengers', 'Hafiz M Mujahid', 'Date', '28-08-2022'),
+              ticketDetailsWidget(
+                  'Passengers', 'Hafiz M Mujahid', 'Date', '28-08-2022'),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0, right: 52.0),
                 child: ticketDetailsWidget('Flight', '76836A45', 'Gate', '66B'),
@@ -233,7 +256,7 @@ class BarcodeWidget extends StatelessWidget {
     required this.barcode,
     required this.width,
     required this.height,
-    super.key, 
+    super.key,
   });
 
   @override
@@ -247,7 +270,8 @@ class BarcodeWidget extends StatelessWidget {
   }
 }
 
-Widget ticketDetailsWidget(String firstTitle, String firstDesc, String secondTitle, String secondDesc) {
+Widget ticketDetailsWidget(String firstTitle, String firstDesc,
+    String secondTitle, String secondDesc) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [

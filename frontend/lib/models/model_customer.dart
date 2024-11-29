@@ -9,8 +9,8 @@ class Customer {
   final String? createdBy;
   final DateTime? updated;
   final String? updatedBy;
-  final User? createdByUser;
-  final User? updatedByUser;
+  User? createdByUser;
+  User? updatedByUser;
 
   Customer({
     required this.idCustomer,

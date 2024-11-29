@@ -12,8 +12,8 @@ class Product {
   final String? createdBy;
   final DateTime? updated;
   final String? updatedBy;
-  final User? createdByUser;
-  final User? updatedByUser;
+  User? createdByUser;
+  User? updatedByUser;
 
   Product({
     required this.idProduct,

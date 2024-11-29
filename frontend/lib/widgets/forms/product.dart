@@ -54,18 +54,18 @@ Future<bool?> showProductDialog(BuildContext context, {Product? product}) async 
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
-                        controller: descriptionController,
-                        decoration: const InputDecoration(labelText: 'Descripción'),
-                        maxLength: 100,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese la descripción del producto';
-                          }
-                          if (!RegExp(r'^[a-zA-Z0-9\s]+$').hasMatch(value)) {
-                            return 'La descripción solo puede contener letras, números y espacios';
-                          }
-                          return null;
-                        },
+                      controller: descriptionController,
+                      decoration: const InputDecoration(labelText: 'Descripción'),
+                      maxLength: 100,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese la descripción del producto';
+                        }
+                        if (value.length > 100) {
+                        return 'La descripción no puede tener más de 100 caracteres';
+                        }
+                        return null;
+                      },
                       ),
                     ),
                     Padding(

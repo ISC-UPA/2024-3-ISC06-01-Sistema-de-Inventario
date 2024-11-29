@@ -18,8 +18,8 @@ class Order {
   final String updatedBy;
   final Customer? customer;
   final Product? product;
-  final User? createdByUser;
-  final User? updatedByUser;
+  User? createdByUser;
+  User? updatedByUser;
 
   Order({
     required this.idOrder,

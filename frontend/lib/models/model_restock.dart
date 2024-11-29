@@ -16,8 +16,8 @@ class RestockOrder {
   final String updatedBy;
   final Supplier? supplier;
   final Product? product;
-  final User? createdByUser;
-  final User? updatedByUser;
+  User? createdByUser;
+  User? updatedByUser;
 
   RestockOrder({
     required this.idRestockOrder,

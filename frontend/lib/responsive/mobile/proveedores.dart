@@ -106,14 +106,17 @@ class ProveedoresMobileState extends State<ProveedoresMobile> {
               : _suppliers.isEmpty
                   ? const Center(child: Text('No hay proveedores disponibles'))
                   : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                        headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                        columns: _buildColumns(),
-                        rows: _buildRows(_suppliers, theme),
+                      scrollDirection: Axis.vertical,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                          headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                          columns: _buildColumns(),
+                          rows: _buildRows(_suppliers, theme),
+                        ),
                       ),
-                    ),
+                  ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addSupplier,
         backgroundColor: theme.primary,

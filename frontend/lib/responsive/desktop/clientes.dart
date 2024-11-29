@@ -99,15 +99,17 @@ class ClientesDesktopState extends State<ClientesDesktop> {
                               ? const Center(child: Text('No hay clientes disponibles'))
                               : SingleChildScrollView(
                                   scrollDirection: Axis.vertical,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: ConstrainedBox(
-                                      constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
-                                      child: DataTable(
-                                        headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                                        headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                                        columns: _buildColumns(),
-                                        rows: _buildRows(_customers, theme),
+                                  child: Expanded(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+                                        child: DataTable(
+                                          headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                                          headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                                          columns: _buildColumns(),
+                                          rows: _buildRows(_customers, theme),
+                                        ),
                                       ),
                                     ),
                                   ),
