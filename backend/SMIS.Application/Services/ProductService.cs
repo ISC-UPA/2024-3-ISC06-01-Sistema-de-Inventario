@@ -56,6 +56,7 @@ namespace SMIS.Application.Services
             product.Updated = localTime;
 
             product.Created = trackedEntity.Created;
+            product.CreatedBy = trackedEntity.CreatedBy;
 
             _context.Products.Update(product);
             await _context.SaveChangesAsync();

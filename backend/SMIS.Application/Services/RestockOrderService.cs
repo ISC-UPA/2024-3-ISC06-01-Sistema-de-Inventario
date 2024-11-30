@@ -55,6 +55,7 @@ namespace SMIS.Application.Services
             restockOrder.Updated = localTime;
 
             restockOrder.Created = trackedEntity.Created;
+            restockOrder.CreatedBy = trackedEntity.CreatedBy;
 
             _context.RestockOrders.Update(restockOrder);
             await _context.SaveChangesAsync();

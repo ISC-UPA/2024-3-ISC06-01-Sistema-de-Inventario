@@ -55,6 +55,7 @@ namespace SMIS.Application.Services
             customer.Updated = localTime; // Set Updated to local time
 
             customer.Created = trackedEntity.Created;
+            customer.CreatedBy = trackedEntity.CreatedBy;
 
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
