@@ -59,6 +59,7 @@ namespace SMIS.Application.Services
             order.Updated = localTime; // Set Updated to local time
 
             order.Created = trackedEntity.Created;
+            order.CreatedBy = trackedEntity.CreatedBy;
 
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();

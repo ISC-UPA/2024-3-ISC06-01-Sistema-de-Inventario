@@ -55,6 +55,7 @@ namespace SMIS.Application.Services
             supplier.Updated = localTime;
 
             supplier.Created = trackedEntity.Created;
+            supplier.CreatedBy = trackedEntity.CreatedBy;
 
             _context.Suppliers.Update(supplier);
             await _context.SaveChangesAsync();
