@@ -17,7 +17,7 @@ namespace SMIS.Infraestructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -38,6 +38,9 @@ namespace SMIS.Infraestructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -77,21 +80,11 @@ namespace SMIS.Infraestructure.Migrations
                     b.Property<Guid>("IdCustomer")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdProduct")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
@@ -103,7 +96,7 @@ namespace SMIS.Infraestructure.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("IdProduct");
+                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("UpdatedBy");
 
@@ -115,9 +108,6 @@ namespace SMIS.Infraestructure.Migrations
                     b.Property<Guid>("IdProduct")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
 
                     b.Property<decimal?>("Cost")
                         .HasPrecision(18, 2)
@@ -132,6 +122,12 @@ namespace SMIS.Infraestructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MinStock")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -172,6 +168,9 @@ namespace SMIS.Infraestructure.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IdOrder")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IdProduct")
                         .HasColumnType("uniqueidentifier");
 
@@ -201,6 +200,8 @@ namespace SMIS.Infraestructure.Migrations
 
                     b.HasIndex("CreatedBy");
 
+                    b.HasIndex("IdOrder");
+
                     b.HasIndex("IdProduct");
 
                     b.HasIndex("IdSupplier");
@@ -223,9 +224,11 @@ namespace SMIS.Infraestructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -267,10 +270,8 @@ namespace SMIS.Infraestructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
@@ -323,14 +324,8 @@ namespace SMIS.Infraestructure.Migrations
 
                     b.HasOne("SMIS.Core.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("IdProduct")
+                        .HasForeignKey("IdCustomer")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SMIS.Core.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("IdProduct")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SMIS.Core.Entities.User", "UpdatedByUser")
@@ -340,8 +335,6 @@ namespace SMIS.Infraestructure.Migrations
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Product");
 
                     b.Navigation("UpdatedByUser");
                 });
@@ -367,6 +360,12 @@ namespace SMIS.Infraestructure.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedBy");
 
+                    b.HasOne("SMIS.Core.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SMIS.Core.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("IdProduct")
@@ -384,6 +383,8 @@ namespace SMIS.Infraestructure.Migrations
                         .HasForeignKey("UpdatedBy");
 
                     b.Navigation("CreatedByUser");
+
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
 

@@ -19,17 +19,12 @@ namespace SMIS.Application.Services
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Where(p => p.IsActive == true).ToListAsync();
         }
 
         public async Task<Product?> GetProductByIdAsync(Guid id)
         {
             return await _context.Products.FindAsync(id);
-        }
-
-        public async Task <Product> GetProductByParamsAsync(string? name, EnumProductCategory? category)
-        {
-            return await _productRepository.GetByParamsAsync(name, category);
         }
 
         public async Task AddProductAsync(Product product)
@@ -70,7 +65,14 @@ namespace SMIS.Application.Services
             var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
-                _context.Products.Remove(product);
+                product.IsActive = false;
+
+                var utcNow = DateTime.UtcNow;
+                var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+                var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+                product.Updated = localTime;
+
+                _context.Products.Update(product);
                 await _context.SaveChangesAsync();
             }
         }
