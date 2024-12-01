@@ -12,6 +12,24 @@ SELECT TOP (1000)
 FROM 
     [SMIS-DB].[dbo].[Users];
 
+INSERT INTO [SMIS-DB].[dbo].[Suppliers](
+		[IdSupplier],
+		[Name],
+		[Description],
+		[SupplierStatus],
+		[IsActive],
+		[Created],
+		[CreatedBy]
+	)	VALUES (
+	'9a8ab899-1468-4da6-96d1-e40469add217',
+	'Distribuidores del centro',
+	'Venta al mayoreo y menudeo',
+	0,
+	1,
+	GETDATE(),
+	'8C2495DA-ACBF-4DEB-9D13-859C72566705'
+);
+
 INSERT INTO [SMIS-DB].[dbo].[Users] 
 (
     [IdUser],
