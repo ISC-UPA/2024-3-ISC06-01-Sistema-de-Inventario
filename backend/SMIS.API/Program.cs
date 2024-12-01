@@ -12,8 +12,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar servicios al contenedor
@@ -26,7 +24,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuraci�n del DbContext
+// Configuración del DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -53,6 +51,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Servicio HttpContext
 builder.Services.AddHttpContextAccessor();
+
+// Registrar el servicio de correo electrónico
+builder.Services.AddSingleton<EmailService>();
 
 // Read CORS settings from configuration
 var corsSettings = builder.Configuration.GetSection("CorsSettings").Get<CorsSettings>();
@@ -96,7 +97,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// autentication & autorization
+// Autenticación y autorización
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -115,7 +116,6 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
         };
     });
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -138,7 +138,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
 
 public class CorsSettings
 {
