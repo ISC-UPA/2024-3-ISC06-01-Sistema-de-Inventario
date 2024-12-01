@@ -41,7 +41,7 @@ namespace SMIS.API.Controllers
             // }
 
 
-            Guid id = new Guid("D99B413F-B318-4A36-8AF8-EA969171040D");
+            Guid id = new Guid("8C2495DA-ACBF-4DEB-9D13-859C72566705");
             var user = await _userService.GetUserByIdAsync(id);
 
 

@@ -1,41 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/responsive/desktop/drawer.dart';
+import 'package:frontend/widgets/product_dialog.dart';
 import 'package:ticket_widget/ticket_widget.dart';
-import 'package:barcode/barcode.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/services/api_services.dart';
+import 'package:frontend/models/model_order.dart';
+import 'package:frontend/models/model_product.dart';
+import 'package:frontend/models/model_customer.dart';
+import 'package:frontend/models/model_restock.dart';
+import 'package:frontend/widgets/tickets/ticket.dart';
+import 'package:frontend/widgets/snake_bar.dart'; // Importar CustomSnackBar
 
 class OrderDesktop extends StatefulWidget {
   const OrderDesktop({super.key});
 
   @override
-  _OrderDesktopState createState() => _OrderDesktopState();
+  OrderDesktopState createState() => OrderDesktopState();
 }
 
-class _OrderDesktopState extends State<OrderDesktop> {
+class OrderDesktopState extends State<OrderDesktop> {
   int selectedCategoryIndex = 0;
   final List<String> categories = [
     'Todos',
     'Abierto',
-    'Pendiente',
-    'Cerrado',
+    'Pagado',
     'Cancelado'
   ];
-  late List<Map<String, dynamic>> allTickets;
+  late List<Order> allOrders = [];
+  late List<Product> allProducts = [];
+  late List<Customer> allCustomers = [];
+  late ApiServices apiServices;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    allTickets = List<Map<String, dynamic>>.generate(7, (index) => {
-      'number': index + 1,
-      'type': categories[(index + 1) % categories.length]
-    });
+    apiServices = ApiServices();
+    loadData();
   }
 
-  List<Map<String, dynamic>> getFilteredTickets() {
+  Future<void> loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final ordersFuture = apiServices.getAllOrders();
+      final productsFuture = apiServices.getAllProducts();
+      final customersFuture = apiServices.getAllCustomers();
+
+      final results = await Future.wait([ordersFuture, productsFuture, customersFuture]);
+
+      setState(() {
+        allOrders = results[0] as List<Order>;
+        allProducts = results[1] as List<Product>;
+        allCustomers = results[2] as List<Customer>;
+        _isLoading = false;
+      });
+    } catch (e) {
+      CustomSnackBar.show(context, 'Failed to load data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  List<Order> getFilteredOrders() {
     if (selectedCategoryIndex == 0) {
-      return allTickets;
+      return allOrders;
     } else {
-      return allTickets.where((ticket) => ticket['type'] == categories[selectedCategoryIndex]).toList();
+      return allOrders.where((order) => order.status == selectedCategoryIndex - 1).toList();
     }
   }
 
@@ -51,10 +84,196 @@ class _OrderDesktopState extends State<OrderDesktop> {
     }
   }
 
+  Future<void> _showProductDialog() async {
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (context) => ProductDialog(products: allProducts, customers: allCustomers),
+    );
+
+    if (result != null) {
+      final selectedCustomer = result['customer'] as Customer;
+      final orderQuantities = result['orderQuantities'] as Map<String, int>;
+
+      final newOrder = Order(
+        idOrder: '',
+        idCustomer: selectedCustomer.idCustomer,
+        orderDate: DateTime.now(),
+        deliveryDate: DateTime.now().add(const Duration(days: 7)),
+        status: 0,
+        created: DateTime.now(),
+        createdBy: '',
+      );
+
+      final restockOrders = _createRestockOrders(orderQuantities);
+
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        await apiServices.createOrderWithRestock(newOrder, restockOrders);
+        setState(() {
+          allOrders.add(newOrder);
+        });
+        CustomSnackBar.show(context, 'Se creó la orden correctamente');
+      } catch (e) {
+        CustomSnackBar.show(context, 'Error: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _showEditProductDialog(Order order) async {
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (context) => ProductDialog(products: allProducts, customers: allCustomers),
+    );
+
+    if (result != null) {
+      final selectedCustomer = result['customer'] as Customer;
+      final orderQuantities = result['orderQuantities'] as Map<String, int>;
+
+      final updatedOrder = Order(
+        idOrder: order.idOrder,
+        idCustomer: selectedCustomer.idCustomer,
+        orderDate: order.orderDate,
+        deliveryDate: order.deliveryDate,
+        status: order.status,
+        created: order.created,
+        createdBy: order.createdBy,
+        updated: DateTime.now(),
+        updatedBy: '', // Asignar el ID del usuario actual
+      );
+
+      final restockOrders = _createRestockOrders(orderQuantities, order.idOrder);
+
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        await apiServices.updateOrderWithRestock(updatedOrder, restockOrders);
+        setState(() {
+          final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
+          if (index != -1) {
+            allOrders[index] = updatedOrder;
+          }
+        });
+        CustomSnackBar.show(context, 'Orden actualizada correctamente');
+      } catch (e) {
+        CustomSnackBar.show(context, 'Failed to update order: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _deleteOrder(Order order) async {
+    final result = await showDeleteConfirmationDialog(context, order.idOrder, () {
+      setState(() {
+        allOrders.removeWhere((o) => o.idOrder == order.idOrder);
+      });
+    });
+
+    if (result == true) {
+      CustomSnackBar.show(context, 'Orden eliminada correctamente');
+    } else if (result == false) {
+      CustomSnackBar.show(context, 'Eliminación cancelada');
+    }
+  }
+
+  Future<void> _cancelarOrder(Order order) async {
+    final result = await showCancelarConfirmationDialog(context, order, () async {
+      order.status = 2; // Actualizar el estado a 2 (Cancelado)
+      await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
+      setState(() {
+        final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
+        if (index != -1) {
+          allOrders[index] = order;
+        }
+      });
+    });
+
+    if (result == true) {
+      CustomSnackBar.show(context, 'Orden cancelada correctamente');
+    } else if (result == false) {
+      CustomSnackBar.show(context, 'Cancelación cancelada');
+    }
+  }
+
+
+
+  Future<void> _pagarOrder(Order order) async {
+    final result = await showPagadoConfirmationDialog(context, order, () async {
+      order.status = 1; // Actualizar el estado a 1 (Pagado)
+      await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
+      setState(() {
+        final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
+        if (index != -1) {
+          allOrders[index] = order;
+        }
+      });
+    });
+
+    if (result == true) {
+      CustomSnackBar.show(context, 'Orden pagada correctamente');
+    } else if (result == false) {
+      CustomSnackBar.show(context, 'Pago cancelado');
+    }
+  }
+
+  List<RestockOrder> _createRestockOrders(Map<String, int> orderQuantities, [String orderId = '']) {
+    return orderQuantities.entries.map((entry) {
+      final productId = entry.key;
+      final quantity = entry.value;
+      final product = allProducts.firstWhere((p) => p.idProduct == productId);
+
+      return RestockOrder(
+        idRestockOrder: '',
+        idSupplier: null,
+        idProduct: productId,
+        idOrder: orderId,
+        restockOrderDate: DateTime.now(),
+        quantity: quantity,
+        totalAmount: product.price * quantity,
+        status: 0,
+        created: DateTime.now(),
+        createdBy: '', // Asignar el ID del usuario actual
+      );
+    }).toList();
+  }
+
+  Future<void> _showConfirmationDialog(String action, Function onConfirm) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirmar $action'),
+        content: Text('¿Estás seguro de que deseas $action este artículo?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Confirmar'),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true) {
+      onConfirm();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-    List<Map<String, dynamic>> filteredTickets = getFilteredTickets();
+    List<Order> filteredOrders = getFilteredOrders();
     double screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount = calculateCrossAxisCount(screenWidth);
 
@@ -70,69 +289,87 @@ class _OrderDesktopState extends State<OrderDesktop> {
                     padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Column(
                       children: [
-                        Center(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
+                        if (_isLoading)
+                          const Expanded(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        else if (allOrders.isEmpty)
+                          const Expanded(
+                            child: Center(
+                              child: Text('No hay órdenes disponibles'),
+                            ),
+                          )
+                        else ...[
+                          Center(
                             child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(categories.length, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: selectedCategoryIndex == index
-                                            ? theme.primary
-                                            : theme.surface,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          selectedCategoryIndex = index;
-                                        });
-                                      },
-                                      child: Text(
-                                        categories[index],
-                                        style: TextStyle(
-                                          color: selectedCategoryIndex == index
-                                              ? theme.onPrimary
-                                              : theme.onSurface,
+                              scrollDirection: Axis.vertical,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(categories.length, (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: selectedCategoryIndex == index
+                                              ? theme.primary
+                                              : theme.surface,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedCategoryIndex = index;
+                                          });
+                                        },
+                                        child: Text(
+                                          categories[index],
+                                          style: TextStyle(
+                                            color: selectedCategoryIndex == index
+                                                ? theme.onPrimary
+                                                : theme.onSurface,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Expanded(
-                          child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: crossAxisCount,
-                              crossAxisSpacing: 30.0,
-                              mainAxisSpacing: 30.0,
-                            ),
-                            itemCount: filteredTickets.length,
-                            itemBuilder: (context, index) {
-                              return TicketWidget(
-                                width: 350,
-                                height: 600,
-                                isCornerRounded: true,
-                                padding: const EdgeInsets.all(20),
-                                child: SingleChildScrollView(
-                                  child: TicketData(
-                                    ticketNumber: filteredTickets[index]['number'],
-                                    theme: theme,
-                                    ticketType: filteredTickets[index]['type'], // Pass the selected category as ticket type
+                          const SizedBox(height: 20),
+                          Expanded(
+                            child: GridView.builder(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 30.0,
+                                mainAxisSpacing: 30.0,
+                              ),
+                              itemCount: filteredOrders.length,
+                              itemBuilder: (context, index) {
+                                final order = filteredOrders[index];
+                                return TicketWidget(
+                                  width: 350,
+                                  height: 600,
+                                  isCornerRounded: true,
+                                  padding: const EdgeInsets.all(20),
+                                  child: SingleChildScrollView(
+                                    child: TicketData(
+                                      order: order,
+                                      theme: theme,
+                                      onDelete: () => _deleteOrder(order),
+                                      onEdit: () => _showEditProductDialog(order),
+                                      onCancel: () => _cancelarOrder(order),
+                                      onPago: () => _pagarOrder(order),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 5)
+                          const SizedBox(height: 5),
+                        ],
                       ],
                     ),
                   ),
@@ -142,220 +379,10 @@ class _OrderDesktopState extends State<OrderDesktop> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class TicketData extends StatelessWidget {
-  final int ticketNumber;
-  final ColorScheme theme;
-  final String ticketType;
-
-  const TicketData({super.key, required this.ticketNumber, required this.theme, required this.ticketType});
-
-  @override
-  Widget build(BuildContext context) {
-    IconData icon;
-    String ticketClass;
-    Color ticketColor;
-
-    switch (ticketType) {
-      case 'Abierto':
-        icon = Icons.lock_open;
-        ticketClass = 'Abierto';
-        ticketColor = Colors.green;
-        break;
-      case 'Pendiente':
-        icon = Icons.hourglass_empty;
-        ticketClass = 'Pendiente';
-        ticketColor = Colors.orange;
-        break;
-      case 'Cerrado':
-        icon = Icons.lock;
-        ticketClass = 'Cerrado';
-        ticketColor = Colors.red;
-        break;
-      case 'Cancelado':
-        icon = Icons.cancel;
-        ticketClass = 'Cancelado';
-        ticketColor = Colors.grey;
-        break;
-      default:
-        icon = Icons.all_inclusive;
-        ticketClass = 'Todos';
-        ticketColor = theme.primary;
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 120.0,
-                height: 25.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  border: Border.all(width: 1.0, color: ticketColor),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(icon, color: ticketColor, size: 16.0),
-                      const SizedBox(width: 4.0),
-                      Text(
-                        ticketClass,
-                        style: TextStyle(color: ticketColor),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    'LHR',
-                    style: TextStyle(color: theme.secondary, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      Icons.flight_takeoff,
-                      color: theme.primary,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'ISL',
-                      style: TextStyle(color: theme.secondary, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Flight Ticket',
-              style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ticketDetailsWidget('Passengers', 'Hafiz M Mujahid', 'Date', '28-08-2022', theme),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0, right: 52.0),
-                  child: ticketDetailsWidget('Flight', '76836A45', 'Gate', '66B', theme),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0, right: 53.0),
-                  child: ticketDetailsWidget('Class', 'Business', 'Seat', '21B', theme),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
-            child: BarcodeWidget(
-              data: 'Ticket $ticketNumber',
-              barcode: Barcode.code128(),
-              width: 200,
-              height: 80,
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10.0, left: 75.0, right: 75.0),
-            child: Text(
-              '0000 +9230 2884 5163',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          const Text('         Developer: instagram.com/DholaSain')
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: _isLoading ? null : _showProductDialog,
+        child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.add),
       ),
     );
   }
-}
-
-class BarcodeWidget extends StatelessWidget {
-  final String data;
-  final Barcode barcode;
-  final double width;
-  final double height;
-
-  const BarcodeWidget({
-    required this.data,
-    required this.barcode,
-    required this.width,
-    required this.height,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final svg = barcode.toSvg(data, width: width, height: height);
-    return SizedBox(
-      width: width,
-      height: height,
-      child: SvgPicture.string(svg),
-    );
-  }
-}
-
-Widget ticketDetailsWidget(String firstTitle, String firstDesc, String secondTitle, String secondDesc, ColorScheme theme) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              firstTitle,
-              style: TextStyle(color: theme.primary),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                firstDesc,
-                style: TextStyle(color: theme.secondary),
-              ),
-            )
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              secondTitle,
-              style: TextStyle(color: theme.primary),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                secondDesc,
-                style: TextStyle(color: theme.secondary),
-              ),
-            )
-          ],
-        ),
-      )
-    ],
-  );
 }

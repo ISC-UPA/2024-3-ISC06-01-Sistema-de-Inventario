@@ -55,15 +55,6 @@ class ProductosMobileState extends State<ProductosMobile> {
     }
   }
 
-  Future<String> _getUserName(String userId) async {
-    try {
-      User user = await ApiServices().getUserById(userId);
-      return user.userName;
-    } catch (e) {
-      return '';
-    }
-  }
-
   void _editProduct(Product product) async {
     final updatedProduct = await showProductDialog(context, product: product);
     if (updatedProduct != null) {
