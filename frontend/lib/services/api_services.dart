@@ -2,17 +2,32 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/models/model_product.dart';
-import 'package:frontend/models/model_user.dart';
 import 'package:frontend/models/model_supplier.dart';
+import 'package:frontend/models/model_user.dart';
 import 'package:frontend/models/model_order.dart';
 import 'package:frontend/models/model_restock.dart';
 import 'package:frontend/services/auth_services.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {
+
+  // Singleton instance
+  static final ApiServices _instance = ApiServices._internal();
+
+  // Factory constructor
+  factory ApiServices() {
+    return _instance;
+  }
+
+  // Private constructor
+  ApiServices._internal();
+
   final String baseUrl = 'http://localhost:5000';
   final AuthService _authService = AuthService(); // Inicializa AuthService
   final Map<String, User> _userCache = {}; // Mapa para almacenar usuarios en caché
+  final Map<String, Product> _productCache = {}; // Mapa para almacenar productos en caché
+  final Map<String, Customer> _customerCache = {}; // Mapa para almacenar clientes en caché
+  final Map<String, List<RestockOrder>> _restockOrderCache = {}; // Mapa para almacenar órdenes de reabastecimiento en caché
 
   Future<Map<String, String>> _getHeaders() async {
     final token = await _authService.getToken();
@@ -39,6 +54,22 @@ class ApiServices {
     }
   }
 
+  Future<Customer> _getCustomerById(String id) async {
+    if (_customerCache.containsKey(id)) {
+      return _customerCache[id]!;
+    }
+
+    final headers = await _getHeaders();
+    final response = await http.get(Uri.parse('$baseUrl/api/Customer/$id'), headers: headers);
+    if (response.statusCode == 200) {
+      final customer = Customer.fromJson(json.decode(response.body));
+      _customerCache[id] = customer;
+      return customer;
+    } else {
+      throw Exception('Error al obtener el cliente con ID $id');
+    }
+  }
+
   Future<void> _populateUserFields(dynamic entity) async {
     if (entity.createdByUser == null && entity.createdBy != null) {
       entity.createdByUser = await _getUserById(entity.createdBy!);
@@ -46,6 +77,10 @@ class ApiServices {
     if (entity.updatedByUser == null && entity.updatedBy != null) {
       entity.updatedByUser = await _getUserById(entity.updatedBy!);
     }
+  }
+
+  Future<void> _populateCustomerFields(Order order) async {
+    order.customer ??= await _getCustomerById(order.idCustomer);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////         PROVEEDORES
@@ -141,6 +176,22 @@ class ApiServices {
       return products;
     } else {
       throw Exception('Error al obtener los productos');
+    }
+  }
+
+  Future<Product> _getProductById(String id) async {
+    if (_productCache.containsKey(id)) {
+      return _productCache[id]!;
+    }
+
+    final headers = await _getHeaders();
+    final response = await http.get(Uri.parse('$baseUrl/api/Product/$id'), headers: headers);
+    if (response.statusCode == 200) {
+      final product = Product.fromJson(json.decode(response.body));
+      _productCache[id] = product;
+      return product;
+    } else {
+      throw Exception('Error al obtener el producto con ID $id');
     }
   }
 
@@ -343,11 +394,29 @@ class ApiServices {
       final orders = data.map((json) => Order.fromJson(json)).toList();
       for (var order in orders) {
         await _populateUserFields(order);
+        await _populateCustomerFields(order);
+        await _populateRestockOrders(order);
       }
-      return orders;
+      final filteredOrders = orders.where((order) => order.status < 3).toList();
+      return filteredOrders;
     } else {
+      debugPrint('Error al obtener las órdenes: ${response.body}');
       throw Exception('Error al obtener las órdenes');
     }
+  }
+  
+  Future<void> _populateRestockOrders(Order order) async {
+    if (_restockOrderCache.isEmpty) {
+      final restockOrders = await getAllRestockOrders();
+      for (var restockOrder in restockOrders) {
+        if (!_restockOrderCache.containsKey(restockOrder.idOrder)) {
+          _restockOrderCache[restockOrder.idOrder] = [];
+        }
+        _restockOrderCache[restockOrder.idOrder]!.add(restockOrder);
+      }
+    }
+
+    order.restockOrders = _restockOrderCache[order.idOrder] ?? [];
   }
 
   Future<Order> getOrderById(String id) async {
@@ -356,13 +425,61 @@ class ApiServices {
     if (response.statusCode == 200) {
       final order = Order.fromJson(json.decode(response.body));
       await _populateUserFields(order);
+      await _populateCustomerFields(order);
+      await _populateRestockOrders(order);
       return order;
     } else {
       throw Exception('Error al obtener la orden con ID $id');
     }
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////         REABASTECIMIENTOS
+  Future<void> createOrder(String id, Map<String, dynamic> order) async {
+    final headers = await _getHeaders();
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/Order/$id'),
+      headers: headers,
+      body: json.encode(order),
+    );
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al crear la orden');
+    }
+  }
+
+  Future<void> updateOrder(String id, Map<String, dynamic> order) async {
+    final headers = await _getHeaders();
+    final sanitizedOrder = order.map((key, value) {
+      if (value is DateTime) {
+        return MapEntry(key, value.toIso8601String());
+      }
+      return MapEntry(key, value);
+    });
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/Order'),
+      headers: headers,
+      body: json.encode(sanitizedOrder),
+    );
+
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al actualizar la orden');
+    }
+  }
+
+  Future<void> deleteOrder(String id) async {
+    final headers = await _getHeaders();
+    final response = await http.delete(Uri.parse('$baseUrl/api/Order/$id'), headers: headers);
+    if (response.statusCode != 200) {
+      throw Exception('Error al eliminar la orden con ID $id');
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////         RESTOCK ORDERS
 
   Future<List<RestockOrder>> getAllRestockOrders() async {
     final headers = await _getHeaders();
@@ -372,6 +489,7 @@ class ApiServices {
       final restockOrders = data.map((json) => RestockOrder.fromJson(json)).toList();
       for (var restockOrder in restockOrders) {
         await _populateUserFields(restockOrder);
+        await _populateProductFields(restockOrder);
       }
       return restockOrders;
     } else {
@@ -379,15 +497,164 @@ class ApiServices {
     }
   }
 
-  Future<RestockOrder> getRestockOrderById(String id) async {
+  Future<void> _populateProductFields(RestockOrder restockOrder) async {
+    restockOrder.product ??= await _getProductById(restockOrder.idProduct);
+  }
+
+  Future<void> createRestockOrder(Map<String, dynamic> restockOrder) async {
     final headers = await _getHeaders();
-    final response = await http.get(Uri.parse('$baseUrl/api/RestockOrder/$id'), headers: headers);
-    if (response.statusCode == 200) {
-      final restockOrder = RestockOrder.fromJson(json.decode(response.body));
-      await _populateUserFields(restockOrder);
-      return restockOrder;
-    } else {
-      throw Exception('Error al obtener la orden de reabastecimiento con ID $id');
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/RestockOrder'),
+      headers: headers,
+      body: json.encode(restockOrder),
+    );
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al crear la orden de reabastecimiento');
+    }
+  }
+
+  Future<void> updateRestockOrder(String id, Map<String, dynamic> restockOrder) async {
+    final headers = await _getHeaders();
+    final sanitizedRestockOrder = restockOrder.map((key, value) {
+      if (value is DateTime) {
+        return MapEntry(key, value.toIso8601String());
+      }
+      return MapEntry(key, value);
+    });
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/RestockOrder/$id'),
+      headers: headers,
+      body: json.encode(sanitizedRestockOrder),
+    );
+
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al actualizar la orden de reabastecimiento');
+    }
+  }
+
+  Future<void> deleteRestockOrder(String id) async {
+    final headers = await _getHeaders();
+    final response = await http.delete(Uri.parse('$baseUrl/api/RestockOrder/$id'), headers: headers);
+    if (response.statusCode != 200) {
+      throw Exception('Error al eliminar la orden de reabastecimiento con ID $id');
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////         UPDATE ORDERS
+
+  Future<List<Order>> updateOrders() async {
+    try {
+      List<Order> orders = await getAllOrders();
+      List<RestockOrder> restockOrders = await getAllRestockOrders();
+  
+      // Map orders by id for quick lookup
+      Map<String, Order> orderMap = {for (var order in orders) order.idOrder: order};
+  
+      // Assign restock orders to their respective orders
+      for (var restockOrder in restockOrders) {
+        if (orderMap.containsKey(restockOrder.idOrder)) {
+          orderMap[restockOrder.idOrder]!.restockOrders ??= [];
+          orderMap[restockOrder.idOrder]!.restockOrders!.add(restockOrder);
+        }
+      }
+  
+      return orders;
+    } catch (e) {
+      print('Failed to update orders: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> createOrderWithRestock(Order order, List<RestockOrder> restockOrders) async {
+    final headers = await _getHeaders();
+    final AuthService authService = AuthService();
+    final userID = await authService.getUserData().then((value) => value?.idUser);
+
+    // Crear la orden
+    final orderJson = order.toCreateJson();
+    orderJson['id'] = userID;
+
+    final orderResponse = await http.post(
+      Uri.parse('$baseUrl/api/Order'),
+      headers: headers,
+      body: json.encode(orderJson),
+    );
+
+    if (orderResponse.statusCode < 200 || orderResponse.statusCode >= 300) {
+      debugPrint('Error al crear la orden: ${orderResponse.body}');
+      throw Exception('Error al crear la orden');
+    }
+
+    final recentOrder = await ApiServices().getAllOrders().then((orders) {
+      return orders
+          .where((order) => order.status < 3)
+          .toList()
+          ..sort((a, b) => b.created.compareTo(a.created));
+    });
+    
+    final createdOrderID = recentOrder.first.idOrder;
+
+    // Crear las órdenes de reabastecimiento
+    for (var restockOrder in restockOrders) {
+      restockOrder.idOrder = createdOrderID;
+      restockOrder.idSupplier = "63227f3b-0862-4b83-387f-08dd11cb6968";
+      final restockOrderJson = restockOrder.toCreateJson();
+      restockOrderJson['id'] = userID;
+
+      final restockResponse = await http.post(
+        Uri.parse('$baseUrl/api/RestockOrder'),
+        headers: headers,
+        body: json.encode(restockOrderJson),
+      );
+
+      if (restockResponse.statusCode < 200 || restockResponse.statusCode >= 300) {
+        debugPrint('Error al crear la orden de reabastecimiento: ${restockResponse.body}');
+        throw Exception('Error al crear la orden de reabastecimiento');
+      }
+    }
+  }
+
+  Future<void> updateOrderWithRestock(Order order, List<RestockOrder> restockOrders) async {
+    final headers = await _getHeaders();
+    final token = await _authService.getToken();
+
+    // Actualizar la orden
+    final orderJson = order.toUpdateJson();
+    orderJson['id'] = token;
+
+    final orderResponse = await http.put(
+      Uri.parse('$baseUrl/api/Order/${order.idOrder}'),
+      headers: headers,
+      body: json.encode(orderJson),
+    );
+
+    if (orderResponse.statusCode < 200 || orderResponse.statusCode >= 300) {
+      debugPrint('Error al actualizar la orden: ${orderResponse.body}');
+      throw Exception('Error al actualizar la orden');
+    }
+
+    // Actualizar las órdenes de reabastecimiento
+    for (var restockOrder in restockOrders) {
+      final restockOrderJson = restockOrder.toUpdateJson();
+      restockOrderJson['id'] = token;
+
+      final restockResponse = await http.put(
+        Uri.parse('$baseUrl/api/RestockOrder/${restockOrder.idRestockOrder}'),
+        headers: headers,
+        body: json.encode(restockOrderJson),
+      );
+
+      if (restockResponse.statusCode < 200 || restockResponse.statusCode >= 300) {
+        debugPrint('Error al actualizar la orden de reabastecimiento: ${restockResponse.body}');
+        throw Exception('Error al actualizar la orden de reabastecimiento');
+      }
     }
   }
 }
