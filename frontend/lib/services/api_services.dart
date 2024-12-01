@@ -26,6 +26,8 @@ class ApiServices {
   final AuthService _authService = AuthService(); // Inicializa AuthService
   final Map<String, User> _userCache = {}; // Mapa para almacenar usuarios en caché
   final Map<String, Product> _productCache = {}; // Mapa para almacenar productos en caché
+  final Map<String, Customer> _customerCache = {}; // Mapa para almacenar clientes en caché
+  final Map<String, List<RestockOrder>> _restockOrderCache = {}; // Mapa para almacenar órdenes de reabastecimiento en caché
 
   Future<Map<String, String>> _getHeaders() async {
     final token = await _authService.getToken();
@@ -53,10 +55,16 @@ class ApiServices {
   }
 
   Future<Customer> _getCustomerById(String id) async {
+    if (_customerCache.containsKey(id)) {
+      return _customerCache[id]!;
+    }
+
     final headers = await _getHeaders();
     final response = await http.get(Uri.parse('$baseUrl/api/Customer/$id'), headers: headers);
     if (response.statusCode == 200) {
-      return Customer.fromJson(json.decode(response.body));
+      final customer = Customer.fromJson(json.decode(response.body));
+      _customerCache[id] = customer;
+      return customer;
     } else {
       throw Exception('Error al obtener el cliente con ID $id');
     }
@@ -387,13 +395,28 @@ class ApiServices {
       for (var order in orders) {
         await _populateUserFields(order);
         await _populateCustomerFields(order);
+        await _populateRestockOrders(order);
       }
-      // Filtrar órdenes cuyo status sea menor a 3
       final filteredOrders = orders.where((order) => order.status < 3).toList();
       return filteredOrders;
     } else {
+      debugPrint('Error al obtener las órdenes: ${response.body}');
       throw Exception('Error al obtener las órdenes');
     }
+  }
+  
+  Future<void> _populateRestockOrders(Order order) async {
+    if (_restockOrderCache.isEmpty) {
+      final restockOrders = await getAllRestockOrders();
+      for (var restockOrder in restockOrders) {
+        if (!_restockOrderCache.containsKey(restockOrder.idOrder)) {
+          _restockOrderCache[restockOrder.idOrder] = [];
+        }
+        _restockOrderCache[restockOrder.idOrder]!.add(restockOrder);
+      }
+    }
+
+    order.restockOrders = _restockOrderCache[order.idOrder] ?? [];
   }
 
   Future<Order> getOrderById(String id) async {
@@ -403,6 +426,7 @@ class ApiServices {
       final order = Order.fromJson(json.decode(response.body));
       await _populateUserFields(order);
       await _populateCustomerFields(order);
+      await _populateRestockOrders(order);
       return order;
     } else {
       throw Exception('Error al obtener la orden con ID $id');

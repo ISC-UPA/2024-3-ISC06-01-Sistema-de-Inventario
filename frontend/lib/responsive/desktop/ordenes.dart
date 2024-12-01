@@ -241,7 +241,7 @@ class OrderDesktopState extends State<OrderDesktop> {
         totalAmount: product.price * quantity,
         status: 0,
         created: DateTime.now(),
-        createdBy: '', // Asignar el ID del usuario actual
+        createdBy: '',
       );
     }).toList();
   }
@@ -349,6 +349,7 @@ class OrderDesktopState extends State<OrderDesktop> {
                               itemCount: filteredOrders.length,
                               itemBuilder: (context, index) {
                                 final order = filteredOrders[index];
+                                print(order.restockOrders);
                                 return TicketWidget(
                                   width: 350,
                                   height: 600,
