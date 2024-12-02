@@ -62,8 +62,6 @@ namespace SMIS.Application.Services
             await _context.SaveChangesAsync();
         }
 
-
-
         public async Task DeletedProductAsync(Guid id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -79,6 +77,24 @@ namespace SMIS.Application.Services
                 _context.Products.Update(product);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task UpdateStockAsync(Product product)
+        {
+
+            var trackedEntity = _context.Products.Local.FirstOrDefault(p => p.IdProduct == product.IdProduct);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            if(product.Stock >= product.MinStock)
+            {
+                //Lanzar alerte de correo
+            }
+
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
         }
     }
 }

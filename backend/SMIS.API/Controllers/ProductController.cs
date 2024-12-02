@@ -88,5 +88,19 @@ namespace SMIS.API.Controllers
         {
             await _productService.DeletedProductAsync(id);
         }
+
+        [HttpPut("stock")]
+        public async Task<IActionResult> UpdateStockAsync([FromBody] StockRequest request)
+        {
+
+            var product = await _productService.GetProductByIdAsync(request.ProductId);
+
+            product.Stock += request.total;
+
+            await _productService.UpdateStockAsync(product);
+            return NoContent();
+        }
     }
+
+
 }
