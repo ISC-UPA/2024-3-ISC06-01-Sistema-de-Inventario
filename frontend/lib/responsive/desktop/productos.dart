@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:frontend/responsive/desktop/drawer.dart';
 import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_product.dart';
@@ -6,6 +7,7 @@ import 'package:frontend/models/model_user.dart';
 import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/forms/product.dart';
 import 'package:intl/intl.dart';
+import 'package:frontend/widgets/entrada_salida.dart'; // Importa el archivo entrada_salida.dart
 
 class ProductosDesktop extends StatefulWidget {
   const ProductosDesktop({super.key});
@@ -75,6 +77,36 @@ class ProductosDesktopState extends State<ProductosDesktop> {
     }
   }
 
+  void _registerEntry() async {
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (context) => ProductEntradasSalidas(
+        products: _products,
+        isEntrada: true,
+      ),
+    );
+
+    if (result != null) {
+      // Procesa el resultado de la entrada registrada
+      await _fetchProducts();
+    }
+  }
+
+  void _registerExit() async {
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (context) => ProductEntradasSalidas(
+        products: _products,
+        isEntrada: false,
+      ),
+    );
+
+    if (result != null) {
+      // Procesa el resultado de la salida registrada
+      await _fetchProducts();
+    }
+  }
+
   String _formatDate(DateTime? date) {
     if (date == null) return '';
     return DateFormat('dd/MM/yyyy HH:mm').format(date);
@@ -115,10 +147,26 @@ class ProductosDesktopState extends State<ProductosDesktop> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addProduct,
-        backgroundColor: theme.primary,
-        child: const Icon(Icons.add),
+      floatingActionButton: SpeedDial(
+        shape: ShapeBorder.lerp(const CircleBorder(), RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), 0.5) ?? const CircleBorder(),
+        icon: Icons.add,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.add),
+            label: 'Agregar Producto',
+            onTap: _addProduct,
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.arrow_downward),
+            label: 'Registrar Entrada',
+            onTap: _registerEntry,
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.arrow_upward),
+            label: 'Registrar Salida',
+            onTap: _registerExit,
+          ),
+        ],
       ),
     );
   }

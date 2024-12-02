@@ -120,7 +120,6 @@ class ProveedoresDesktopState extends State<ProveedoresDesktop> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addSupplier,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

@@ -119,7 +119,6 @@ class ProveedoresMobileState extends State<ProveedoresMobile> {
                   ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addSupplier,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

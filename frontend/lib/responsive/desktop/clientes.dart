@@ -122,7 +122,6 @@ class ClientesDesktopState extends State<ClientesDesktop> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addCustomer,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

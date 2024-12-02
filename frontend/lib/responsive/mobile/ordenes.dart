@@ -53,7 +53,7 @@ class OrderMobileState extends State<OrderMobile> {
         _isLoading = false;
       });
     } catch (e) {
-      CustomSnackBar.show(context, 'Failed to load data: $e');
+      if (mounted) CustomSnackBar.show(context, 'Failed to load data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -67,6 +67,18 @@ class OrderMobileState extends State<OrderMobile> {
       return allOrders
           .where((order) => order.status == selectedCategoryIndex - 1)
           .toList();
+    }
+  }
+
+  int calculateCrossAxisCount(double width) {
+    if (width > 1200) {
+      return 3;
+    } else if (width > 800) {
+      return 2;
+    } else if (width > 600) {
+      return 1;
+    } else {
+      return 1;
     }
   }
 
@@ -100,10 +112,10 @@ class OrderMobileState extends State<OrderMobile> {
         await apiServices.createOrderWithRestock(newOrder, restockOrders);
         await loadData();
         setState(() {
-          CustomSnackBar.show(context, 'Se creó la orden correctamente');
+          if (mounted) CustomSnackBar.show(context, 'Se creó la orden correctamente');
         });
       } catch (e) {
-        CustomSnackBar.show(context, 'Error: $e');
+        if (mounted) CustomSnackBar.show(context, 'Error: $e');
       } finally {
         setState(() {
           _isLoading = false;
@@ -128,63 +140,83 @@ class OrderMobileState extends State<OrderMobile> {
       ),
     );
 
-    if (result != null) {
-      final selectedCustomer = result['customer'] as Customer;
-      final orderQuantities = result['orderQuantities'] as Map<String, int>;
+    if (result == null) {
+      return;
+    }
 
-      final updatedOrder = Order(
-        idOrder: order.idOrder,
-        idCustomer: selectedCustomer.idCustomer,
-        orderDate: order.orderDate,
-        deliveryDate: order.deliveryDate,
-        status: order.status,
-        created: order.created,
-        createdBy: order.createdBy,
-        updated: DateTime.now(),
-        updatedBy: '', // Asignar el ID del usuario actual
-      );
+    final selectedCustomer = result['customer'] as Customer;
+    final orderQuantities = result['orderQuantities'] as Map<String, int>;
 
-      final restockOrders = order.restockOrders?.map((restockOrder) {
-            return RestockOrder(
-              idRestockOrder: restockOrder.idRestockOrder,
-              idSupplier: restockOrder.idSupplier,
-              idProduct: restockOrder.idProduct,
-              idOrder: order.idOrder,
-              restockOrderDate: restockOrder.restockOrderDate,
-              quantity: orderQuantities[restockOrder.idProduct] ??
-                  restockOrder.quantity,
-              totalAmount: restockOrder.totalAmount,
-              status: restockOrder.status,
-              created: restockOrder.created,
-              createdBy: restockOrder.createdBy,
-            );
-          }).toList() ??
-          [];
+    final updatedOrder = Order(
+      idOrder: order.idOrder,
+      idCustomer: selectedCustomer.idCustomer,
+      orderDate: order.orderDate,
+      deliveryDate: order.deliveryDate,
+      status: order.status,
+      created: order.created,
+      createdBy: order.createdBy,
+      updated: DateTime.now(),
+      updatedBy: '', // Asignar el ID del usuario actual
+    );
 
-      try {
-        setState(() {
-          _isLoading = true;
-        });
-        await apiServices.updateOrderWithRestock(updatedOrder, restockOrders);
-        setState(() {
-          final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
-          if (index != -1) {
-            allOrders[index] = updatedOrder;
-          }
-        });
-        await loadData();
-        setState(() {
-          CustomSnackBar.show(context, 'Orden actualizada correctamente');
-        });
-      } catch (e) {
-        if (mounted) {
-          CustomSnackBar.show(context, 'Failed to update order: $e');
-        }
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+    final updatedRestockOrders = order.restockOrders?.map((restockOrder) {
+          final updatedQuantity =
+              orderQuantities[restockOrder.idProduct] ?? restockOrder.quantity;
+          return RestockOrder(
+            idRestockOrder: restockOrder.idRestockOrder,
+            idSupplier: restockOrder.idSupplier,
+            idProduct: restockOrder.idProduct,
+            idOrder: order.idOrder,
+            restockOrderDate: restockOrder.restockOrderDate,
+            quantity: updatedQuantity,
+            totalAmount: restockOrder
+                .totalAmount, // Mantener el valor existente de totalAmount
+            status: restockOrder.status, // Mantener el estado actual
+            created: restockOrder.created,
+            createdBy: restockOrder.createdBy,
+          );
+        }).toList() ??
+        [];
+
+    // Si hay productos con nuevas cantidades que no estaban en la orden de reposición original
+    orderQuantities.forEach((productId, quantity) {
+      if (!updatedRestockOrders.any((order) => order.idProduct == productId)) {
+        // Crear un nuevo RestockOrder si no existe
+        updatedRestockOrders.add(RestockOrder(
+          idRestockOrder: '', 
+          idSupplier: '9A8AB899-1468-4DA6-96D1-E40469ADD217',
+          idProduct: productId,
+          idOrder: order.idOrder,
+          restockOrderDate: DateTime.now(),
+          quantity: quantity,
+          totalAmount: 0,
+          status: 0,
+          created: DateTime.now(),
+          createdBy: '',
+        ));
       }
+    });
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await apiServices.updateOrderWithRestock(
+          updatedOrder, updatedRestockOrders);
+      setState(() {
+        final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
+        if (index != -1) {
+          allOrders[index] = updatedOrder;
+        }
+      });
+      await loadData();
+      if (mounted) CustomSnackBar.show(context, 'Orden actualizada correctamente');
+    } catch (e) {
+      if (mounted) CustomSnackBar.show(context, 'Failed to update order: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -197,15 +229,21 @@ class OrderMobileState extends State<OrderMobile> {
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden eliminada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden eliminada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Eliminación cancelada');
+      if (mounted) CustomSnackBar.show(context, 'Eliminación cancelada');
     }
   }
 
   Future<void> _cancelarOrder(Order order) async {
-    final result =
-        await showCancelarConfirmationDialog(context, order, () async {
+    final result = await showCancelarConfirmationDialog(context, order, () async {
+      if (order.status == 1) {
+        // Si la orden estaba marcada como pagada, regresar el stock
+        for (var restockOrder in order.restockOrders ?? []) {
+          await apiServices.updateProductStock(restockOrder.idProduct, restockOrder.quantity);
+        }
+      }
+
       order.status = 2; // Actualizar el estado a 2 (Cancelado)
       await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
       setState(() {
@@ -217,9 +255,9 @@ class OrderMobileState extends State<OrderMobile> {
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden cancelada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden cancelada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Cancelación cancelada');
+      if (mounted) CustomSnackBar.show(context, 'Cancelación cancelada');
     }
   }
 
@@ -227,6 +265,13 @@ class OrderMobileState extends State<OrderMobile> {
     final result = await showPagadoConfirmationDialog(context, order, () async {
       order.status = 1; // Actualizar el estado a 1 (Pagado)
       await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
+
+      // Actualizar el stock de los productos en las órdenes de reabastecimiento
+      for (var restockOrder in order.restockOrders ?? []) {
+        await apiServices.updateProductStock(
+            restockOrder.idProduct, -restockOrder.quantity);
+      }
+
       setState(() {
         final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
         if (index != -1) {
@@ -236,9 +281,9 @@ class OrderMobileState extends State<OrderMobile> {
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden pagada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden pagada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Pago cancelado');
+      if (mounted) CustomSnackBar.show(context, 'Pago cancelado');
     }
   }
 

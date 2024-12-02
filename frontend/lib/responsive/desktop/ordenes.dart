@@ -8,7 +8,7 @@ import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_customer.dart';
 import 'package:frontend/models/model_restock.dart';
 import 'package:frontend/widgets/tickets/ticket.dart';
-import 'package:frontend/widgets/snake_bar.dart'; // Importar CustomSnackBar
+import 'package:frontend/widgets/snake_bar.dart'; // Importar if(mounted) CustomSnackBar
 
 class OrderDesktop extends StatefulWidget {
   const OrderDesktop({super.key});
@@ -19,12 +19,7 @@ class OrderDesktop extends StatefulWidget {
 
 class OrderDesktopState extends State<OrderDesktop> {
   int selectedCategoryIndex = 0;
-  final List<String> categories = [
-    'Todos',
-    'Abierto',
-    'Pagado',
-    'Cancelado'
-  ];
+  final List<String> categories = ['Todos', 'Abierto', 'Pagado', 'Cancelado'];
   late List<Order> allOrders = [];
   late List<Product> allProducts = [];
   late List<Customer> allCustomers = [];
@@ -48,7 +43,8 @@ class OrderDesktopState extends State<OrderDesktop> {
       final productsFuture = apiServices.getAllProducts();
       final customersFuture = apiServices.getAllCustomers();
 
-      final results = await Future.wait([ordersFuture, productsFuture, customersFuture]);
+      final results =
+          await Future.wait([ordersFuture, productsFuture, customersFuture]);
 
       setState(() {
         allOrders = results[0] as List<Order>;
@@ -57,7 +53,7 @@ class OrderDesktopState extends State<OrderDesktop> {
         _isLoading = false;
       });
     } catch (e) {
-      CustomSnackBar.show(context, 'Failed to load data: $e');
+      if (mounted) CustomSnackBar.show(context, 'Failed to load data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -68,7 +64,9 @@ class OrderDesktopState extends State<OrderDesktop> {
     if (selectedCategoryIndex == 0) {
       return allOrders;
     } else {
-      return allOrders.where((order) => order.status == selectedCategoryIndex - 1).toList();
+      return allOrders
+          .where((order) => order.status == selectedCategoryIndex - 1)
+          .toList();
     }
   }
 
@@ -87,13 +85,14 @@ class OrderDesktopState extends State<OrderDesktop> {
   Future<void> _showProductDialog() async {
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
-      builder: (context) => ProductDialog(products: allProducts, customers: allCustomers),
+      builder: (context) =>
+          ProductDialog(products: allProducts, customers: allCustomers),
     );
-  
+
     if (result != null) {
       final selectedCustomer = result['customer'] as Customer;
       final orderQuantities = result['orderQuantities'] as Map<String, int>;
-  
+
       final newOrder = Order(
         idOrder: '',
         idCustomer: selectedCustomer.idCustomer,
@@ -103,9 +102,9 @@ class OrderDesktopState extends State<OrderDesktop> {
         created: DateTime.now(),
         createdBy: '',
       );
-  
+
       final restockOrders = _createRestockOrders(orderQuantities);
-  
+
       try {
         setState(() {
           _isLoading = true;
@@ -113,10 +112,10 @@ class OrderDesktopState extends State<OrderDesktop> {
         await apiServices.createOrderWithRestock(newOrder, restockOrders);
         await loadData();
         setState(() {
-          CustomSnackBar.show(context, 'Se creó la orden correctamente');
+          if (mounted) CustomSnackBar.show(context, 'Se creó la orden correctamente');
         });
       } catch (e) {
-        CustomSnackBar.show(context, 'Error: $e');
+        if (mounted) CustomSnackBar.show(context, 'Error: $e');
       } finally {
         setState(() {
           _isLoading = false;
@@ -130,7 +129,7 @@ class OrderDesktopState extends State<OrderDesktop> {
       for (var restockOrder in order.restockOrders ?? [])
         restockOrder.idProduct: restockOrder.quantity
     };
-  
+
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
       builder: (context) => ProductDialog(
@@ -140,81 +139,111 @@ class OrderDesktopState extends State<OrderDesktop> {
         initialOrderQuantities: initialOrderQuantities,
       ),
     );
-  
-    if (result != null) {
-      final selectedCustomer = result['customer'] as Customer;
-      final orderQuantities = result['orderQuantities'] as Map<String, int>;
-  
-      final updatedOrder = Order(
-        idOrder: order.idOrder,
-        idCustomer: selectedCustomer.idCustomer,
-        orderDate: order.orderDate,
-        deliveryDate: order.deliveryDate,
-        status: order.status,
-        created: order.created,
-        createdBy: order.createdBy,
-        updated: DateTime.now(),
-        updatedBy: '', // Asignar el ID del usuario actual
-      );
-  
-      final restockOrders = order.restockOrders?.map((restockOrder) {
-        return RestockOrder(
-          idRestockOrder: restockOrder.idRestockOrder,
-          idSupplier: restockOrder.idSupplier,
-          idProduct: restockOrder.idProduct,
+
+    if (result == null) {
+      return;
+    }
+
+    final selectedCustomer = result['customer'] as Customer;
+    final orderQuantities = result['orderQuantities'] as Map<String, int>;
+
+    final updatedOrder = Order(
+      idOrder: order.idOrder,
+      idCustomer: selectedCustomer.idCustomer,
+      orderDate: order.orderDate,
+      deliveryDate: order.deliveryDate,
+      status: order.status,
+      created: order.created,
+      createdBy: order.createdBy,
+      updated: DateTime.now(),
+      updatedBy: '', // Asignar el ID del usuario actual
+    );
+
+    final updatedRestockOrders = order.restockOrders?.map((restockOrder) {
+          final updatedQuantity =
+              orderQuantities[restockOrder.idProduct] ?? restockOrder.quantity;
+          return RestockOrder(
+            idRestockOrder: restockOrder.idRestockOrder,
+            idSupplier: restockOrder.idSupplier,
+            idProduct: restockOrder.idProduct,
+            idOrder: order.idOrder,
+            restockOrderDate: restockOrder.restockOrderDate,
+            quantity: updatedQuantity,
+            totalAmount: restockOrder
+                .totalAmount, // Mantener el valor existente de totalAmount
+            status: restockOrder.status, // Mantener el estado actual
+            created: restockOrder.created,
+            createdBy: restockOrder.createdBy,
+          );
+        }).toList() ??
+        [];
+
+    // Si hay productos con nuevas cantidades que no estaban en la orden de reposición original
+    orderQuantities.forEach((productId, quantity) {
+      if (!updatedRestockOrders.any((order) => order.idProduct == productId)) {
+        // Crear un nuevo RestockOrder si no existe
+        updatedRestockOrders.add(RestockOrder(
+          idRestockOrder: '', 
+          idSupplier: '9A8AB899-1468-4DA6-96D1-E40469ADD217',
+          idProduct: productId,
           idOrder: order.idOrder,
-          restockOrderDate: restockOrder.restockOrderDate,
-          quantity: orderQuantities[restockOrder.idProduct] ?? restockOrder.quantity,
-          totalAmount: restockOrder.totalAmount,
-          status: restockOrder.status,
-          created: restockOrder.created,
-          createdBy: restockOrder.createdBy,
-        );
-      }).toList() ?? [];
-  
-      try {
-        setState(() {
-          _isLoading = true;
-        });
-        await apiServices.updateOrderWithRestock(updatedOrder, restockOrders);
-        setState(() {
-          final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
-          if (index != -1) {
-            allOrders[index] = updatedOrder;
-          }
-        });
-        await loadData();
-        setState(() {
-          CustomSnackBar.show(context, 'Orden actualizada correctamente');
-        });
-      } catch (e) {
-        if(mounted){
-          CustomSnackBar.show(context, 'Failed to update order: $e');
-        }
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+          restockOrderDate: DateTime.now(),
+          quantity: quantity,
+          totalAmount: 0,
+          status: 0,
+          created: DateTime.now(),
+          createdBy: '',
+        ));
       }
+    });
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await apiServices.updateOrderWithRestock(
+          updatedOrder, updatedRestockOrders);
+      setState(() {
+        final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
+        if (index != -1) {
+          allOrders[index] = updatedOrder;
+        }
+      });
+      await loadData();
+      if (mounted) CustomSnackBar.show(context, 'Orden actualizada correctamente');
+    } catch (e) {
+      if (mounted) CustomSnackBar.show(context, 'Failed to update order: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
-  
+
   Future<void> _deleteOrder(Order order) async {
-    final result = await showDeleteConfirmationDialog(context, order.idOrder, () {
+    final result =
+        await showDeleteConfirmationDialog(context, order.idOrder, () {
       setState(() {
         allOrders.removeWhere((o) => o.idOrder == order.idOrder);
       });
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden eliminada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden eliminada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Eliminación cancelada');
+      if (mounted) CustomSnackBar.show(context, 'Eliminación cancelada');
     }
   }
 
   Future<void> _cancelarOrder(Order order) async {
     final result = await showCancelarConfirmationDialog(context, order, () async {
+      if (order.status == 1) {
+        // Si la orden estaba marcada como pagada, regresar el stock
+        for (var restockOrder in order.restockOrders ?? []) {
+          await apiServices.updateProductStock(restockOrder.idProduct, restockOrder.quantity);
+        }
+      }
+
       order.status = 2; // Actualizar el estado a 2 (Cancelado)
       await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
       setState(() {
@@ -226,18 +255,23 @@ class OrderDesktopState extends State<OrderDesktop> {
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden cancelada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden cancelada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Cancelación cancelada');
+      if (mounted) CustomSnackBar.show(context, 'Cancelación cancelada');
     }
   }
-
-
 
   Future<void> _pagarOrder(Order order) async {
     final result = await showPagadoConfirmationDialog(context, order, () async {
       order.status = 1; // Actualizar el estado a 1 (Pagado)
       await apiServices.updateOrder(order.idOrder, order.toUpdateJson());
+
+      // Actualizar el stock de los productos en las órdenes de reabastecimiento
+      for (var restockOrder in order.restockOrders ?? []) {
+        await apiServices.updateProductStock(
+            restockOrder.idProduct, -restockOrder.quantity);
+      }
+
       setState(() {
         final index = allOrders.indexWhere((o) => o.idOrder == order.idOrder);
         if (index != -1) {
@@ -247,13 +281,14 @@ class OrderDesktopState extends State<OrderDesktop> {
     });
 
     if (result == true) {
-      CustomSnackBar.show(context, 'Orden pagada correctamente');
+      if (mounted) CustomSnackBar.show(context, 'Orden pagada correctamente');
     } else if (result == false) {
-      CustomSnackBar.show(context, 'Pago cancelado');
+      if (mounted) CustomSnackBar.show(context, 'Pago cancelado');
     }
   }
 
-  List<RestockOrder> _createRestockOrders(Map<String, int> orderQuantities, [String orderId = '']) {
+  List<RestockOrder> _createRestockOrders(Map<String, int> orderQuantities,
+      [String orderId = '']) {
     return orderQuantities.entries.map((entry) {
       final productId = entry.key;
       final quantity = entry.value;
@@ -274,30 +309,6 @@ class OrderDesktopState extends State<OrderDesktop> {
     }).toList();
   }
 
-  Future<void> _showConfirmationDialog(String action, Function onConfirm) async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Confirmar $action'),
-        content: Text('¿Estás seguro de que deseas $action este artículo?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Confirmar'),
-          ),
-        ],
-      ),
-    );
-
-    if (result == true) {
-      onConfirm();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -314,7 +325,8 @@ class OrderDesktopState extends State<OrderDesktop> {
                 const DesktopMenu(),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Column(
                       children: [
                         if (_isLoading)
@@ -337,14 +349,17 @@ class OrderDesktopState extends State<OrderDesktop> {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(categories.length, (index) {
+                                  children:
+                                      List.generate(categories.length, (index) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: selectedCategoryIndex == index
-                                              ? theme.primary
-                                              : theme.surface,
+                                          backgroundColor:
+                                              selectedCategoryIndex == index
+                                                  ? theme.primary
+                                                  : theme.surface,
                                         ),
                                         onPressed: () {
                                           setState(() {
@@ -354,9 +369,10 @@ class OrderDesktopState extends State<OrderDesktop> {
                                         child: Text(
                                           categories[index],
                                           style: TextStyle(
-                                            color: selectedCategoryIndex == index
-                                                ? theme.onPrimary
-                                                : theme.onSurface,
+                                            color:
+                                                selectedCategoryIndex == index
+                                                    ? theme.onPrimary
+                                                    : theme.onSurface,
                                           ),
                                         ),
                                       ),
@@ -369,7 +385,8 @@ class OrderDesktopState extends State<OrderDesktop> {
                           const SizedBox(height: 20),
                           Expanded(
                             child: GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: crossAxisCount,
                                 crossAxisSpacing: 30.0,
                                 mainAxisSpacing: 30.0,
@@ -377,7 +394,6 @@ class OrderDesktopState extends State<OrderDesktop> {
                               itemCount: filteredOrders.length,
                               itemBuilder: (context, index) {
                                 final order = filteredOrders[index];
-                                print(order.restockOrders);
                                 return TicketWidget(
                                   width: 350,
                                   height: 600,
@@ -388,7 +404,8 @@ class OrderDesktopState extends State<OrderDesktop> {
                                       order: order,
                                       theme: theme,
                                       onDelete: () => _deleteOrder(order),
-                                      onEdit: () => _showEditProductDialog(order),
+                                      onEdit: () =>
+                                          _showEditProductDialog(order),
                                       onCancel: () => _cancelarOrder(order),
                                       onPago: () => _pagarOrder(order),
                                     ),
@@ -410,7 +427,9 @@ class OrderDesktopState extends State<OrderDesktop> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _isLoading ? null : _showProductDialog,
-        child: _isLoading ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.add),
+        child: _isLoading
+            ? const CircularProgressIndicator(color: Colors.white)
+            : const Icon(Icons.add),
       ),
     );
   }

@@ -122,7 +122,6 @@ class ClientesMobileState extends State<ClientesMobile> {
                     ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addCustomer,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

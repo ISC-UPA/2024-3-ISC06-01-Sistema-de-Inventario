@@ -118,7 +118,6 @@ class EmpleadosMobileState extends State<EmpleadosMobile> {
                   ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addEmployee,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

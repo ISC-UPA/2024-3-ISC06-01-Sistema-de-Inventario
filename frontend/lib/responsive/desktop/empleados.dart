@@ -116,7 +116,6 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addEmployee,
-        backgroundColor: theme.primary,
         child: const Icon(Icons.add),
       ),
     );

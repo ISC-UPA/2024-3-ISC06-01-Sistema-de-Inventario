@@ -95,8 +95,6 @@ class ApiServices {
   Future<List<Supplier>> getAllSuppliers() async {
     final headers = await _getHeaders();
     final response = await http.get(Uri.parse('$baseUrl/api/Supplier'), headers: headers);
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       final suppliers = data.map((json) => Supplier.fromJson(json)).toList();
@@ -150,9 +148,6 @@ class ApiServices {
       body: json.encode(sanitizedSupplier),
     );
     
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar el proveedor');
@@ -172,8 +167,6 @@ class ApiServices {
   Future<List<Product>> getAllProducts() async {
     final headers = await _getHeaders();
     final response = await http.get(Uri.parse('$baseUrl/api/Product'), headers: headers);
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       final products = data.map((json) => Product.fromJson(json)).toList();
@@ -183,6 +176,25 @@ class ApiServices {
       return products;
     } else {
       throw Exception('Error al obtener los productos');
+    }
+  }
+
+  Future<void> updateProductStock(String productId, int total) async {
+    final headers = await _getHeaders();
+    final body = json.encode({
+      'productId': productId,
+      'total': total,
+    });
+
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/Product/stock'),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode != 204) {
+      debugPrint('Error: ${response.body}');
+      throw Exception('Error al actualizar el stock del producto');
     }
   }
 
@@ -242,10 +254,6 @@ class ApiServices {
       headers: headers,
       body: json.encode(sanitizedProduct),
     );
-    
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
@@ -309,8 +317,6 @@ class ApiServices {
   Future<void> deleteUser(String id) async {
     final headers = await _getHeaders();
     final response = await http.delete(Uri.parse('$baseUrl/api/User/$id'), headers: headers);
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
     if (response.statusCode != 200) {
       throw Exception('Error al eliminar el empleado con ID $id');
     }
@@ -373,9 +379,6 @@ class ApiServices {
       headers: headers,
       body: json.encode(sanitizedCustomer),
     );
-
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
@@ -472,9 +475,6 @@ class ApiServices {
       body: json.encode(sanitizedOrder),
     );
 
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar la orden');
@@ -543,9 +543,6 @@ class ApiServices {
       body: json.encode(sanitizedRestockOrder),
     );
 
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debugPrint('Error: ${response.body}');
       throw Exception('Error al actualizar la orden de reabastecimiento');
@@ -586,7 +583,7 @@ class ApiServices {
   
       return orders;
     } catch (e) {
-      print('Failed to update orders: $e');
+      debugPrint('Failed to update orders: $e');
       rethrow;
     }
   }
@@ -605,8 +602,6 @@ class ApiServices {
       headers: headers,
       body: json.encode(orderJson),
     );
-
-    print(orderJson);
 
     if (orderResponse.statusCode < 200 || orderResponse.statusCode >= 300) {
       debugPrint('Error al crear la orden: ${orderResponse.body}');
@@ -629,9 +624,6 @@ class ApiServices {
       final restockOrderJson = restockOrder.toCreateJson();
       restockOrderJson['id'] = userID;
 
-      print("pruducto: ${restockOrderJson}");
-      print("id: ${createdOrderID}");
-
       final restockResponse = await http.post(
         Uri.parse('$baseUrl/api/RestockOrder'),
         headers: headers,
@@ -650,6 +642,9 @@ class ApiServices {
     final AuthService authService = AuthService();
     final userID = await authService.getUserData().then((value) => value?.idUser);
 
+    print("Hola desde update");
+    print(restockOrders);
+
     // Actualizar la orden
     final orderJson = order.toUpdateJson();
     orderJson['id'] = userID;
@@ -661,29 +656,34 @@ class ApiServices {
     );
 
     if (orderResponse.statusCode < 200 || orderResponse.statusCode >= 300) {
-      print(orderResponse.statusCode);
-      print(orderResponse.body);
       debugPrint('Error al actualizar la orden: ${orderResponse.body}');
       throw Exception('Error al actualizar la orden');
     }
 
     // Actualizar las órdenes de reabastecimiento
     for (var restockOrder in restockOrders) {
-      final restockOrderJson = restockOrder.toUpdateJson();
-      restockOrderJson['id'] = userID;
 
-      print(restockOrderJson);
+      print(restockOrder.toCreateJson());
+      if (restockOrder.idRestockOrder == ''){
+        final rOrder = restockOrder.toCreateJson();
+        rOrder['id'] = userID;
+        createRestockOrder(rOrder);
+      } else {
+        final restockOrderJson = restockOrder.toUpdateJson();
+        restockOrderJson['id'] = userID;
 
-      final restockResponse = await http.put(
-        Uri.parse('$baseUrl/api/RestockOrder'),
-        headers: headers,
-        body: json.encode(restockOrderJson),
-      );
+        final restockResponse = await http.put(
+          Uri.parse('$baseUrl/api/RestockOrder'),
+          headers: headers,
+          body: json.encode(restockOrderJson),
+        );
 
-      if (restockResponse.statusCode < 200 || restockResponse.statusCode >= 300) {
-        debugPrint('Error al actualizar la orden de reabastecimiento: ${restockResponse.body}');
-        throw Exception('Error al actualizar la orden de reabastecimiento');
+        if (restockResponse.statusCode < 200 || restockResponse.statusCode >= 300) {
+          debugPrint('Error al actualizar la orden de reabastecimiento: ${restockResponse.body}');
+          throw Exception('Error al actualizar la orden de reabastecimiento');
+        }
       }
+
     }
   }
 }
