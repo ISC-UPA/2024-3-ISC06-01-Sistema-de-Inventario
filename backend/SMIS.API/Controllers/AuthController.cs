@@ -41,13 +41,13 @@ namespace SMIS.API.Controllers
             // }
 
 
-            Guid id = new Guid("8C2495DA-ACBF-4DEB-9D13-859C72566705");
+            Guid id = new Guid("D99B413F-B318-4A36-8AF8-EA969171040D");
             var user = await _userService.GetUserByIdAsync(id);
 
-
-            //var expirationTime = DateTime.UtcNow.AddHours(1);
-            var expirationTime = DateTime.UtcNow.AddDays(31);
-            var token = GenerateJwtToken(user, expirationTime);
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var expirationTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, mexicoCityTimeZone);
+            //var expirationTime = DateTime.UtcNow;
+            var token = GenerateJwtToken(user, expirationTime.AddDays(1));
             return Ok(new { User = user, Token = token, Expiration = expirationTime });
         }
 
@@ -67,7 +67,7 @@ namespace SMIS.API.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: expirationDate,
                 signingCredentials: credentials
             );
 
