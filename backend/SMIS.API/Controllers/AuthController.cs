@@ -34,17 +34,19 @@ namespace SMIS.API.Controllers
         public async Task<IActionResult> LogIn([FromBody] LoginRequest request)
         {
             // Código original comentado para utilizar después
-            var user = await _auth.ValidateUserAsync(request.Username, request.Password);
-            if(user == null)
-            {
-                return Unauthorized();
-            }
+            // var user = await _auth.ValidateUserAsync(request.Username, request.Password);
+            // if(user == null)
+            // {
+            //     return Unauthorized();
+            // }
 
 
-            //Guid id = new Guid("A8001BD4-F0A2-44DD-93AC-B4F97763A6AF");
-            //var user = await _userService.GetUserByIdAsync(id);
+            Guid id = new Guid("8C2495DA-ACBF-4DEB-9D13-859C72566705");
+            var user = await _userService.GetUserByIdAsync(id);
 
-            var expirationTime = DateTime.UtcNow.AddHours(1);
+
+            //var expirationTime = DateTime.UtcNow.AddHours(1);
+            var expirationTime = DateTime.UtcNow.AddDays(31);
             var token = GenerateJwtToken(user, expirationTime);
             return Ok(new { User = user, Token = token, Expiration = expirationTime });
         }

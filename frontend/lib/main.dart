@@ -1,11 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/clientes.dart';
 import 'package:frontend/pages/empleados.dart';
-import 'package:frontend/pages/home.dart';
-import 'package:frontend/intro.dart';
 import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/ordenes.dart';
 import 'package:frontend/pages/productos.dart';
 import 'package:frontend/pages/proveedores.dart';
 import 'package:frontend/pages/settings.dart';
@@ -14,6 +14,7 @@ import 'package:frontend/services/certificate.dart';
 import 'package:frontend/services/shared_preferences.dart';
 import 'package:frontend/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:frontend/services/auth_services.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -37,14 +38,33 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  late Future<bool> _seenTutorialFuture;
+  late Future<String> _initialRouteFuture;
 
   @override
   void initState() {
     super.initState();
-    //SharedPreferencesService().setSeenTutorial(true);
-    SharedPreferencesService().setUserId("8c2495da-acbf-4deb-9d13-859c72566705");
-    _seenTutorialFuture = SharedPreferencesService().getSeenTutorial();
+    _initialRouteFuture = _initializeApp();
+  }
+
+  Future<String> _initializeApp() async {
+    final authService = AuthService();
+    final sharedPreferencesService = SharedPreferencesService();
+
+    // Verifica si el usuario ha visto el tutorial
+    final seenTutorial = await sharedPreferencesService.getSeenTutorial();
+    if (seenTutorial) {
+      return '/swipe_intro';
+    }
+
+    // Verifica si el usuario tiene credenciales guardadas
+    final hasUserCredentials = await authService.hasUserCredentials();
+    if (!hasUserCredentials) {
+      debugPrint('User credentials not found at startup.');
+      return '/login';
+    } else {
+      debugPrint('User credentials found at startup.');
+      return '/ordenes';
+    }
   }
 
   @override
@@ -55,27 +75,24 @@ class MyAppState extends State<MyApp> {
       value: themeNotifier,
       child: Consumer<AppThemeNotifier>(
         builder: (context, tema, _) {
-          return FutureBuilder<bool>(
-            future: _seenTutorialFuture,
+          return FutureBuilder<String>(
+            future: _initialRouteFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Muestra un indicador de carga mientras esperas.
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 // Manejo de error, podrías mostrar un mensaje o redirigir.
-                return const Center(child: Text('Error loading tutorial state.'));
+                return const Center(child: Text('Error loading app.'));
               } else {
-                // Aquí ya tienes el valor de seenTutorial.
-                bool seenTutorial = snapshot.data ?? false;
-                String route = seenTutorial ? '/swipe_intro' : '/login';
+                // Aquí ya tienes la ruta inicial.
+                String initialRoute = snapshot.data ?? '/login';
 
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   theme: tema.appTheme.getTheme(),
-                  initialRoute: route,
+                  initialRoute: initialRoute,
                   routes: {
-                    '/': (context) => HomePage(themeNotifier: tema),
-                    '/splash': (context) => const SplashScreen(),
                     '/login': (context) => const LoginPage(),
                     '/swipe_intro': (context) => const SwipeIntroPage(),
                     '/settings': (context) => SettingsPage(themeNotifier: tema),
@@ -83,6 +100,7 @@ class MyAppState extends State<MyApp> {
                     '/proveedores': (context) => const ProveedoresPage(),
                     '/productos': (context) => const ProductosPage(),
                     '/empleados': (context) => const EmpleadosPage(),
+                    '/ordenes': (context) => const OrderPage(),
                   },
                 );
               }

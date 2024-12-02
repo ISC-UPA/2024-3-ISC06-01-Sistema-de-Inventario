@@ -1,17 +1,16 @@
-// user.dart
 class User {
   final String idUser;
   final String userName;
   final String userDisplayName;
   final int role;
   final String email;
-  final String password;
+  final bool isActive; // Nuevo campo
   final DateTime? created;
   final String? createdBy;
   final DateTime? updated;
   final String? updatedBy;
-  final User? createdByUser;
-  final User? updatedByUser;
+  User? createdByUser;
+  User? updatedByUser;
 
   User({
     required this.idUser,
@@ -19,7 +18,7 @@ class User {
     required this.userDisplayName,
     required this.role,
     required this.email,
-    required this.password,
+    required this.isActive, // Nuevo campo
     this.created,
     this.createdBy,
     this.updated,
@@ -36,7 +35,7 @@ class User {
       userDisplayName: json['userDisplayName'],
       role: json['role'],
       email: json['email'],
-      password: json['password'],
+      isActive: json['isActive'], // Nuevo campo
       created: json['created'] != null ? DateTime.parse(json['created']) : null,
       createdBy: json['createdBy'],
       updated: json['updated'] != null ? DateTime.parse(json['updated']) : null,
@@ -58,7 +57,7 @@ class User {
       'userDisplayName': userDisplayName,
       'role': role,
       'email': email,
-      'password': password,
+      'isActive': isActive, // Nuevo campo
       'created': created?.toIso8601String(),
       'createdBy': createdBy,
       'updated': updated?.toIso8601String(),

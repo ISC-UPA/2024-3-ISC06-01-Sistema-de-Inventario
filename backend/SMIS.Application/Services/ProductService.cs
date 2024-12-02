@@ -54,6 +54,10 @@ namespace SMIS.Application.Services
             var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
             var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
             product.Updated = localTime;
+
+            product.Created = trackedEntity.Created;
+            product.CreatedBy = trackedEntity.CreatedBy;
+
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }

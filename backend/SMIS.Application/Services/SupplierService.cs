@@ -29,12 +29,34 @@ namespace SMIS.Application.Services
 
         public async Task AddSupplierAsync(Supplier supplier)
         {
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+
+            Console.WriteLine($"UTC Time: {utcNow}, Local Time: {localTime}");
+
+            supplier.Created = localTime;
+
             _context.Suppliers.Add(supplier);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateSupplierAsync(Supplier supplier)
         {
+            var trackedEntity = _context.Suppliers.Local.FirstOrDefault(s => s.IdSupplier == supplier.IdSupplier);
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
+            var utcNow = DateTime.UtcNow;
+            var mexicoCityTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, mexicoCityTimeZone);
+            supplier.Updated = localTime;
+
+            supplier.Created = trackedEntity.Created;
+            supplier.CreatedBy = trackedEntity.CreatedBy;
+
             _context.Suppliers.Update(supplier);
             await _context.SaveChangesAsync();
         }

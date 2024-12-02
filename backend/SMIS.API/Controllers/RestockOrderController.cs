@@ -22,10 +22,28 @@ namespace SMIS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<RestockOrder>> GetAllRestockOrdersAsync()
+        public async Task<IEnumerable<RestockOrder?>> GetAllRestockOrdersAsync()
         {
-            return await _restockOrderService.GetAllRestockOrdersAsync();
+            var restockOrders = await _restockOrderService.GetAllRestockOrdersAsync();
+            var restockOrderDtos = restockOrders.Select(ro => new RestockOrder
+            {
+                IdRestockOrder = ro.IdRestockOrder,
+                IdSupplier = ro.IdSupplier,
+                IdProduct = ro.IdProduct,
+                IdOrder = ro.IdOrder,
+                RestockOrderDate = ro.RestockOrderDate,
+                Quantity = ro.Quantity,
+                TotalAmount = ro.TotalAmount,
+                Status = ro.Status,
+                Created = ro.Created ?? DateTime.MinValue,
+                CreatedBy = ro.CreatedBy ?? Guid.Empty,
+                Updated = ro.Updated,
+                UpdatedBy = ro.UpdatedBy
+            });
+
+            return restockOrderDtos;
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RestockOrder?>> GetRestockOrderByIdAsync(Guid id)

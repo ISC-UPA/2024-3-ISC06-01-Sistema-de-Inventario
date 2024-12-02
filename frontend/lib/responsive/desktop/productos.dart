@@ -3,6 +3,7 @@ import 'package:frontend/responsive/desktop/drawer.dart';
 import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_product.dart';
 import 'package:frontend/models/model_user.dart';
+import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/forms/product.dart';
 import 'package:intl/intl.dart';
 
@@ -17,11 +18,13 @@ class ProductosDesktopState extends State<ProductosDesktop> {
   List<Product> _products = [];
   bool _isLoading = true;
   String? _error;
+  User? _user;
 
   @override
   void initState() {
     super.initState();
     _fetchProducts();
+    _fetchUserData();
   }
 
   Future<void> _fetchProducts() async {
@@ -39,12 +42,15 @@ class ProductosDesktopState extends State<ProductosDesktop> {
     }
   }
 
-  Future<String> _getUserName(String userId) async {
+  Future<void> _fetchUserData() async {
     try {
-      User user = await ApiServices().getUserById(userId);
-      return user.userName;
+      final AuthService authService = AuthService();
+      final user = await authService.getUserData();
+      setState(() {
+        _user = user;
+      });
     } catch (e) {
-      return '';
+      debugPrint(e.toString());
     }
   }
 
@@ -92,14 +98,17 @@ class ProductosDesktopState extends State<ProductosDesktop> {
                           : _products.isEmpty
                               ? const Center(child: Text('No hay productos disponibles'))
                               : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: DataTable(
-                                    headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                                    headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                                    columns: _buildColumns(),
-                                    rows: _buildRows(_products, theme),
+                                scrollDirection: Axis.vertical,
+                                child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                                      headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                                      columns: _buildColumns(),
+                                      rows: _buildRows(_products, theme),
+                                    ),
                                   ),
-                                ),
+                              ),
                 ),
               ],
             ),
@@ -115,61 +124,43 @@ class ProductosDesktopState extends State<ProductosDesktop> {
   }
 
   List<DataColumn> _buildColumns() {
-    return const [
-      DataColumn(label: Text('Nombre')),
-      DataColumn(label: Text('Descripción')),
-      DataColumn(label: Text('Precio')),
-      DataColumn(label: Text('Costo')),
-      DataColumn(label: Text('Stock')),
-      DataColumn(label: Text('Categoría')),
-      DataColumn(label: Text('Creado')),
-      DataColumn(label: Text('Creado Por')),
-      DataColumn(label: Text('Actualizado')),
-      DataColumn(label: Text('Actualizado Por')),
-      DataColumn(label: Text('Acciones')),
+    final columns = [
+      const DataColumn(label: Text('Nombre')),
+      const DataColumn(label: Text('Descripción')),
+      const DataColumn(label: Text('Precio')),
+      const DataColumn(label: Text('Costo')),
+      const DataColumn(label: Text('Stock')),
+      const DataColumn(label: Text('Stock Mínimo')),
+      const DataColumn(label: Text('Creado')),
+      const DataColumn(label: Text('Creado Por')),
+      const DataColumn(label: Text('Actualizado')),
+      const DataColumn(label: Text('Actualizado Por')),
     ];
+
+    if (_user?.role == 0) {
+      columns.add(const DataColumn(label: Text('Acciones')));
+    }
+
+    return columns;
   }
 
   List<DataRow> _buildRows(List<Product> products, ColorScheme theme) {
     return products.map((product) {
-      return DataRow(
-        cells: [
-          DataCell(Text(product.name)),
-          DataCell(Text(product.description)),
-          DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
-          DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
-          DataCell(Text(product.stock.toString())),
-          DataCell(Text(product.category.toString())),
-          DataCell(Text(_formatDate(product.created))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(product.createdBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
-          DataCell(Text(_formatDate(product.updated))),
-          DataCell(
-            FutureBuilder<String>(
-              future: _getUserName(product.updatedBy ?? ''),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text('Cargando...');
-                } else if (snapshot.hasError) {
-                  return const Text('Error');
-                } else {
-                  return Text(snapshot.data ?? 'Desconocido');
-                }
-              },
-            ),
-          ),
+      final cells = [
+        DataCell(Text(product.name)),
+        DataCell(Text(product.description)),
+        DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
+        DataCell(Text('\$${product.cost.toStringAsFixed(2)}')),
+        DataCell(Text(product.stock.toString())),
+        DataCell(Text(product.minStock.toString())),
+        DataCell(Text(_formatDate(product.created))),
+        DataCell(Text(product.createdByUser?.userDisplayName ?? '')),
+        DataCell(Text(_formatDate(product.updated))),
+        DataCell(Text(product.updatedByUser?.userDisplayName ?? '')),
+      ];
+
+      if (_user?.role == 0) {
+        cells.add(
           DataCell(
             Row(
               children: [
@@ -184,8 +175,10 @@ class ProductosDesktopState extends State<ProductosDesktop> {
               ],
             ),
           ),
-        ],
-      );
+        );
+      }
+
+      return DataRow(cells: cells);
     }).toList();
   }
 }
