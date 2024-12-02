@@ -22,7 +22,7 @@ class ApiServices {
   // Private constructor
   ApiServices._internal();
 
-  final String baseUrl = 'http://localhost:5000';
+  final String baseUrl = 'http://192.168.1.222:5000';
   final AuthService _authService = AuthService(); // Inicializa AuthService
   final Map<String, User> _userCache = {}; // Mapa para almacenar usuarios en caché
   final Map<String, Product> _productCache = {}; // Mapa para almacenar productos en caché
