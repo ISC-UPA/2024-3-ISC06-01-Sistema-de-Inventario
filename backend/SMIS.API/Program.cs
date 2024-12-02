@@ -1,10 +1,10 @@
-using SMIS.Application.Services;
+using SMIS.Application.Services; // Usamos el namespace correcto para los servicios
 using SMIS.Core.Interfaces;
 using SMIS.Infraestructure.Repositories;
 using SMIS.Infraestructure.Data;
 using SMIS.Application.Helpers;
 
-//SQL-Server
+// SQL-Server
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -12,11 +12,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Agregar servicios al contenedor
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -26,11 +24,11 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Configure the DbContext
+// Configuración del DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Register services and repositories
+// Registrar servicios y repositorios
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -48,11 +46,14 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LdapService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
-//Current User Sercvice
+// Servicio de usuario actual
 builder.Services.AddScoped<IUserService, UserService>();
 
-//HttpContext Service
+// Servicio HttpContext
 builder.Services.AddHttpContextAccessor();
+
+// Registrar el servicio de correo electrónico
+builder.Services.AddSingleton<EmailService>();
 
 // Read CORS settings from configuration
 var corsSettings = builder.Configuration.GetSection("CorsSettings").Get<CorsSettings>();
@@ -96,7 +97,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// autentication & autorization
+// Autenticación y autorización
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -117,7 +118,6 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
         };
     });
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -140,7 +140,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
 
 public class CorsSettings
 {

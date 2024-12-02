@@ -12,6 +12,7 @@ class Program
             Console.WriteLine($"Generated JWT Secret Key: {secretKey}");
             Console.ReadLine();
         }
+
     }
 }
 
