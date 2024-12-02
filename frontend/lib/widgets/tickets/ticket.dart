@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api_services.dart';
+import 'package:frontend/widgets/price.dart';
 import 'package:frontend/widgets/snake_bar.dart';
 import 'package:frontend/widgets/tickets/bar_code_widget.dart';
 import 'package:frontend/models/model_order.dart';
@@ -61,7 +62,7 @@ class _TicketDataState extends State<TicketData> {
       return DateFormat('dd/MM/yyyy HH:mm').format(date);
     }
 
-    double totalAmount = 0;
+    final theme = Theme.of(context).colorScheme;
     
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -187,7 +188,6 @@ class _TicketDataState extends State<TicketData> {
           ticketProductTitlesWidget('Cantidad', 'Producto', 'Subtotal', widget.theme),
           if (widget.order.restockOrders != null)
             ...widget.order.restockOrders!.map((restockOrder) {
-              totalAmount += restockOrder.totalAmount;
               return ticketProductDetailsWidget(
                 restockOrder.quantity.toString(),
                 restockOrder.product?.name ?? 'Producto desconocido',
@@ -197,9 +197,7 @@ class _TicketDataState extends State<TicketData> {
               );
             }),
           const SizedBox(height: 15),
-          ticketProductTitlesWidget('Subtotal', '', totalAmount.toStringAsFixed(2), widget.theme),
-          ticketProductTitlesWidget('IVA: 16%', '', (totalAmount * .16).toStringAsFixed(2), widget.theme),
-          ticketProductTitlesWidget('Total', '', (totalAmount + (totalAmount * 0.16)).toStringAsFixed(2), widget.theme),
+          TotalPrice(apiServices: ApiServices(), restockOrders: widget.order.restockOrders, theme: theme, s: widget.order.status,),
           const SizedBox(height: 15),
           Center(
             child: BarCodeWidget(
