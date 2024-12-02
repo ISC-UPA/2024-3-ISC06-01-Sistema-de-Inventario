@@ -59,7 +59,7 @@ class LoginButtonState extends State<LoginButton> {
         debugPrint('Login successful, token expires in: $hours:$minutes:$seconds');
 
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pushReplacementNamed(context, '/ordenes');
         }
       } else {
         debugPrint('Error: Usuario o contraseña incorrectos');

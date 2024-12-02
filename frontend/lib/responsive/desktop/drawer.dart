@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/services/api_services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:frontend/services/auth_services.dart';
@@ -55,6 +56,7 @@ class DesktopMenuState extends State<DesktopMenu> {
   Future<void> _logout() async {
     try {
       await _authService.logout();
+      ApiServices().cleanCache();
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } catch (e) {
       debugPrint('Error al cerrar sesión: $e');
@@ -94,10 +96,10 @@ class DesktopMenuState extends State<DesktopMenu> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(Icons.home, color: theme.primary),
-                  title: Text('Inicio', style: TextStyle(color: theme.onSurface)),
+                  leading: Icon(Icons.shopping_cart, color: theme.primary),
+                  title: Text('Pedidos', style: TextStyle(color: theme.onSurface)),
                   onTap: () {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushNamed(context, '/ordenes');
                   },
                 ),
                 ListTile(
@@ -105,13 +107,6 @@ class DesktopMenuState extends State<DesktopMenu> {
                   title: Text('Productos', style: TextStyle(color: theme.onSurface)),
                   onTap: () {
                     Navigator.pushNamed(context, '/productos');
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_cart, color: theme.primary),
-                  title: Text('Pedidos', style: TextStyle(color: theme.onSurface)),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/ordenes');
                   },
                 ),
                 ListTile(

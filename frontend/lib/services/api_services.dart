@@ -29,6 +29,13 @@ class ApiServices {
   final Map<String, Customer> _customerCache = {}; // Mapa para almacenar clientes en caché
   final Map<String, List<RestockOrder>> _restockOrderCache = {}; // Mapa para almacenar órdenes de reabastecimiento en caché
 
+  cleanCache(){
+    _userCache.clear();
+    _productCache.clear();
+    _customerCache.clear();
+    _restockOrderCache.clear();
+  }
+
   Future<Map<String, String>> _getHeaders() async {
     final token = await _authService.getToken();
     return {

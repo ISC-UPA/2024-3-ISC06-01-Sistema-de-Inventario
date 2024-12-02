@@ -3,40 +3,56 @@
       "title": "Bienvenido a\nSTOCK MASTER",
       "image": "assets/lottie/welcome.json",
       "description": "Administra tu inventario de manera eficiente y en tiempo real",
-      "color": "#004872",
-      "titleColor": "#ccecff",
+      "color": "#7ec4c1",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     },
     {
-      "title": "Gestión de Stock",
-      "image": "assets/lottie/stock.json",
-      "description": "Controla tus existencias. Obtén notificaciones cuando el inventario esté bajo",
-      "color": "#216d4b",
-      "titleColor": "#c8eedd",
+      "title": "Gestión de Proveedores",
+      "image": "assets/lottie/supplier.json",
+      "description": "Administra tus proveedores y mantén actualizada la información de contacto y productos",
+      "color": "#e4943a",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     },
     {
-      "title": "Alertas por Correo Electrónico",
-      "image": "assets/lottie/email.json",
-      "description": "Mantente informado sobre el estado de tus existencias mediante correo electronico",
-      "color": "#024f45",
-      "titleColor": "#cefdf7",
+      "title": "Gestión de Productos",
+      "image": "assets/lottie/product.json",
+      "description": "Mantén un registro detallado de todos tus productos, incluyendo precios, costos y stock",
+      "color": "#9d303b",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     },
     {
-      "title": "Búsqueda Rápida y Avanzada",
-      "image": "assets/lottie/search.json",
-      "description": "Encuentra rápidamente cualquier producto al instante",
-      "color": "#ad1135",
-      "titleColor": "#fce3e9",
+      "title": "Gestión de Empleados",
+      "image": "assets/lottie/employee.json",
+      "description": "Administra tu personal y asigna roles y permisos de acceso a tu inventario",
+      "color": "#c0c741",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     },
     {
-      "title": "Generacion de Reportes",
-      "image": "assets/lottie/report.json",
-      "description": "Genera reportes de inventario para una correcta administracion",
-      "color": "#eb0066",
-      "titleColor": "#ffe6e8",
+      "title": "Gestión de Clientes",
+      "image": "assets/lottie/client.json",
+      "description": "Mantén un registro de tus clientes y sus pedidos para una mejor atención",
+      "color": "#d26471",
+      "titleColor": "#FFFFFF",
+      "subColor": "#FFFFFF"
+    },
+    {
+      "title": "Personaliza tu Experiencia",
+      "image": "assets/lottie/colors.json",
+      "description": "Disfruta de una interfaz adaptable con colores personalizados y tema oscuro",
+      "color": "#3e2137",
+      "titleColor": "#FFFFFF",
+      "subColor": "#FFFFFF"
+    },
+    {
+      "title": "Multiplataforma",
+      "image": "assets/lottie/platform.json",
+      "description": "Accede a STOCK MASTER desde cualquier dispositivo, ya sea móvil o de escritorio",
+      "color": "#17434b",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     },
     {
@@ -44,8 +60,8 @@
       "image": "assets/lottie/start.json",
       "description": "",
       "isLast": true,
-      "color": "#004872",
-      "titleColor": "#ccecff",
+      "color": "#FFFFFF",
+      "titleColor": "#FFFFFF",
       "subColor": "#FFFFFF"
     }
 ]

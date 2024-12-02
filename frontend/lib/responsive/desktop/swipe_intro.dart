@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/responsive/desktop/login.dart';
 import 'package:lottie/lottie.dart';
 import 'package:frontend/classes/intro_data.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,67 +22,56 @@ class DesktopIntroState extends State<DesktopIntro> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 600,
+
+    if (widget.pageData.isLast) {
+      return LoginDesktopLayout(
+        userController: TextEditingController(),
+        passwordController: TextEditingController(),
+      );
+    } else {
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Animación Lottie
-            Lottie.asset(widget.pageData.lottie, width: 200, height: 200),
+            Lottie.asset(widget.pageData.lottie, width: 400, height: 400),
+
+            const SizedBox(height: 10),
             
-            // Título
-            Text(
-              widget.pageData.title,
-              style: GoogleFonts.modak(
-                textStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(color: widget.pageData.titleColor) ?? 
-                           TextStyle(fontSize: 24, color: widget.pageData.titleColor), // Estilo por defecto si headlineMedium es null
-              ),
-            ),
-            
-            // Descripción
+            // Título completamente centrado
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget.pageData.description,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(color: widget.pageData.subColor),
+              padding: const EdgeInsets.all(10),
+              child: Align(
+                alignment: Alignment.center, // Alinea el texto en el centro
+                child: Text(
+                  widget.pageData.title,
+                  textAlign: TextAlign.center, // Centra el texto dentro del widget
+                  style: GoogleFonts.concertOne(
+                    textStyle: Theme.of(context).textTheme.displayLarge?.copyWith(color: widget.pageData.titleColor) ?? 
+                               TextStyle(fontSize: 65, color: widget.pageData.titleColor),
+                  ),
                 ),
               ),
             ),
             
-            // Botón y Checkbox en la última página
-            if (widget.pageData.isLast)
-              Column(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20), // Alto del botón
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30), // Bordes redondeados
-                      ),
-                      backgroundColor: Colors.redAccent, // Color de fondo del botón
-                    ),
-                    onPressed: () async {
-                      Navigator.pushReplacementNamed(context, '/login');
-                    },
-                    child: Text(
-                      "Llevame ahí",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 18,
-                        color: Colors.white, // Color del texto en el botón
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+            // Descripción centrada y con un ancho del 70% de la pantalla
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7, // 70% del ancho de la pantalla
+                child: Text(
+                  widget.pageData.description,
+                  textAlign: TextAlign.center, // Centrar el texto de la descripción
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(color: widget.pageData.subColor, fontSize: 18, fontWeight: FontWeight.w900),
                   ),
-                  
-                  const SizedBox(height: 20),
-                ],
+                ),
               ),
+            ),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 }
