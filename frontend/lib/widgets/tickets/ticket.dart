@@ -41,7 +41,7 @@ class _TicketDataState extends State<TicketData> {
         ticketColor = widget.theme.primary;
         break;
       case 1:
-        icon = Icons.hourglass_empty;
+        icon = Icons.lock;
         ticketClass = 'Pagado';
         ticketColor = widget.theme.secondary;
         break;
@@ -191,8 +191,9 @@ class _TicketDataState extends State<TicketData> {
               return ticketProductDetailsWidget(
                 restockOrder.quantity.toString(),
                 restockOrder.product?.name ?? 'Producto desconocido',
-                restockOrder.totalAmount.toString(),
-                widget.theme
+                restockOrder,
+                widget.theme,
+                widget.order.status
               );
             }),
           const SizedBox(height: 15),

@@ -84,4 +84,13 @@ class RestockOrder {
       updatedBy: json['updatedBy'],
     );
   }
+
+  Future<double> calculateTotalAmount(Future<Product> Function(String) getProductById, {int s = 0}) async {
+    if (s == 0) {
+      final product = await getProductById(idProduct);
+      return product.price * quantity;
+    } else {
+      return totalAmount;
+    }
+  }
 }

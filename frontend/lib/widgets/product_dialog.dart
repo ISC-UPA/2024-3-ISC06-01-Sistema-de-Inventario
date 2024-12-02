@@ -7,8 +7,16 @@ import 'dart:async';
 class ProductDialog extends StatefulWidget {
   final List<Product> products;
   final List<Customer> customers;
+  final Customer? initialCustomer;
+  final Map<String, int>? initialOrderQuantities;
 
-  const ProductDialog({super.key, required this.products, required this.customers});
+  const ProductDialog({
+    super.key,
+    required this.products,
+    required this.customers,
+    this.initialCustomer,
+    this.initialOrderQuantities,
+  });
 
   @override
   _ProductDialogState createState() => _ProductDialogState();
@@ -27,6 +35,8 @@ class _ProductDialogState extends State<ProductDialog> {
     super.initState();
     filteredProducts = widget.products;
     filteredCustomers = widget.customers;
+    selectedCustomer = widget.initialCustomer;
+    orderQuantities = widget.initialOrderQuantities ?? {};
   }
 
   void _filterProducts(String query) {
@@ -159,7 +169,7 @@ class _ProductDialogState extends State<ProductDialog> {
                               ),
                               prefixIcon: const Icon(Icons.search),
                               filled: true,
-                              fillColor: theme.surfaceVariant,
+                              fillColor: theme.surfaceContainerHighest,
                             ),
                           ),
                         ),

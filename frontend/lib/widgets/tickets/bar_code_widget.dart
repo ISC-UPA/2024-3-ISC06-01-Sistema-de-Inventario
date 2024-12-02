@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/model_restock.dart';
+import 'package:frontend/services/api_services.dart';
+import 'package:frontend/widgets/price.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class BarCodeWidget extends StatelessWidget {
@@ -47,7 +50,7 @@ Widget ticketDetailsWidget(String firstTitle, List<String> descriptions, ColorSc
                   style: TextStyle(color: theme.secondary),
                   overflow: TextOverflow.ellipsis,
                 ),
-              )).toList(),
+              )),
             ],
           ),
         ),
@@ -86,7 +89,7 @@ Widget ticketProductTitlesWidget(String cantidad, String product, String total, 
   );
 }
 
-Widget ticketProductDetailsWidget(String cantidad, String product, String total, ColorScheme theme) {
+Widget ticketProductDetailsWidget(String cantidad, String product, RestockOrder order, ColorScheme theme, int s) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Row(
@@ -107,9 +110,11 @@ Widget ticketProductDetailsWidget(String cantidad, String product, String total,
             ),
           ],
         ),
-        Text(
-          total,
-          style: TextStyle(color: theme.primary),
+        Price(
+          apiServices: ApiServices(),
+          restockOrder: order,
+          textStyle: TextStyle(color: theme.primary),
+          s: s,
         ),
       ],
     ),

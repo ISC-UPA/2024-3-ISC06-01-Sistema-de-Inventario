@@ -89,11 +89,11 @@ class OrderDesktopState extends State<OrderDesktop> {
       context: context,
       builder: (context) => ProductDialog(products: allProducts, customers: allCustomers),
     );
-
+  
     if (result != null) {
       final selectedCustomer = result['customer'] as Customer;
       final orderQuantities = result['orderQuantities'] as Map<String, int>;
-
+  
       final newOrder = Order(
         idOrder: '',
         idCustomer: selectedCustomer.idCustomer,
@@ -103,18 +103,18 @@ class OrderDesktopState extends State<OrderDesktop> {
         created: DateTime.now(),
         createdBy: '',
       );
-
+  
       final restockOrders = _createRestockOrders(orderQuantities);
-
+  
       try {
         setState(() {
           _isLoading = true;
         });
         await apiServices.createOrderWithRestock(newOrder, restockOrders);
+        await loadData();
         setState(() {
-          allOrders.add(newOrder);
+          CustomSnackBar.show(context, 'Se creó la orden correctamente');
         });
-        CustomSnackBar.show(context, 'Se creó la orden correctamente');
       } catch (e) {
         CustomSnackBar.show(context, 'Error: $e');
       } finally {
@@ -126,15 +126,25 @@ class OrderDesktopState extends State<OrderDesktop> {
   }
 
   Future<void> _showEditProductDialog(Order order) async {
+    final Map<String, int> initialOrderQuantities = {
+      for (var restockOrder in order.restockOrders ?? [])
+        restockOrder.idProduct: restockOrder.quantity
+    };
+  
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
-      builder: (context) => ProductDialog(products: allProducts, customers: allCustomers),
+      builder: (context) => ProductDialog(
+        products: allProducts,
+        customers: allCustomers,
+        initialCustomer: order.customer,
+        initialOrderQuantities: initialOrderQuantities,
+      ),
     );
-
+  
     if (result != null) {
       final selectedCustomer = result['customer'] as Customer;
       final orderQuantities = result['orderQuantities'] as Map<String, int>;
-
+  
       final updatedOrder = Order(
         idOrder: order.idOrder,
         idCustomer: selectedCustomer.idCustomer,
@@ -146,9 +156,22 @@ class OrderDesktopState extends State<OrderDesktop> {
         updated: DateTime.now(),
         updatedBy: '', // Asignar el ID del usuario actual
       );
-
-      final restockOrders = _createRestockOrders(orderQuantities, order.idOrder);
-
+  
+      final restockOrders = order.restockOrders?.map((restockOrder) {
+        return RestockOrder(
+          idRestockOrder: restockOrder.idRestockOrder,
+          idSupplier: restockOrder.idSupplier,
+          idProduct: restockOrder.idProduct,
+          idOrder: order.idOrder,
+          restockOrderDate: restockOrder.restockOrderDate,
+          quantity: orderQuantities[restockOrder.idProduct] ?? restockOrder.quantity,
+          totalAmount: restockOrder.totalAmount,
+          status: restockOrder.status,
+          created: restockOrder.created,
+          createdBy: restockOrder.createdBy,
+        );
+      }).toList() ?? [];
+  
       try {
         setState(() {
           _isLoading = true;
@@ -160,9 +183,14 @@ class OrderDesktopState extends State<OrderDesktop> {
             allOrders[index] = updatedOrder;
           }
         });
-        CustomSnackBar.show(context, 'Orden actualizada correctamente');
+        await loadData();
+        setState(() {
+          CustomSnackBar.show(context, 'Orden actualizada correctamente');
+        });
       } catch (e) {
-        CustomSnackBar.show(context, 'Failed to update order: $e');
+        if(mounted){
+          CustomSnackBar.show(context, 'Failed to update order: $e');
+        }
       } finally {
         setState(() {
           _isLoading = false;
@@ -170,7 +198,7 @@ class OrderDesktopState extends State<OrderDesktop> {
       }
     }
   }
-
+  
   Future<void> _deleteOrder(Order order) async {
     final result = await showDeleteConfirmationDialog(context, order.idOrder, () {
       setState(() {
