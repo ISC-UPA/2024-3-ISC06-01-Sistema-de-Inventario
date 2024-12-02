@@ -89,7 +89,7 @@ class AuthService {
   // Login with API
   Future<bool> login(String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://localhost:5000/api/Auth/login'),
+      Uri.parse('http://192.168.1.222:5000/api/Auth/login'),
       headers: {
         'accept': '*/*',
         'Content-Type': 'application/json',
