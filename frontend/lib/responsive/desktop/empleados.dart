@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/responsive/desktop/drawer.dart';
 import 'package:frontend/services/api_services.dart';
 import 'package:frontend/models/model_user.dart';
+import 'package:frontend/services/auth_services.dart';
 import 'package:frontend/widgets/forms/user.dart';
 import 'package:intl/intl.dart';
 
@@ -16,11 +17,13 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
   List<User> _employees = [];
   bool _isLoading = true;
   String? _error;
+  User? _user;
 
   @override
   void initState() {
     super.initState();
     _fetchEmployees();
+    _fetchUserData();
   }
 
   Future<void> _fetchEmployees() async {
@@ -35,6 +38,18 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
         _error = e.toString();
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final AuthService authService = AuthService();
+      final user = await authService.getUserData();
+      setState(() {
+        _user = user;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -82,14 +97,17 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
                           : _employees.isEmpty
                               ? const Center(child: Text('No hay empleados disponibles'))
                               : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: DataTable(
-                                    headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
-                                    headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
-                                    columns: _buildColumns(),
-                                    rows: _buildRows(_employees, theme),
+                                  scrollDirection: Axis.vertical,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: DataTable(
+                                      headingRowColor: WidgetStateColor.resolveWith((states) => theme.primary),
+                                      headingTextStyle: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.bold),
+                                      columns: _buildColumns(),
+                                      rows: _buildRows(_employees, theme),
+                                    ),
                                   ),
-                                ),
+                              ),
                 ),
               ],
             ),
@@ -105,31 +123,39 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
   }
 
   List<DataColumn> _buildColumns() {
-    return const [
-      DataColumn(label: Text('Nombre de Usuario')),
-      DataColumn(label: Text('Nombre Completo')),
-      DataColumn(label: Text('Rol')),
-      DataColumn(label: Text('Email')),
-      DataColumn(label: Text('Creado')),
-      DataColumn(label: Text('Creado Por')),
-      DataColumn(label: Text('Actualizado')),
-      DataColumn(label: Text('Actualizado Por')),
-      DataColumn(label: Text('Acciones')),
+    final columns = [
+      const DataColumn(label: Text('Nombre de Usuario')),
+      const DataColumn(label: Text('Nombre Completo')),
+      const DataColumn(label: Text('Rol')),
+      const DataColumn(label: Text('Email')),
+      const DataColumn(label: Text('Creado')),
+      const DataColumn(label: Text('Creado Por')),
+      const DataColumn(label: Text('Actualizado')),
+      const DataColumn(label: Text('Actualizado Por')),
     ];
+
+    if (_user?.role == 0) {
+      columns.add(const DataColumn(label: Text('Acciones')));
+    }
+
+    return columns;
   }
 
   List<DataRow> _buildRows(List<User> employees, ColorScheme theme) {
     return employees.map((employee) {
-      return DataRow(
-        cells: [
-          DataCell(Text(employee.userName)),
-          DataCell(Text(employee.userDisplayName)),
-          DataCell(Text(employee.role.toString())),
-          DataCell(Text(employee.email)),
-          DataCell(Text(_formatDate(employee.created))),
-          DataCell(Text(employee.createdByUser?.userDisplayName ?? '')),
-          DataCell(Text(_formatDate(employee.updated))),
-          DataCell(Text(employee.updatedByUser?.userDisplayName ?? '')),
+      final cells = [
+        DataCell(Text(employee.userName)),
+        DataCell(Text(employee.userDisplayName)),
+        DataCell(Text(employee.role == 0 ? 'Administrador' : 'Empleado')),
+        DataCell(Text(employee.email)),
+        DataCell(Text(_formatDate(employee.created))),
+        DataCell(Text(employee.createdByUser?.userDisplayName ?? '')),
+        DataCell(Text(_formatDate(employee.updated))),
+        DataCell(Text(employee.updatedByUser?.userDisplayName ?? '')),
+      ];
+
+      if (_user?.role == 0) {
+        cells.add(
           DataCell(
             Row(
               children: [
@@ -146,8 +172,10 @@ class EmpleadosDesktopState extends State<EmpleadosDesktop> {
               ],
             ),
           ),
-        ],
-      );
+        );
+      }
+
+      return DataRow(cells: cells);
     }).toList();
   }
 }

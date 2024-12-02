@@ -1,1 +1,0 @@
-En esta carpeta estará toda la lógica para poder iniciar sesión con Active Directory
