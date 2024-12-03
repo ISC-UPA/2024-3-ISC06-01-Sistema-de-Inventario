@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.API", "SMIS.API.csproj", "{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7} = {4793FBD3-04D8-423E-970C-542ECF93B1A7}
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4} = {507D6401-8191-4DE6-86D4-2F341CD69BE4}
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB} = {EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Core", "..\SMIS.Core\SMIS.Core.csproj", "{507D6401-8191-4DE6-86D4-2F341CD69BE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Application", "..\SMIS.Application\SMIS.Application.csproj", "{4793FBD3-04D8-423E-970C-542ECF93B1A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB} = {EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMIS.Infraestructure", "..\SMIS.Infraestructure\SMIS.Infraestructure.csproj", "{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateJwtKey", "..\GenerateJwtKey\GenerateJwtKey.csproj", "{E196976C-208D-48AB-836A-19617A28D7DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0C40BA-2102-433F-8C4F-0C3112AF1DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507D6401-8191-4DE6-86D4-2F341CD69BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4793FBD3-04D8-423E-970C-542ECF93B1A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE92FC40-1997-4FCE-AB38-1FFF7BCD94EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E196976C-208D-48AB-836A-19617A28D7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E196976C-208D-48AB-836A-19617A28D7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E196976C-208D-48AB-836A-19617A28D7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E196976C-208D-48AB-836A-19617A28D7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {243E0B7D-1E51-4747-A1CD-81B61999831A}
+	EndGlobalSection
+EndGlobal

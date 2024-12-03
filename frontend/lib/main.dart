@@ -1,9 +1,24 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/home.dart';
+import 'package:frontend/pages/clientes.dart';
+import 'package:frontend/pages/empleados.dart';
+import 'package:frontend/pages/login.dart';
+import 'package:frontend/pages/ordenes.dart';
+import 'package:frontend/pages/productos.dart';
+import 'package:frontend/pages/proveedores.dart';
+import 'package:frontend/pages/settings.dart';
+import 'package:frontend/pages/swipe_intro.dart';
+import 'package:frontend/services/certificate.dart';
+import 'package:frontend/services/shared_preferences.dart';
 import 'package:frontend/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:frontend/services/auth_services.dart';
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
+  
   WidgetsFlutterBinding.ensureInitialized();
   
   // Crea el tema antes de ejecutar runApp()
@@ -13,24 +28,82 @@ void main() async {
   runApp(MyApp(themeNotifier: themeNotifier));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final AppThemeNotifier themeNotifier;
 
   const MyApp({super.key, required this.themeNotifier});
 
   @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  late Future<String> _initialRouteFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialRouteFuture = _initializeApp();
+  }
+
+  Future<String> _initializeApp() async {
+    final authService = AuthService();
+    final sharedPreferencesService = SharedPreferencesService();
+
+    // Verifica si el usuario ha visto el tutorial
+    final seenTutorial = await sharedPreferencesService.getSeenTutorial();
+    if (seenTutorial) {
+      return '/swipe_intro';
+    }
+
+    // Verifica si el usuario tiene credenciales guardadas
+    final hasUserCredentials = await authService.hasUserCredentials();
+    if (!hasUserCredentials) {
+      debugPrint('User credentials not found at startup.');
+      return '/login';
+    } else {
+      debugPrint('User credentials found at startup.');
+      return '/ordenes';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final themeNotifier = widget.themeNotifier;
 
     return ChangeNotifierProvider.value(
       value: themeNotifier,
       child: Consumer<AppThemeNotifier>(
         builder: (context, tema, _) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: tema.appTheme.getTheme(),
-            initialRoute: '/home',
-            routes: {
-              '/home': (context) => HomePage(themeNotifier: tema),
+          return FutureBuilder<String>(
+            future: _initialRouteFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Muestra un indicador de carga mientras esperas.
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                // Manejo de error, podrías mostrar un mensaje o redirigir.
+                return const Center(child: Text('Error loading app.'));
+              } else {
+                // Aquí ya tienes la ruta inicial.
+                String initialRoute = snapshot.data ?? '/login';
+
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: tema.appTheme.getTheme(),
+                  initialRoute: initialRoute,
+                  routes: {
+                    '/login': (context) => const LoginPage(),
+                    '/swipe_intro': (context) => const SwipeIntroPage(),
+                    '/settings': (context) => SettingsPage(themeNotifier: tema),
+                    '/clientes': (context) => const ClientesPage(),
+                    '/proveedores': (context) => const ProveedoresPage(),
+                    '/productos': (context) => const ProductosPage(),
+                    '/empleados': (context) => const EmpleadosPage(),
+                    '/ordenes': (context) => const OrderPage(),
+                  },
+                );
+              }
             },
           );
         },
